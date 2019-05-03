@@ -60,9 +60,6 @@ import figures.sites
 
 #TMA
 from django.core.management import call_command
-from figures.pipeline import course_daily_metrics as pipeline_cdm
-import logging
-import datetime
 log = logging.getLogger()
 
 UNAUTHORIZED_USER_REDIRECT_URL = '/'
