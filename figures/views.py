@@ -60,6 +60,7 @@ import figures.sites
 
 #TMA
 from django.core.management import call_command
+import logging
 log = logging.getLogger()
 
 UNAUTHORIZED_USER_REDIRECT_URL = '/'
