@@ -58,6 +58,9 @@ import figures.permissions
 import figures.helpers
 import figures.sites
 
+#TMA
+from django.core.management import call_command
+log = logging.getLogger()
 
 UNAUTHORIZED_USER_REDIRECT_URL = '/'
 
@@ -87,6 +90,10 @@ def figures_home(request):
     context = {
         'figures_api_url': '//api.example.com',
     }
+
+    #TMA
+    call_command('populate_figures_metrics', '--no-delay')
+
     return render(request, 'figures/index.html', context)
 
 
@@ -310,6 +317,8 @@ class CourseDetailsViewSet(CommonAuthMixin, viewsets.ReadOnlyModelViewSet):
                 # Raising NotFound instead of PermissionDenied
                 raise NotFound()
         course_overview = get_object_or_404(CourseOverview, pk=course_key)
+
+
         return Response(CourseDetailsSerializer(course_overview).data)
 
 
