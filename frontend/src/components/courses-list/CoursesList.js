@@ -21,16 +21,13 @@ class CoursesList extends Component {
 
   changeSorting = (parameter) => {
     let coursesList = this.state.coursesList;
-    if (parameter === 'alphabetically') {
-      coursesList = coursesList.sortBy(item => item.getIn(['course_name'])).reverse()
-    } else if (parameter === 'learners-enrolled') {
-      coursesList = coursesList.sortBy(item => item.getIn(['learners_enrolled', 'current_month'])).reverse()
-    } else if (parameter === 'average-progress') {
-      coursesList = coursesList.sortBy(item => item.getIn(['average_progress', 'current_month'])).reverse()
-    } else if (parameter === 'completion-time') {
-      coursesList = coursesList.sortBy(item => item.getIn(['average_days_to_complete', 'current_month'])).reverse()
-    } else if (parameter === 'completed-learners') {
-      coursesList = coursesList.sortBy(item => item.getIn(['users_completed', 'current_month'])).reverse()
+    /* TMA specifing sorting filters */
+    if (parameter === 'tag') {
+      coursesList = coursesList.sortBy(item => item.getIn(['tma_course', 'tag']))
+    } else if (parameter === 'mandatory') {
+      coursesList = coursesList.filter(item => item.getIn(['tma_course', 'is_mandatory']) === true)
+    } else if (parameter === 'language') {
+      console.log('NOT YET')
     }
     this.setState({
       coursesList: coursesList,
@@ -61,6 +58,7 @@ class CoursesList extends Component {
           averageProgress={item.getIn(['average_progress', 'current_month'])}
           learnersEnrolled={item.getIn(['learners_enrolled', 'current_month'])}
           numberLearnersCompleted={item.getIn(['users_completed', 'current_month'])}
+          tag={item.getIn(['tma_course', 'tag'])}
           key={index}
         />
       )
@@ -75,11 +73,9 @@ class CoursesList extends Component {
           <div className={styles['sort-container']}>
             <span>Sort by:</span>
             <ul>
-              <li onClick={this.changeSorting.bind(this, 'alphabetically')} className={cx({ 'sort-item': true, 'active': (this.state.sortListBy === 'alphabetically')})}>A-Z</li>
-              <li onClick={this.changeSorting.bind(this, 'learners-enrolled')} className={cx({ 'sort-item': true, 'active': (this.state.sortListBy === 'learners-enrolled')})}>Learners enrolled</li>
-              <li onClick={this.changeSorting.bind(this, 'average-progress')} className={cx({ 'sort-item': true, 'active': (this.state.sortListBy === 'average-progress')})}>Average progress</li>
-              <li onClick={this.changeSorting.bind(this, 'completion-time')} className={cx({ 'sort-item': true, 'active': (this.state.sortListBy === 'completion-time')})}>Avg. time for completion</li>
-              <li onClick={this.changeSorting.bind(this, 'completed-learners')} className={cx({ 'sort-item': true, 'active': (this.state.sortListBy === 'completed-learners')})}>No. of compl. learners</li>
+              <li onClick={this.changeSorting.bind(this, 'tag')} className={cx({ 'sort-item': true, 'active': (this.state.sortListBy === 'tag')})}>Tag</li>
+              <li onClick={this.changeSorting.bind(this, 'language')} className={cx({ 'sort-item': true, 'active': (this.state.sortListBy === 'language')})}>Language</li>
+              <li onClick={this.changeSorting.bind(this, 'mandatory')} className={cx({ 'sort-item': true, 'active': (this.state.sortListBy === 'mandatory')})}>Mandatory</li>
             </ul>
           </div>
         </div>

@@ -51,6 +51,11 @@ from figures.models import (
 from figures.pipeline.logger import log_error
 import figures.sites
 
+# TMA importe
+from lms.djangoapps.tma_apps.models import TmaCourseOverview, TmaCourseEnrollment
+import logging
+
+log = logging.getLogger()
 
 # Temporarily hardcoding here
 # TODO: put into figures.settings
@@ -114,6 +119,22 @@ class UserIndexSerializer(serializers.Serializer):
 #
 # Serializers for edx-platform models
 #
+class TmaCourseEnrollmentSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = TmaCourseEnrollment
+        fields = (
+            'has_validated_course', 'completion_rate', 'is_favourite', 'liked_total', 'is_liked', 'student_grade', 'best_student_grade', 'date_best_student_grade'
+        )
+
+        
+class TmaCourseOverviewSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = TmaCourseOverview
+        fields = (
+            'is_manager_only', 'is_mandatory', 'is_vodeclic', 'liked_total', 'favourite_total', 'tag', 'onboarding'
+        )
 
 
 class CourseOverviewSerializer(serializers.ModelSerializer):
@@ -121,7 +142,7 @@ class CourseOverviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = CourseOverview
         fields = (
-            'id', 'display_name', 'org',
+            'id', 'display_name', 'org'
         )
 
 
@@ -145,6 +166,7 @@ class SiteSerializer(serializers.ModelSerializer):
         editable = False
         exclude = ()
 
+
 #
 # Figures model serializers
 #
@@ -153,7 +175,7 @@ class SiteSerializer(serializers.ModelSerializer):
 class CourseDailyMetricsSerializer(serializers.ModelSerializer):
     """Provides summary data about a specific course
     """
-    average_progress = serializers.DecimalField(max_digits=2, decimal_places=2)
+    average_progress = serializers.DecimalField(max_digits=6, decimal_places=2)
 
     class Meta:
         model = CourseDailyMetrics
@@ -245,6 +267,9 @@ class GeneralCourseDataSerializer(serializers.Serializer):
         source='end', read_only=True, default=None)
     self_paced = serializers.BooleanField(read_only=True)
 
+    # TMA fields 
+    tma_course = serializers.SerializerMethodField()
+
     staff = serializers.SerializerMethodField()
 
     metrics = serializers.SerializerMethodField()
@@ -273,6 +298,13 @@ class GeneralCourseDataSerializer(serializers.Serializer):
         qs = CourseDailyMetrics.objects.filter(course_id=str(obj.id))
         if qs:
             return CourseDailyMetricsSerializer(qs.latest('date_for')).data
+        else:
+            return []
+
+    def get_tma_course(self, obj):
+        qs = TmaCourseOverview.objects.filter(course_overview_edx_id=obj.id)
+        if qs:
+            return [TmaCourseOverviewSerializer(data).data for data in qs]
         else:
             return []
 
@@ -342,13 +374,16 @@ class CourseDetailsSerializer(serializers.ModelSerializer):
     average_days_to_complete = serializers.SerializerMethodField()
     users_completed = serializers.SerializerMethodField()
 
+    # TMA fields 
+    tma_course = serializers.SerializerMethodField()
+
     # TODO: Consider if we want to add a hyperlink field to the learner details endpoint
 
     class Meta:
         model = CourseOverview
         fields = ['course_id', 'course_name', 'course_code', 'org', 'start_date',
                   'end_date', 'self_paced', 'staff', 'learners_enrolled',
-                  'average_progress', 'average_days_to_complete', 'users_completed', ]
+                  'average_progress', 'average_days_to_complete', 'users_completed', 'tma_course' ]
         read_only_fields = fields
 
     def to_representation(self, instance):
@@ -413,7 +448,14 @@ class CourseDetailsSerializer(serializers.ModelSerializer):
             date_for=datetime.datetime.utcnow(),
             months_back=HISTORY_MONTHS_BACK,
             )
-
+            
+    def get_tma_course(self, course_overview):
+        qs = TmaCourseOverview.objects.filter(course_overview_edx_id=course_overview.id)
+        if qs:
+            for obj in qs:
+                return TmaCourseOverviewSerializer(obj).data
+        else:
+            return {}
 
 class GeneralSiteMetricsSerializer(serializers.Serializer):
     """

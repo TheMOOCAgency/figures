@@ -26,7 +26,7 @@ class CoursesListItem extends Component {
     return (
       <Link to={'/figures/course/' + this.props.courseId} className={styles['course-list-item']} key={this.props.courseId}>
         <div className={styles['general-info-section']}>
-          <span className={styles['course-id']}>{this.props.courseCode}</span>
+          <span className={styles['course-id']}>{this.props.tag}</span>
           <span className={styles['course-name']}>{this.props.courseName}</span>
           {this.props.courseIsSelfPaced ? (
             <div className={styles['label-value']}>
@@ -43,10 +43,10 @@ class CoursesListItem extends Component {
               <span className={styles['value']}>{parseCourseDate(this.props.startDate)}</span>
             </div>
           ]}
-          <div className={styles['label-value']}>
+          {/*<div className={styles['label-value']}>
             <span className={styles['label']}>Course staff:</span>
             {courseStaff}
-          </div>
+        </div>*/}
         </div>
         <span className={styles['sections-separator']} />
         <div className={styles['stats-section']}>
