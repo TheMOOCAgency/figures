@@ -6,7 +6,6 @@
 .stat-card {
 
   .main-content {
-
     .main-data-container {
       display: flex;
       align-items: center;
@@ -40,6 +39,48 @@
         font-size: calcRem(12);
         display: block;
       }
+    }
+
+    .top-courses-data-container {
+      display: inline;
+      align-items: center;
+      color: $primary-color;
+      margin-top: auto;
+      min-height: calcRem(90);
+      box-sizing: border-box;
+
+      .top-one-value {
+        font-weight: 900;
+        font-size: calcRem(32);
+        line-height: 100%;
+        height: 100%;
+      }
+
+      .top-one-value-box {
+        display: inline-block;
+        font-weight: normal;
+        margin-left: calcRem(15);
+        padding: calcRem(5) 0 calcRem(5) calcRem(15);
+        border-left: calcRem(1) solid $primary-color;
+      }
+
+      .top-value-box {
+        display: inline-block;
+        font-weight: normal;
+        margin-left: calcRem(15);
+        padding: calcRem(5) 0 calcRem(5) calcRem(15);
+      }
+
+      .top-value {
+        font-weight: bold;
+        font-size: calcRem(18);
+        display: inline-block;
+      }
+
+      .top-course-name {
+        font-size: calcRem(12);
+        display: inline-block;
+      }      
     }
 
     .history-toggle {

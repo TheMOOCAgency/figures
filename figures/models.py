@@ -38,7 +38,7 @@ class CourseDailyMetrics(TimeStampedModel):
     # that will save significant storage. Otherwise, we wait for the model
     # abstraction rework
     average_progress = models.DecimalField(
-        max_digits=3, decimal_places=2, blank=True, null=True,
+        max_digits=6, decimal_places=2, blank=True, null=True,
         validators=[MaxValueValidator(1.0), MinValueValidator(0.0)],
         )
 

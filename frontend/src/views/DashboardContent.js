@@ -8,6 +8,7 @@ import HeaderContentMaus from 'base/components/header-views/header-content-maus/
 import BaseStatCard from 'base/components/stat-cards/BaseStatCard';
 import CoursesList from 'base/components/courses-list/CoursesList';
 import apiConfig from 'base/apiConfig';
+import TopCoursesStatCard from '../components/stat-cards/TopCoursesCard';
 
 let cx = classNames.bind(styles);
 
@@ -53,10 +54,9 @@ class DashboardContent extends Component {
             mainValue={this.props.generalData.getIn(['total_course_enrollments', 'current_month'])}
             valueHistory={this.props.generalData.getIn(['total_course_enrollments', 'history'])}
           />
-          <BaseStatCard
-            cardTitle='Course completions'
-            mainValue={this.props.generalData.getIn(['total_course_completions', 'current_month'])}
-            valueHistory={this.props.generalData.getIn(['total_course_completions', 'history'])}
+          <TopCoursesStatCard
+            cardTitle='Top courses'
+            coursesList={this.state.coursesDetailed}
           />
           <CoursesList
             coursesList={this.state.coursesDetailed}
