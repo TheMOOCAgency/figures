@@ -59,7 +59,7 @@ import figures.helpers
 import figures.sites
 
 # TMA IMPORTS
-from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
+from student.views.dashboard import get_org_black_and_whitelist_for_site
 from django.core.management import call_command
 import logging
 log = logging.getLogger()
@@ -277,7 +277,12 @@ class GeneralCourseDataViewSet(CommonAuthMixin, viewsets.ReadOnlyModelViewSet):
     serializer_class = GeneralCourseDataSerializer
 
     def get_queryset(self):
-        org = configuration_helpers.get_value('org')
+        # Get current org
+        org_whitelist,org_blacklist = get_org_black_and_whitelist_for_site()
+        org = "phileas"
+        if org_whitelist:
+            org = org_whitelist[0]
+
         queryset = figures.sites.get_courses_for_org(org)
         return queryset
 
