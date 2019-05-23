@@ -26,7 +26,6 @@ from figures.helpers import as_course_key
 import figures.helpers
 
 # TMA IMPORTS
-from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 import logging
 log = logging.getLogger()
 
@@ -117,6 +116,7 @@ def get_courses_for_org(org):
 
         This function is specific to TMA multi-microsites platforms.
     """
+
     if figures.helpers.is_multisite():
         course_overviews = CourseOverview.objects.filter(org=org)
         course_ids = course_overviews.values_list('id', flat=True)
