@@ -26,6 +26,7 @@ from figures.helpers import as_course_key
 import figures.helpers
 
 # TMA IMPORTS
+from django.conf import settings
 import logging
 log = logging.getLogger()
 
@@ -111,17 +112,17 @@ def get_courses_for_site(site):
 
 def get_courses_for_org(org):
     """
-        If "FIGURES_IS_MULTISITE" setting is true : returns the courses accessible by the user on the microsite, excluding Vodeclic courses
+        If "FIGURES_HAS_MICROSITES" setting is true : returns the courses accessible by the user on the microsite, excluding Vodeclic courses
         Else, returns all courses (except Vodeclic)
 
         This function is specific to TMA multi-microsites platforms.
     """
 
-    if figures.helpers.is_multisite():
+    if bool(settings.FEATURES.get('FIGURES_HAS_MICROSITES', False)):
         course_overviews = CourseOverview.objects.filter(org=org)
         course_ids = course_overviews.values_list('id', flat=True)
         course_keys = [as_course_key(cid) for cid in course_ids]
-        courses = CourseOverview.objects.filter(id__in=course_keys)
+        courses = CourseOverview.objects.filter(id__in=course_keys, tmacourseoverview__is_vodeclic=False)
     else:
         courses = CourseOverview.objects.filter(tmacourseoverview__is_vodeclic=False)
     return courses
