@@ -25,6 +25,11 @@ from student.models import CourseEnrollment
 from figures.helpers import as_course_key
 import figures.helpers
 
+# TMA IMPORTS
+from lms.djangoapps.tma_apps.models import TmaCourseOverview
+import logging
+log = logging.getLogger()
+
 
 def default_site():
     """Returns the default site instance if Django settings defines SITE_ID, else None
@@ -101,7 +106,8 @@ def get_courses_for_site(site):
         course_keys = get_course_keys_for_site(site)
         courses = CourseOverview.objects.filter(id__in=course_keys)
     else:
-        courses = CourseOverview.objects.all()
+        # TMA - exclude Vodeclic courses
+        courses = CourseOverview.objects.filter(tmacourseoverview__is_vodeclic=False)
     return courses
 
 
