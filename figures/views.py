@@ -58,7 +58,8 @@ import figures.permissions
 import figures.helpers
 import figures.sites
 
-#TMA
+# TMA IMPORTS
+from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 from django.core.management import call_command
 import logging
 log = logging.getLogger()
@@ -276,8 +277,8 @@ class GeneralCourseDataViewSet(CommonAuthMixin, viewsets.ReadOnlyModelViewSet):
     serializer_class = GeneralCourseDataSerializer
 
     def get_queryset(self):
-        site = django.contrib.sites.shortcuts.get_current_site(self.request)
-        queryset = figures.sites.get_courses_for_site(site)
+        org = configuration_helpers.get_value('org')
+        queryset = figures.sites.get_courses_for_org(org)
         return queryset
 
     def retrieve(self, request, *args, **kwargs):
