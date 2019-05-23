@@ -305,6 +305,7 @@ class CourseDetailsViewSet(CommonAuthMixin, viewsets.ReadOnlyModelViewSet):
     def get_queryset(self):
         site = django.contrib.sites.shortcuts.get_current_site(self.request)
         queryset = figures.sites.get_courses_for_site(site)
+        log.info(site)
         return queryset
 
     def retrieve(self, request, *args, **kwargs):
@@ -318,7 +319,6 @@ class CourseDetailsViewSet(CommonAuthMixin, viewsets.ReadOnlyModelViewSet):
                 # Raising NotFound instead of PermissionDenied
                 raise NotFound()
         course_overview = get_object_or_404(CourseOverview, pk=course_key)
-
 
         return Response(CourseDetailsSerializer(course_overview).data)
 

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styles from './_base-stat-card.scss';
 import classNames from 'classnames/bind';
-import { cpus } from 'os';
+//import { cpus } from 'os';
 
 let cx = classNames.bind(styles);
 
@@ -28,14 +28,14 @@ class TopCoursesStatCard extends Component {
         return (
             <div>
                 {(index === 0) ? (
-                    <div>
+                    <div key={index}>
                         <span className={styles['top-one-value']}>{index+1}</span>
                         <div className={styles['top-one-value-box']}>
                             <span className={styles['top-course-name']}>{item.get('course_name')}</span>
                         </div>
                     </div>
                 ) : (
-                    <div>
+                    <div key={index}>
                         <span className={styles['top-value']}>{index+1}</span>
                         <div className={styles['top-value-box']}>
                             <span className={styles['top-course-name']}>{item.get('course_name')}</span>

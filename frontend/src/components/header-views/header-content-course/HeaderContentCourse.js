@@ -9,8 +9,9 @@ const parseCourseDate = (fetchedDate) => {
   if (fetchedDate === null) {
     return "-";
   } else if (Date.parse(fetchedDate)) {
-    const tempDate = new Date(fetchedDate);
-    return tempDate.toUTCString();
+    let tempDate = new Date(fetchedDate);
+    tempDate = (tempDate.getMonth()+1) +'/'+ tempDate.getDay() +'/'+ tempDate.getFullYear();
+    return tempDate;
   } else {
     return fetchedDate;
   }
@@ -40,23 +41,37 @@ class HeaderContentCourse extends Component {
   render() {
 
     const displayCourseHeaderGraph = false;
-
+    console.log(this.props.tmaCourse)
     return (
       <section className={styles['header-content-course']}>
         <div className={cx({ 'main-content': true, 'container': true})}>
+          <div className={styles['course-info']}>
+            <span className={styles['course-date']}>Microsite: {this.props.microsite}</span>
+            <img className={styles['refresh-img']} src="/static/tma-static/images/circle-arrows.png"></img>
+          </div>
           <div className={styles['course-title']}>
             {this.props.courseName}
           </div>
-          <div className={styles['course-info']}>
-            <span className={styles['course-code']}>{this.props.courseCode}</span>
-            <span className={styles['course-info-separator']}>|</span>
+          <div className={styles['course-id']}>
+            Course ID: {this.props.courseId}
+          </div>
+          <div className={styles['course-id']}>
+            likes
+          </div>
+          <div className={styles['course-tma-info']}>
             {this.props.isSelfPaced ? (
               <span className={styles['course-date']}>This course is self-paced</span>
             ) : [
               <span key='courseStart' className={styles['course-date']}>Starts: {parseCourseDate(this.props.startDate)}</span>,
-              this.props.endDate && <span key='separator' className={styles['course-info-separator']}>|</span>,
               this.props.endDate && <span key='courseEnd' className={styles['course-date']}>Ends: {parseCourseDate(this.props.endDate)}</span>,
             ]}
+          </div>
+          <div className={styles['course-tma-info']}>
+            <span className={styles['course-date']}>Mandatory : {this.props.isMandatory ? "Yes" : "No"}</span>
+            <span className={styles['course-date']}>Tag : {this.props.tag}</span>
+            <span className={styles['course-date']}>Language :</span>
+            <span className={styles['course-date']}>Target : {this.props.isManagerOnly ? "Manager Only" : "No Restriction"}</span>
+            <span className={styles['course-date']}>Score required :</span>
           </div>
           {displayCourseHeaderGraph ? [
             <span className={styles['text-separator']} />,
