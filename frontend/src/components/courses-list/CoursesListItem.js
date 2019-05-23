@@ -17,11 +17,11 @@ const parseCourseDate = (fetchedDate) => {
 class CoursesListItem extends Component {
 
   render() {
-    const courseStaff = this.props.courseStaff.map((item, index) => {
+    /*const courseStaff = this.props.courseStaff.map((item, index) => {
       return (
         <span key={index} className={styles['value']}>{item.get('fullname')}</span>
       )
-    });
+    });*/
 
     return (
       <Link to={'/figures/course/' + this.props.courseId} className={styles['course-list-item']} key={this.props.courseId}>

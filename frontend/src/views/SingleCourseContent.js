@@ -7,8 +7,8 @@ import styles from './_single-course-content.scss';
 import HeaderAreaLayout from 'base/components/layout/HeaderAreaLayout';
 import HeaderContentCourse from 'base/components/header-views/header-content-course/HeaderContentCourse';
 import BaseStatCard from 'base/components/stat-cards/BaseStatCard';
-import LearnerStatistics from 'base/components/learner-statistics/LearnerStatistics';
-import CourseLearnersList from 'base/components/course-learners-list/CourseLearnersList';
+//import LearnerStatistics from 'base/components/learner-statistics/LearnerStatistics';
+//import CourseLearnersList from 'base/components/course-learners-list/CourseLearnersList';
 import apiConfig from 'base/apiConfig';
 
 let cx = classNames.bind(styles);
@@ -56,7 +56,7 @@ class SingleCourseContent extends Component {
 
   componentDidMount() {
     this.fetchCourseData();
-    this.fetchLearnersData();
+    //this.fetchLearnersData();
   }
 
   render() {
@@ -64,10 +64,14 @@ class SingleCourseContent extends Component {
       <div className="ef--layout-root">
         <HeaderAreaLayout>
           <HeaderContentCourse
+            microsite = {this.state.courseData.getIn(['org'])}
             startDate = {this.state.courseData.getIn(['start_date'])}
             endDate = {this.state.courseData.getIn(['end_date'])}
             courseName = {this.state.courseData.getIn(['course_name'])}
-            courseCode = {this.state.courseData.getIn(['course_code'])}
+            courseId = {this.state.courseData.getIn(['course_id'])}
+            isMandatory = {this.state.courseData.getIn(['tma_course', 'is_mandatory'])}
+            tag = {this.state.courseData.getIn(['tma_course', 'tag'])}
+            isManagerOnly = {this.state.courseData.getIn(['tma_course', 'is_manager_only'])}
             isSelfPaced = {this.state.courseData.getIn(['self_paced'])}
             learnersEnrolled = {this.state.courseData.getIn(['learners_enrolled'])}
           />
@@ -94,15 +98,17 @@ class SingleCourseContent extends Component {
             mainValue={this.state.courseData.getIn(['users_completed', 'current_month'], 0)}
             valueHistory={this.state.courseData.getIn(['users_completed', 'history'], [])}
           />
-          <LearnerStatistics
-            learnersData = {this.state.learnersList}
-          />
-          <CourseLearnersList
-            courseId = {this.props.courseId}
-            allLearnersLoaded = {this.state.allLearnersLoaded}
-            apiFetchMoreLearnersFunction = {this.fetchLearnersData}
-            learnersData = {this.state.learnersList}
-          />
+          {/*
+            <LearnerStatistics
+              learnersData = {this.state.learnersList}
+            />
+            <CourseLearnersList
+              courseId = {this.props.courseId}
+              allLearnersLoaded = {this.state.allLearnersLoaded}
+              apiFetchMoreLearnersFunction = {this.fetchLearnersData}
+              learnersData = {this.state.learnersList}
+            />
+          */}
         </div>
       </div>
     );
