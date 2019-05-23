@@ -26,7 +26,7 @@ from figures.helpers import as_course_key
 import figures.helpers
 
 # TMA IMPORTS
-from lms.djangoapps.tma_apps.models import TmaCourseOverview
+from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 import logging
 log = logging.getLogger()
 
@@ -106,7 +106,23 @@ def get_courses_for_site(site):
         course_keys = get_course_keys_for_site(site)
         courses = CourseOverview.objects.filter(id__in=course_keys)
     else:
-        # TMA - exclude Vodeclic courses
+        courses = CourseOverview.objects.all()
+    return courses
+
+
+def get_courses_for_org(org):
+    """
+        If "FIGURES_IS_MULTISITE" setting is true : returns the courses accessible by the user on the microsite, excluding Vodeclic courses
+        Else, returns all courses (except Vodeclic)
+
+        This function is specific to TMA multi-microsites platforms.
+    """
+    if figures.helpers.is_multisite():
+        course_overviews = CourseOverview.objects.filter(org=org)
+        course_ids = course_overviews.values_list('id', flat=True)
+        course_keys = [as_course_key(cid) for cid in course_ids]
+        courses = CourseOverview.objects.filter(id__in=course_keys)
+    else:
         courses = CourseOverview.objects.filter(tmacourseoverview__is_vodeclic=False)
     return courses
 
