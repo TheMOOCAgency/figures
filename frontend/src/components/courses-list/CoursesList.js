@@ -29,7 +29,6 @@ class CoursesList extends Component {
     } else if (parameter === 'language') {
       console.log('NOT YET');
     } else if (parameter === 'all') {
-      console.log('keukou')
       coursesList = this.props.coursesList;
     }
     this.setState({
