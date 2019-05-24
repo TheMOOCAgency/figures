@@ -47,7 +47,7 @@ class HeaderContentCourse extends Component {
         <div className={cx({ 'main-content': true, 'container': true})}>
           <div className={styles['course-info']}>
             <span className={styles['course-date']}>Microsite: {this.props.microsite}</span>
-            <img className={styles['refresh-img']} src="/static/tma-static/images/circle-arrows.png"></img>
+            <span className={styles['course-date']}>Last update: <img className={styles['refresh-img']} src="/static/tma-static/images/circle-arrows.png" alt="refresh"></img></span>
           </div>
           <div className={styles['course-title']}>
             {this.props.courseName}
@@ -58,15 +58,15 @@ class HeaderContentCourse extends Component {
           <div className={styles['course-id']}>
             likes
           </div>
-          <div className={styles['course-tma-info']}>
+          <div className={styles['course-tma-info-left']}>
             {this.props.isSelfPaced ? (
               <span className={styles['course-date']}>This course is self-paced</span>
             ) : [
-              <span key='courseStart' className={styles['course-date']}>Starts: {parseCourseDate(this.props.startDate)}</span>,
-              this.props.endDate && <span key='courseEnd' className={styles['course-date']}>Ends: {parseCourseDate(this.props.endDate)}</span>,
+              <span key='courseStart' className={styles['course-date']}>Starting date: {parseCourseDate(this.props.startDate)}</span>,
+              this.props.endDate && <span key='courseEnd' className={styles['course-date']}>Ending date: {parseCourseDate(this.props.endDate)}</span>,
             ]}
           </div>
-          <div className={styles['course-tma-info']}>
+          <div className={styles['course-tma-info-right']}>
             <span className={styles['course-date']}>Mandatory : {this.props.isMandatory ? "Yes" : "No"}</span>
             <span className={styles['course-date']}>Tag : {this.props.tag}</span>
             <span className={styles['course-date']}>Language :</span>

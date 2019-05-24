@@ -59,7 +59,8 @@ import figures.helpers
 import figures.sites
 
 # TMA IMPORTS
-from student.views.dashboard import get_org_black_and_whitelist_for_site
+#from common.djangoapps.student.views.dashboard import get_org_black_and_whitelist_for_site
+from django.conf import settings
 from django.core.management import call_command
 import logging
 log = logging.getLogger()
@@ -277,11 +278,14 @@ class GeneralCourseDataViewSet(CommonAuthMixin, viewsets.ReadOnlyModelViewSet):
     serializer_class = GeneralCourseDataSerializer
 
     def get_queryset(self):
-        # Get current org
-        org_whitelist,org_blacklist = get_org_black_and_whitelist_for_site()
-        org = "phileas"
-        if org_whitelist:
-            org = org_whitelist[0]
+        if bool(settings.FEATURES.get('FIGURES_HAS_MICROSITES', False)):
+            # Get current org
+            org_whitelist,org_blacklist = get_org_black_and_whitelist_for_site()
+            org = "phileas"
+            if org_whitelist:
+                org = org_whitelist[0]
+        else:
+            org = ""
 
         queryset = figures.sites.get_courses_for_org(org)
         return queryset

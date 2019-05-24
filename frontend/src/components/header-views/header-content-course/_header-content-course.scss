@@ -46,14 +46,37 @@
       font-weight: normal;
     }
   }
-  .course-tma-info {
+  .course-tma-info-left {
     display: inline-block;
-    width: 50%;
+    width: 75%;
     font-size: calcRem(14);
     margin-bottom: calcRem(5);
     line-height: 130%;
     text-align: left;
 
+    .course-code {
+      font-weight: 900;
+    }
+
+    .course-info-separator {
+      margin-left: calcRem(10);
+      margin-right: calcRem(10);
+    }
+
+    .course-date {
+      display: block;
+      font-weight: normal;
+    }
+  }
+
+  .course-tma-info-right {
+    display: inline-block;
+    width: 25%;
+    font-size: calcRem(14);
+    margin-bottom: calcRem(5);
+    line-height: 130%;
+    text-align: left;
+    
     .course-code {
       font-weight: 900;
     }

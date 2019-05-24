@@ -23,11 +23,14 @@ class CoursesList extends Component {
     let coursesList = this.state.coursesList;
     /* TMA specifing sorting filters */
     if (parameter === 'tag') {
-      coursesList = coursesList.sortBy(item => item.getIn(['tma_course', 'tag']))
+      coursesList = coursesList.sortBy(item => item.getIn(['tma_course', 'tag']));
     } else if (parameter === 'mandatory') {
-      coursesList = coursesList.filter(item => item.getIn(['tma_course', 'is_mandatory']) === true)
+      coursesList = coursesList.filter(item => item.getIn(['tma_course', 'is_mandatory']) === true);
     } else if (parameter === 'language') {
-      console.log('NOT YET')
+      console.log('NOT YET');
+    } else if (parameter === 'all') {
+      console.log('keukou')
+      coursesList = this.props.coursesList;
     }
     this.setState({
       coursesList: coursesList,
@@ -73,8 +76,9 @@ class CoursesList extends Component {
           <div className={styles['sort-container']}>
             <span>Sort by:</span>
             <ul>
+              <li onClick={this.changeSorting.bind(this, 'all')} className={cx({ 'sort-item': true, 'active': (this.state.sortListBy === 'all')})}>All</li>
               <li onClick={this.changeSorting.bind(this, 'tag')} className={cx({ 'sort-item': true, 'active': (this.state.sortListBy === 'tag')})}>Tag</li>
-              <li onClick={this.changeSorting.bind(this, 'language')} className={cx({ 'sort-item': true, 'active': (this.state.sortListBy === 'language')})}>Language</li>
+              {/*<li onClick={this.changeSorting.bind(this, 'language')} className={cx({ 'sort-item': true, 'active': (this.state.sortListBy === 'language')})}>Language</li>*/}
               <li onClick={this.changeSorting.bind(this, 'mandatory')} className={cx({ 'sort-item': true, 'active': (this.state.sortListBy === 'mandatory')})}>Mandatory</li>
             </ul>
           </div>
