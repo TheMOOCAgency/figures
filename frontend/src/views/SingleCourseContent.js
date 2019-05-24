@@ -61,6 +61,7 @@ class SingleCourseContent extends Component {
   }
 
   render() {
+    console.log(this.state.courseData)
     return (
       <div className="ef--layout-root">
         <HeaderAreaLayout>
@@ -70,10 +71,12 @@ class SingleCourseContent extends Component {
             endDate = {this.state.courseData.getIn(['end_date'])}
             courseName = {this.state.courseData.getIn(['course_name'])}
             courseId = {this.state.courseData.getIn(['course_id'])}
+            likesTotal = {this.state.courseData.getIn(['tma_course', 'liked_total'])}
             isMandatory = {this.state.courseData.getIn(['tma_course', 'is_mandatory'])}
             tag = {this.state.courseData.getIn(['tma_course', 'tag'])}
             isManagerOnly = {this.state.courseData.getIn(['tma_course', 'is_manager_only'])}
             isSelfPaced = {this.state.courseData.getIn(['self_paced'])}
+            requiredGrade = {this.state.courseData.getIn(['passing_grade'])}
             learnersEnrolled = {this.state.courseData.getIn(['learners_enrolled'])}
           />
         </HeaderAreaLayout>

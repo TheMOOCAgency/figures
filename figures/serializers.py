@@ -142,7 +142,7 @@ class CourseOverviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = CourseOverview
         fields = (
-            'id', 'display_name', 'org'
+            'id', 'display_name', 'org', 'lowest_passing_grade'
         )
 
 
@@ -267,7 +267,9 @@ class GeneralCourseDataSerializer(serializers.Serializer):
         source='end', read_only=True, default=None)
     self_paced = serializers.BooleanField(read_only=True)
 
-    # TMA fields 
+    # TMA fields
+    passing_grade = serializers.DecimalField(
+        source='lowest_passing_grade', max_digits=5, decimal_places=2, read_only=True)
     tma_course = serializers.SerializerMethodField()
 
     staff = serializers.SerializerMethodField()
@@ -374,7 +376,9 @@ class CourseDetailsSerializer(serializers.ModelSerializer):
     average_days_to_complete = serializers.SerializerMethodField()
     users_completed = serializers.SerializerMethodField()
 
-    # TMA fields 
+    # TMA fields
+    passing_grade = serializers.DecimalField(
+        source='lowest_passing_grade', max_digits=5, decimal_places=2, read_only=True)
     tma_course = serializers.SerializerMethodField()
 
     # TODO: Consider if we want to add a hyperlink field to the learner details endpoint
@@ -382,7 +386,7 @@ class CourseDetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = CourseOverview
         fields = ['course_id', 'course_name', 'course_code', 'org', 'start_date',
-                  'end_date', 'self_paced', 'staff', 'learners_enrolled',
+                  'end_date', 'self_paced', 'passing_grade', 'staff', 'learners_enrolled',
                   'average_progress', 'average_days_to_complete', 'users_completed', 'tma_course' ]
         read_only_fields = fields
 
