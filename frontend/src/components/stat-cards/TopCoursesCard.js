@@ -26,23 +26,12 @@ class TopCoursesStatCard extends Component {
     const coursesListSliced = this.getTopCourses()
     const topItems = coursesListSliced.map((item, index) => {
         return (
-            <div>
-                {(index === 0) ? (
-                    <div key={index}>
-                        <span className={styles['top-one-value']}>{index+1}</span>
-                        <div className={styles['top-one-value-box']}>
-                            <span className={styles['top-course-name']}>{item.get('course_name')}</span>
-                        </div>
-                    </div>
-                ) : (
-                    <div key={index}>
-                        <span className={styles['top-value']}>{index+1}</span>
-                        <div className={styles['top-value-box']}>
-                            <span className={styles['top-course-name']}>{item.get('course_name')}</span>
-                        </div>
-                    </div>
-                )}
-            </div>
+          <div key={index}>
+              <div className={(index === 0) ? styles['top-one-value-box'] : styles['top-value-box']}>
+                <span className={(index === 0) ? styles['top-one-value'] : styles['top-value']}>{index+1}</span>
+                  <span className={styles['top-course-name']}>{item.get('course_name')}</span>
+              </div>
+          </div>
         )
     });
     

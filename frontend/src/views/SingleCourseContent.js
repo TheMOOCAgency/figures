@@ -7,6 +7,7 @@ import styles from './_single-course-content.scss';
 import HeaderAreaLayout from 'base/components/layout/HeaderAreaLayout';
 import HeaderContentCourse from 'base/components/header-views/header-content-course/HeaderContentCourse';
 import BaseStatCard from 'base/components/stat-cards/BaseStatCard';
+import ImageCard from 'base/components/stat-cards/ImageCard';
 //import LearnerStatistics from 'base/components/learner-statistics/LearnerStatistics';
 //import CourseLearnersList from 'base/components/course-learners-list/CourseLearnersList';
 import apiConfig from 'base/apiConfig';
@@ -78,25 +79,73 @@ class SingleCourseContent extends Component {
         </HeaderAreaLayout>
         <div className={cx({ 'container': true, 'base-grid-layout': true, 'dashboard-content': true})}>
           <BaseStatCard
-            cardTitle='Number of enrolled learners'
+            cardTitle='No. of learners'
             mainValue={this.state.courseData.getIn(['learners_enrolled', 'current_month'], 0)}
             valueHistory={this.state.courseData.getIn(['learners_enrolled', 'history'], [])}
           />
           <BaseStatCard
-            cardTitle='Average course progress'
+            cardTitle='Invited'
             mainValue={this.state.courseData.getIn(['average_progress', 'current_month'], 0).toFixed(2)}
-            valueHistory={this.state.courseData.getIn(['average_progress', 'history'], [])}
             dataType='percentage'
+            compareToPrevious={false}
+            enableHistory={false}
           />
           <BaseStatCard
-            cardTitle='Average days to complete'
+            cardTitle='Not started'
             mainValue={this.state.courseData.getIn(['average_days_to_complete', 'current_month'], 0)}
-            valueHistory={this.state.courseData.getIn(['average_days_to_complete', 'history'], [])}
+            dataType='percentage'
+            compareToPrevious={false}
+            enableHistory={false}
           />
           <BaseStatCard
-            cardTitle='User course completions'
+            cardTitle='Started'
+            mainValue={this.state.courseData.getIn(['users_completed', 'current_month'], 0)}
+            dataType='percentage'
+            compareToPrevious={false}
+            enableHistory={false}
+          />
+          <BaseStatCard
+            cardTitle='Fully Completed'
+            mainValue={this.state.courseData.getIn(['users_completed', 'current_month'], 0)}
+            compareToPrevious={false}
+            enableHistory={false}
+          />
+          <BaseStatCard
+            cardTitle='Partially Completed'
+            mainValue={this.state.courseData.getIn(['users_completed', 'current_month'], 0)}
+            compareToPrevious={false}
+            enableHistory={false}
+          />
+          <BaseStatCard
+            cardTitle='Participation rate'
+            mainValue={this.state.courseData.getIn(['users_completed', 'current_month'], 0)}
+            dataType='percentage'
+            compareToPrevious={false}
+            enableHistory={false}
+          />
+          <ImageCard
+            cardImage={"/static/tma-static/images/logo-phileas.jpg"}
+          />
+          <BaseStatCard
+            cardTitle='Certificates awarded'
             mainValue={this.state.courseData.getIn(['users_completed', 'current_month'], 0)}
             valueHistory={this.state.courseData.getIn(['users_completed', 'history'], [])}
+          />
+          <BaseStatCard
+            cardTitle='Non certified'
+            mainValue={this.state.courseData.getIn(['users_completed', 'current_month'], 0)}
+            compareToPrevious={false}
+            enableHistory={false}
+          />
+          <BaseStatCard
+            cardTitle='Average score'
+            mainValue={this.state.courseData.getIn(['users_completed', 'current_month'], 0)}
+            dataType='percentage'
+            compareToPrevious={false}
+            enableHistory={false}
+          />
+          <ImageCard
+            cardImage={"/static/tma-static/images/logo-phileas.jpg"}
           />
           {/*
             <LearnerStatistics

@@ -15,12 +15,12 @@ class HeaderNav extends Component {
         >
           Overview
         </NavLink>
-        <NavLink
+        {/*<NavLink
           to="/figures/mau-history"
           className={styles['header-nav__link']}
         >
           MAU History
-        </NavLink>
+        </NavLink>*/}
         <AutoCompleteCourseSelect
           negativeStyleButton
           buttonText='Jump to a course'

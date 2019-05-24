@@ -12,6 +12,7 @@
       color: $primary-color;
       padding: calcRem(20) 0;
       margin-top: auto;
+      margin-bottom: auto;
       min-height: calcRem(90);
       box-sizing: border-box;
 
@@ -49,38 +50,48 @@
       min-height: calcRem(90);
       box-sizing: border-box;
 
+      .top-one-value-box {
+        display: flex;
+        align-items: center;
+        font-weight: normal;
+        padding: calcRem(5) 0 calcRem(5) calcRem(15);
+      }
+
       .top-one-value {
+        margin-right: calcRem(15);
+        padding-right: calcRem(15);
         font-weight: 900;
         font-size: calcRem(32);
         line-height: 100%;
         height: 100%;
-      }
-
-      .top-one-value-box {
-        display: inline-block;
-        font-weight: normal;
-        margin-left: calcRem(15);
-        padding: calcRem(5) 0 calcRem(5) calcRem(15);
-        border-left: calcRem(1) solid $primary-color;
+        border-right: calcRem(1) solid $primary-color;
       }
 
       .top-value-box {
-        display: inline-block;
+        display: flex;
+        align-items: center;
         font-weight: normal;
-        margin-left: calcRem(15);
         padding: calcRem(5) 0 calcRem(5) calcRem(15);
       }
 
       .top-value {
+        margin-right: calcRem(15);
+        padding-right: calcRem(15);
         font-weight: bold;
         font-size: calcRem(18);
-        display: inline-block;
       }
 
       .top-course-name {
         font-size: calcRem(12);
-        display: inline-block;
       }      
+    }
+
+    .image-container {
+      margin: auto;
+      
+      .card-img {
+        height: 8rem;
+      }
     }
 
     .history-toggle {
