@@ -20,8 +20,13 @@
     margin-bottom: calcRem(15);
   }
 
+  .course-likes {
+    font-size: calcRem(14);
+  }
+
   .refresh-img {
     width: 1.4rem;
+    padding-left: 1rem;
     cursor: pointer;
   }
 
