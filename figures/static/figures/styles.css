@@ -1295,12 +1295,13 @@ textarea.input__2lx3TsF4, input[type="text"].input__2lx3TsF4, input[type="url"].
     line-height: 100%; }
   .courses-list__1AnTO3KB .sort-container__2rScvzNe {
     display: flex;
+    align-items: baseline;
     margin-left: auto;
     padding-right: 1rem;
     font-size: 1.2rem;
     color: #787280; }
     .courses-list__1AnTO3KB .sort-container__2rScvzNe span {
-      margin: 1.2rem 1rem 0 1rem; }
+      margin: 0.9rem 1rem 0 1rem; }
     .courses-list__1AnTO3KB .sort-container__2rScvzNe ul {
       padding: 0;
       margin: 0;
@@ -1961,8 +1962,12 @@ textarea.input__2lx3TsF4, input[type="text"].input__2lx3TsF4, input[type="url"].
   font-size: 1.2rem;
   margin-bottom: 1.5rem; }
 
+.header-content-course__2MEybh6J .course-likes__1p5rvp67 {
+  font-size: 1.4rem; }
+
 .header-content-course__2MEybh6J .refresh-img__6PLEXc59 {
   width: 1.4rem;
+  padding-left: 1rem;
   cursor: pointer; }
 
 .header-content-course__2MEybh6J .course-info__2gr8nYUc {
