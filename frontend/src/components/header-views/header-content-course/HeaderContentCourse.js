@@ -71,7 +71,6 @@ class HeaderContentCourse extends Component {
           <div className={styles['course-tma-info-right']}>
             <span className={styles['course-date']}>Mandatory : {this.props.isMandatory ? "Yes" : "No"}</span>
             <span className={styles['course-date']}>Tag : {this.props.tag}</span>
-            {/*<span className={styles['course-date']}>Language :</span>*/}
             <span className={styles['course-date']}>Target : {this.props.isManagerOnly ? "Manager Only" : "No Restriction"}</span>
             <span className={styles['course-date']}>Score required : {this.props.requiredGrade * 100}%  </span>
           </div>

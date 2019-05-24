@@ -20,6 +20,7 @@
 
   .sort-container {
     display: flex;
+    align-items: baseline;
     margin-left: auto;
     padding-right: calcRem(10);
     font-size: calcRem(12);
