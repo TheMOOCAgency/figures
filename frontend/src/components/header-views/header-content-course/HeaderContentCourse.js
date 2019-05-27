@@ -17,6 +17,16 @@ const parseCourseDate = (fetchedDate) => {
   }
 }
 
+const parseLanguage = (language) => {
+  if (language) {
+    if (language === 'fr') {
+      return 'French';
+    } else if (language === 'en') {
+      return 'English'
+    }
+  }
+}
+
 class CustomTooltip extends Component {
 
   render() {
@@ -71,6 +81,7 @@ class HeaderContentCourse extends Component {
           <div className={styles['course-tma-info-right']}>
             <span className={styles['course-date']}>Mandatory : {this.props.isMandatory ? "Yes" : "No"}</span>
             <span className={styles['course-date']}>Tag : {this.props.tag}</span>
+            <span className={styles['course-date']}>Language : {parseLanguage(this.props.language)}</span>
             <span className={styles['course-date']}>Target : {this.props.isManagerOnly ? "Manager Only" : "No Restriction"}</span>
             <span className={styles['course-date']}>Score required : {this.props.requiredGrade * 100}%  </span>
           </div>

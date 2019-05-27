@@ -74,6 +74,7 @@ class SingleCourseContent extends Component {
             likesTotal = {this.state.courseData.getIn(['tma_course', 'liked_total'])}
             isMandatory = {this.state.courseData.getIn(['tma_course', 'is_mandatory'])}
             tag = {this.state.courseData.getIn(['tma_course', 'tag'])}
+            language={this.state.courseData.getIn(['language'])}
             isManagerOnly = {this.state.courseData.getIn(['tma_course', 'is_manager_only'])}
             isSelfPaced = {this.state.courseData.getIn(['self_paced'])}
             requiredGrade = {this.state.courseData.getIn(['passing_grade'])}

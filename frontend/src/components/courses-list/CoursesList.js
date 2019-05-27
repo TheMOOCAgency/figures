@@ -27,7 +27,7 @@ class CoursesList extends Component {
     } else if (parameter === 'mandatory') {
       coursesList = coursesList.filter(item => item.getIn(['tma_course', 'is_mandatory']) === true);
     } else if (parameter === 'language') {
-      console.log('NOT YET');
+      coursesList = coursesList.sortBy(item => item.get('language'))
     } else if (parameter === 'all') {
       coursesList = this.props.coursesList;
     }
@@ -61,6 +61,7 @@ class CoursesList extends Component {
           learnersEnrolled={item.getIn(['learners_enrolled', 'current_month'])}
           numberLearnersCompleted={item.getIn(['users_completed', 'current_month'])}
           tag={item.getIn(['tma_course', 'tag'])}
+          language={item.get('language')}
           key={index}
         />
       )
@@ -77,7 +78,7 @@ class CoursesList extends Component {
             <ul>
               <li onClick={this.changeSorting.bind(this, 'all')} className={cx({ 'sort-item': true, 'active': (this.state.sortListBy === 'all')})}>All</li>
               <li onClick={this.changeSorting.bind(this, 'tag')} className={cx({ 'sort-item': true, 'active': (this.state.sortListBy === 'tag')})}>Tag</li>
-              {/*<li onClick={this.changeSorting.bind(this, 'language')} className={cx({ 'sort-item': true, 'active': (this.state.sortListBy === 'language')})}>Language</li>*/}
+              <li onClick={this.changeSorting.bind(this, 'language')} className={cx({ 'sort-item': true, 'active': (this.state.sortListBy === 'language')})}>Language</li>
               <li onClick={this.changeSorting.bind(this, 'mandatory')} className={cx({ 'sort-item': true, 'active': (this.state.sortListBy === 'mandatory')})}>Mandatory</li>
             </ul>
           </div>

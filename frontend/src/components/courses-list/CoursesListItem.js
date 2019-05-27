@@ -14,6 +14,16 @@ const parseCourseDate = (fetchedDate) => {
   }
 }
 
+const parseLanguage = (language) => {
+  if (language) {
+    if (language === 'fr') {
+      return 'French';
+    } else if (language === 'en') {
+      return 'English'
+    }
+  }
+}
+
 class CoursesListItem extends Component {
 
   render() {
@@ -26,7 +36,7 @@ class CoursesListItem extends Component {
     return (
       <Link to={'/figures/course/' + this.props.courseId} className={styles['course-list-item']} key={this.props.courseId}>
         <div className={styles['general-info-section']}>
-          <span className={styles['course-id']}>{this.props.tag}</span>
+          <span className={styles['course-id']}>{this.props.tag} - {parseLanguage(this.props.language)}</span>
           <span className={styles['course-name']}>{this.props.courseName}</span>
           {this.props.courseIsSelfPaced ? (
             <div className={styles['label-value']}>
