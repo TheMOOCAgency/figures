@@ -22,7 +22,7 @@ class SingleCourseContent extends Component {
       courseData: Immutable.Map(),
       allLearnersLoaded: true,
       learnersList: Immutable.List(),
-      apiFetchMoreLearnersUrl: null
+      apiFetchMoreLearnersUrl: null,
     };
 
     this.fetchCourseData = this.fetchCourseData.bind(this);
@@ -55,13 +55,27 @@ class SingleCourseContent extends Component {
     }, () => this.props.removeActiveApiFetch())
   }
 
+  // TMA
+  populateMetrics = () => {
+    fetch(apiConfig.updateData, { 
+      credentials: "same-origin",
+      method: "post",
+      body: JSON.stringify({ course_id: this.state.courseData.getIn(['course_id'])}),
+      headers:{
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(response => response.json())
+    .then(data => console.log(data))
+  }
+
   componentDidMount() {
     this.fetchCourseData();
     //this.fetchLearnersData();
   }
 
   render() {
-    console.log(this.state.courseData)
     return (
       <div className="ef--layout-root">
         <HeaderAreaLayout>
@@ -79,6 +93,7 @@ class SingleCourseContent extends Component {
             isSelfPaced = {this.state.courseData.getIn(['self_paced'])}
             requiredGrade = {this.state.courseData.getIn(['passing_grade'])}
             learnersEnrolled = {this.state.courseData.getIn(['learners_enrolled'])}
+            updateData = {this.populateMetrics}
           />
         </HeaderAreaLayout>
         <div className={cx({ 'container': true, 'base-grid-layout': true, 'dashboard-content': true})}>

@@ -59,14 +59,19 @@ import figures.helpers
 import figures.sites
 
 # TMA IMPORTS
+from figures.tasks import (
+    populate_single_cdm
+)
 from student.views.dashboard import get_org_black_and_whitelist_for_site
 from django.conf import settings
 from django.core.management import call_command
+from util.json_request import JsonResponse
+import datetime
 import logging
+
 log = logging.getLogger()
 
 UNAUTHORIZED_USER_REDIRECT_URL = '/'
-
 
 #
 # UI Template rendering views
@@ -94,10 +99,25 @@ def figures_home(request):
         'figures_api_url': '//api.example.com',
     }
 
-    #TMA
-    #call_command('populate_figures_metrics', '--no-delay')
-
     return render(request, 'figures/index.html', context)
+
+
+### TMA ###
+@ensure_csrf_cookie
+@login_required
+@user_passes_test(lambda u: u.is_active,
+                  login_url=UNAUTHORIZED_USER_REDIRECT_URL,
+                  redirect_field_name=None)
+def populate_metrics_from_view(request):
+    course_id = request.POST.get('course_id')
+    populate_single_cdm(course_id, None, False)
+    log.info('COUCOU HIBOU')
+    
+    context = {
+        "last_update": datetime.now().strftime('%d-%m-%Y')
+    }
+    
+    return JsonResponse(context)
 
 
 #

@@ -14,6 +14,7 @@ const parseCourseDate = (fetchedDate) => {
   }
 }
 
+// TMA
 const parseLanguage = (language) => {
   if (language) {
     if (language === 'fr') {
