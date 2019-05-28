@@ -82,6 +82,9 @@ class SingleCourseContent extends Component {
           />
         </HeaderAreaLayout>
         <div className={cx({ 'container': true, 'base-grid-layout': true, 'dashboard-content': true})}>
+          <div className={styles['header']}>
+            <div className={styles['header-title']}>Course Activity</div>
+          </div>
           <BaseStatCard
             cardTitle='No. of learners'
             mainValue={this.state.courseData.getIn(['learners_enrolled', 'current_month'], 0)}
@@ -108,6 +111,9 @@ class SingleCourseContent extends Component {
             compareToPrevious={false}
             enableHistory={false}
           />
+          <div className={styles['header']}>
+            <div className={styles['header-title']}>Learner Engagement</div>
+          </div>
           <BaseStatCard
             cardTitle='Fully Completed'
             mainValue={this.state.courseData.getIn(['users_completed', 'current_month'], 0)}
@@ -130,6 +136,9 @@ class SingleCourseContent extends Component {
           <ImageCard
             cardImage={"/static/tma-static/images/logo-phileas.jpg"}
           />
+          <div className={styles['header']}>
+            <div className={styles['header-title']}>Completion</div>
+          </div>
           <BaseStatCard
             cardTitle='Certificates awarded'
             mainValue={this.state.courseData.getIn(['users_completed', 'current_month'], 0)}

@@ -2,3 +2,15 @@
 @import '~base/sass/base/functions';
 @import '~base/sass/base/grid';
 @import '~base/sass/base/stat-cards';
+
+.header {
+    margin: calcRem(10) 0;
+    grid-column-end: span 4;
+  }
+
+  .header-title {
+    font-weight: bold;
+    font-size: calcRem(22);
+    padding-left: calcRem(20);
+    line-height: 100%;
+  }
