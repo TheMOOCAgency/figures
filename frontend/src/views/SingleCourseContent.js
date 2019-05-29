@@ -57,16 +57,8 @@ class SingleCourseContent extends Component {
 
   // TMA
   populateMetrics = () => {
-    fetch(apiConfig.updateData, { 
-      credentials: "same-origin",
-      method: "post",
-      body: JSON.stringify({ course_id: this.state.courseData.getIn(['course_id'])}),
-      headers:{
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      }
-    })
-    .then(response => response.json())
+    fetch(apiConfig.updateData, { credentials: "same-origin" })
+    .then(response => console.log(response))
     .then(data => console.log(data))
   }
 
