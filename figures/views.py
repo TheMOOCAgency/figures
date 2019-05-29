@@ -358,8 +358,6 @@ class CourseDetailsViewSet(CommonAuthMixin, viewsets.ReadOnlyModelViewSet):
 
         return Response(CourseDetailsSerializer(course_overview).data)
 
-    def update(self, request):
-
 
 class GeneralUserDataViewSet(CommonAuthMixin, viewsets.ReadOnlyModelViewSet):
     '''View class to serve general user data to the Figures UI
