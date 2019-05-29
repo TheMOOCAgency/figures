@@ -8,7 +8,7 @@ const apiConfig = {
   coursesDetailed: '/figures/api/courses/detail/',
   learnersGeneral: '/figures/api/users/general/',
   learnersDetailed: '/figures/api/users/detail/',
-  updateData: '/figures/tma_update_data/'
+  updateData: '/figures/api/tma_update_data/'
 }
 
 export default apiConfig;

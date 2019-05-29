@@ -5,7 +5,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required, user_passes_test
 import django.contrib.sites.shortcuts
 from django.contrib.sites.models import Site
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import get_object_or_404, render
 from django.views.decorators.csrf import ensure_csrf_cookie
 
@@ -65,7 +65,6 @@ from figures.tasks import (
 from student.views.dashboard import get_org_black_and_whitelist_for_site
 from django.conf import settings
 from django.core.management import call_command
-from util.json_request import JsonResponse
 import datetime
 import logging
 
@@ -109,15 +108,15 @@ def figures_home(request):
                   login_url=UNAUTHORIZED_USER_REDIRECT_URL,
                   redirect_field_name=None)
 def populate_metrics_from_view(request):
-    course_id = request.POST.get('course_id')
-    populate_single_cdm(course_id, None, False)
     log.info('COUCOU HIBOU')
+    course_id = request.GET.get('course_id')
+    populate_single_cdm(course_id, None, False)
     
     context = {
         "last_update": datetime.now().strftime('%d-%m-%Y')
     }
     
-    return JsonResponse(context)
+    return HttpResponse(context)
 
 
 #
@@ -358,6 +357,8 @@ class CourseDetailsViewSet(CommonAuthMixin, viewsets.ReadOnlyModelViewSet):
         course_overview = get_object_or_404(CourseOverview, pk=course_key)
 
         return Response(CourseDetailsSerializer(course_overview).data)
+
+    def update(self, request):
 
 
 class GeneralUserDataViewSet(CommonAuthMixin, viewsets.ReadOnlyModelViewSet):

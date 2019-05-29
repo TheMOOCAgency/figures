@@ -1869,6 +1869,16 @@ textarea.input__2lx3TsF4, input[type="text"].input__2lx3TsF4, input[type="url"].
       color: #45424a;
       font-size: 1.1rem;
       margin: 0 0 1rem; }
+
+.header__pIBmiwRL {
+  margin: 1rem 0;
+  grid-column-end: span 4; }
+
+.header-title__1wurT6Ch {
+  font-weight: bold;
+  font-size: 2.2rem;
+  padding-left: 2rem;
+  line-height: 100%; }
 @charset "UTF-8";
 /*
  * Picks a colour from two options based on which one is more visible
@@ -1966,7 +1976,7 @@ textarea.input__2lx3TsF4, input[type="text"].input__2lx3TsF4, input[type="url"].
   font-size: 1.4rem; }
 
 .header-content-course__2MEybh6J .refresh-img__6PLEXc59 {
-  width: 1.4rem;
+  width: 2.4rem;
   padding-left: 1rem;
   cursor: pointer; }
 
