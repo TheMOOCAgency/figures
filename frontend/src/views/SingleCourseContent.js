@@ -55,16 +55,16 @@ class SingleCourseContent extends Component {
     }, () => this.props.removeActiveApiFetch())
   }
 
-  // TMA
+  componentDidMount() {
+    this.fetchCourseData();
+    //this.fetchLearnersData();
+  }
+
+  /*** TMA FUNCTIONS ***/
   populateMetrics = () => {
     fetch(apiConfig.updateData, { credentials: "same-origin" })
     .then(response => console.log(response))
     .then(data => console.log(data))
-  }
-
-  componentDidMount() {
-    this.fetchCourseData();
-    //this.fetchLearnersData();
   }
 
   render() {
@@ -92,6 +92,7 @@ class SingleCourseContent extends Component {
           <div className={styles['header']}>
             <div className={styles['header-title']}>Course Activity</div>
           </div>
+
           <BaseStatCard
             cardTitle='No. of learners'
             mainValue={this.state.courseData.getIn(['learners_enrolled', 'current_month'], 0)}
@@ -99,24 +100,27 @@ class SingleCourseContent extends Component {
           />
           <BaseStatCard
             cardTitle='Invited'
-            mainValue={this.state.courseData.getIn(['average_progress', 'current_month'], 0).toFixed(2)}
-            dataType='percentage'
+            mainValue={0}
+            compareToPercent={true}
             compareToPrevious={false}
             enableHistory={false}
+            replaceText='of learners'
           />
           <BaseStatCard
             cardTitle='Not started'
-            mainValue={this.state.courseData.getIn(['average_days_to_complete', 'current_month'], 0)}
-            dataType='percentage'
+            mainValue={(this.state.courseData.get('tma_learners_enrolled') - this.state.courseData.get('tma_active_learners'))}
+            compareToPercent={true}
             compareToPrevious={false}
             enableHistory={false}
+            replaceText='of learners'
           />
           <BaseStatCard
             cardTitle='Started'
-            mainValue={this.state.courseData.getIn(['users_completed', 'current_month'], 0)}
-            dataType='percentage'
+            mainValue={this.state.courseData.get('tma_active_learners')}
+            compareToPercent={true}
             compareToPrevious={false}
             enableHistory={false}
+            replaceText='of learners'
           />
           <div className={styles['header']}>
             <div className={styles['header-title']}>Learner Engagement</div>
