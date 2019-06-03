@@ -51,7 +51,7 @@ from figures.models import (
 from figures.pipeline.logger import log_error
 import figures.sites
 
-# TMA importe
+# TMA imports
 from lms.djangoapps.tma_apps.models import TmaCourseOverview, TmaCourseEnrollment
 import logging
 
@@ -155,6 +155,9 @@ class CourseEnrollmentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CourseEnrollment
+        fields = (
+            'course_id', 'created', 'is_active'
+        )
         editable = False
         exclude = ()
 
@@ -272,7 +275,7 @@ class GeneralCourseDataSerializer(serializers.Serializer):
         source='lowest_passing_grade', max_digits=5, decimal_places=2, read_only=True)
     language = serializers.CharField(read_only=True)
     tma_course = serializers.SerializerMethodField()
-
+        
     staff = serializers.SerializerMethodField()
 
     metrics = serializers.SerializerMethodField()
@@ -304,12 +307,14 @@ class GeneralCourseDataSerializer(serializers.Serializer):
         else:
             return []
 
+    # TMA
     def get_tma_course(self, obj):
         qs = TmaCourseOverview.objects.filter(course_overview_edx_id=obj.id)
         if qs:
             return [TmaCourseOverviewSerializer(data).data for data in qs]
         else:
             return []
+
 
 
 def get_course_history_metric(site, course_id, func, date_for, months_back):
@@ -352,7 +357,7 @@ def get_course_history_metric(site, course_id, func, date_for, months_back):
 class CourseDetailsSerializer(serializers.ModelSerializer):
     """
 
-    Initial implementation uses serializer emthods to retrieve some data
+    Initial implementation uses serializer methods to retrieve some data
 
     Need to ask edX team why CourseEnrollment doesn't have a foreign key
     relationship to CourseOverview
@@ -382,14 +387,16 @@ class CourseDetailsSerializer(serializers.ModelSerializer):
         source='lowest_passing_grade', max_digits=5, decimal_places=2, read_only=True)
     language = serializers.CharField(read_only=True)
     tma_course = serializers.SerializerMethodField()
+    tma_active_learners = serializers.SerializerMethodField()
+    tma_learners_enrolled = serializers.SerializerMethodField()
+    tma_learners_passed = serializers.SerializerMethodField()
 
     # TODO: Consider if we want to add a hyperlink field to the learner details endpoint
 
     class Meta:
         model = CourseOverview
         fields = ['course_id', 'course_name', 'course_code', 'org', 'start_date',
-                  'end_date', 'self_paced', 'passing_grade', 'language', 'staff', 'learners_enrolled',
-                  'average_progress', 'average_days_to_complete', 'users_completed', 'tma_course' ]
+                  'end_date', 'self_paced', 'passing_grade', 'language', 'staff', 'learners_enrolled', 'tma_learners_enrolled', 'tma_active_learners', 'tma_learners_passed', 'average_progress', 'average_days_to_complete', 'users_completed', 'tma_course' ]
         read_only_fields = fields
 
     def to_representation(self, instance):
@@ -454,7 +461,7 @@ class CourseDetailsSerializer(serializers.ModelSerializer):
             date_for=datetime.datetime.utcnow(),
             months_back=HISTORY_MONTHS_BACK,
             )
-            
+    # TMA
     def get_tma_course(self, course_overview):
         qs = TmaCourseOverview.objects.filter(course_overview_edx_id=course_overview.id)
         if qs:
@@ -462,6 +469,38 @@ class CourseDetailsSerializer(serializers.ModelSerializer):
                 return TmaCourseOverviewSerializer(obj).data
         else:
             return {}
+
+    def get_tma_active_learners(self, course_overview):
+        qs = CourseEnrollment.objects.filter(course_id=course_overview.id)
+        active_learners = 0
+        if qs:
+            for obj in qs:
+                if obj.is_active:
+                    active_learners = active_learners + 1
+                return active_learners
+        else:
+            return active_learners
+
+    def get_tma_learners_enrolled(self, course_overview):
+        qs = CourseEnrollment.objects.filter(course_id=course_overview.id)
+        enrolled_learners = 0
+        if qs:
+            for obj in qs:
+                enrolled_learners = enrolled_learners + 1
+                return enrolled_learners
+        else:
+            return enrolled_learners
+
+    def get_tma_learners_passed(self, course_overview):
+        qs = TmaCourseEnrollment.objects.filter(course_enrollment_edx__course_id=course_overview.id)
+        passed_learners = 0
+        if qs:
+            for obj in qs:
+                passed_learners = passed_learners + 1
+                return passed_learners
+        else:
+            return passed_learners
+    
 
 class GeneralSiteMetricsSerializer(serializers.Serializer):
     """

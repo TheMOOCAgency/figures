@@ -58,8 +58,19 @@ class BaseStatCard extends Component {
             )}
             {(this.props.compareToPrevious && !this.props.singleValue) && (
               <div className={styles['previous-comparison']}>
-                <span className={styles['comparison-value']}>{(this.props.dataType === 'percentage') ? (((this.props.mainValue - valueHistory.getIn([valueHistory.size-2, 'value']))*100).toFixed(2)) : (this.props.mainValue - valueHistory.getIn([valueHistory.size-2, 'value']))}{(this.props.dataType === 'percentage') && '%'}</span>
-                <span className={styles['comparison-text']}>since last month</span>
+                <span className={styles['comparison-value']}>{(this.props.dataType === 'percentage') ? (
+                  ((this.props.mainValue - valueHistory.getIn([valueHistory.size-2, 'value']))*100).toFixed(2)) :
+                  (this.props.mainValue - valueHistory.getIn([valueHistory.size-2, 'value']))}{(this.props.dataType === 'percentage') && '%'}
+                </span>
+                <span className={styles['comparison-text']}>{this.props.replaceText ? this.props.replaceText : "since last month"}</span>
+              </div>
+            )}
+            {(this.props.compareToPercent && !this.props.singleValue) && (
+              <div className={styles['previous-comparison']}>
+                <span className={styles['comparison-value']}>
+                  {this.props.mainValue * 100}%
+                </span>
+                <span className={styles['comparison-text']}>{this.props.replaceText ? this.props.replaceText : "since last month"}</span>
               </div>
             )}
           </div>
