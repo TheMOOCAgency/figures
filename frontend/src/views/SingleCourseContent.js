@@ -145,19 +145,20 @@ class SingleCourseContent extends Component {
             enableHistory={false}
           />
           <ImageCard
-            cardImage={"/static/tma-static/images/logo-phileas.jpg"}
+            cardImage={'/static/tma-static/images/logo-phileas.jpg'}
           />
           <div className={styles['header']}>
             <div className={styles['header-title']}>Completion</div>
           </div>
           <BaseStatCard
             cardTitle='Certificates awarded'
-            mainValue={this.state.courseData.getIn(['users_completed', 'current_month'], 0)}
-            valueHistory={this.state.courseData.getIn(['users_completed', 'history'], [])}
+            mainValue={this.state.courseData.get('tma_learners_passed')}
+            compareToPrevious={false}
+            enableHistory={false}
           />
           <BaseStatCard
             cardTitle='Non certified'
-            mainValue={this.state.courseData.getIn(['users_completed', 'current_month'], 0)}
+            mainValue={this.state.courseData.get('tma_active_learners') - this.state.courseData.get('tma_learners_passed')}
             compareToPrevious={false}
             enableHistory={false}
           />
@@ -169,7 +170,7 @@ class SingleCourseContent extends Component {
             enableHistory={false}
           />
           <ImageCard
-            cardImage={"/static/tma-static/images/logo-phileas.jpg"}
+            cardImage={'/static/tma-static/images/logo-phileas.jpg'}
           />
           {/*
             <LearnerStatistics
