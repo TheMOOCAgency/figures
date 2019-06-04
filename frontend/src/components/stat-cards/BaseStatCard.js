@@ -68,7 +68,7 @@ class BaseStatCard extends Component {
             {(this.props.compareToPercent && !this.props.singleValue) && (
               <div className={styles['previous-comparison']}>
                 <span className={styles['comparison-value']}>
-                  {this.props.mainValue * 100}%
+                  {(this.props.mainValue / this.props.secondaryValue) * 100}%
                 </span>
                 <span className={styles['comparison-text']}>{this.props.replaceText ? this.props.replaceText : "since last month"}</span>
               </div>
