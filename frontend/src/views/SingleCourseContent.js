@@ -101,7 +101,8 @@ class SingleCourseContent extends Component {
           <BaseStatCard
             cardTitle='Invited'
             mainValue={0}
-            compareToPercent={true}
+            //secondaryValue={0}
+            //compareToPercent={true}
             compareToPrevious={false}
             enableHistory={false}
             replaceText='of learners'
@@ -109,6 +110,7 @@ class SingleCourseContent extends Component {
           <BaseStatCard
             cardTitle='Not started'
             mainValue={(this.state.courseData.get('tma_learners_enrolled') - this.state.courseData.get('tma_active_learners'))}
+            secondaryValue={this.state.courseData.get('tma_learners_enrolled')}
             compareToPercent={true}
             compareToPrevious={false}
             enableHistory={false}
@@ -117,6 +119,7 @@ class SingleCourseContent extends Component {
           <BaseStatCard
             cardTitle='Started'
             mainValue={this.state.courseData.get('tma_active_learners')}
+            secondaryValue={this.state.courseData.get('tma_learners_enrolled')}
             compareToPercent={true}
             compareToPrevious={false}
             enableHistory={false}

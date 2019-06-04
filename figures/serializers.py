@@ -477,7 +477,7 @@ class CourseDetailsSerializer(serializers.ModelSerializer):
             for obj in qs:
                 if obj.is_active:
                     active_learners = active_learners + 1
-                return active_learners
+            return active_learners
         else:
             return active_learners
 
@@ -487,7 +487,7 @@ class CourseDetailsSerializer(serializers.ModelSerializer):
         if qs:
             for obj in qs:
                 enrolled_learners = enrolled_learners + 1
-                return enrolled_learners
+            return enrolled_learners
         else:
             return enrolled_learners
 
@@ -497,7 +497,7 @@ class CourseDetailsSerializer(serializers.ModelSerializer):
         if qs:
             for obj in qs:
                 passed_learners = passed_learners + 1
-                return passed_learners
+            return passed_learners
         else:
             return passed_learners
     
