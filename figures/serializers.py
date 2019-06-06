@@ -18,6 +18,7 @@ looking at adding additional Figures models to capture:
 """
 
 import datetime
+import json
 
 from django.contrib.auth import get_user_model
 from django.contrib.sites.models import Site
@@ -53,6 +54,8 @@ import figures.sites
 
 # TMA imports
 from lms.djangoapps.tma_apps.models import TmaCourseOverview, TmaCourseEnrollment
+from student.models import User, CourseEnrollmentAllowed
+from django.db.models import Avg
 import logging
 
 log = logging.getLogger()
@@ -133,7 +136,7 @@ class TmaCourseOverviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = TmaCourseOverview
         fields = (
-            'is_manager_only', 'is_mandatory', 'is_vodeclic', 'liked_total', 'favourite_total', 'tag', 'onboarding'
+            'is_manager_only', 'is_mandatory', 'is_vodeclic', 'liked_total', 'active_enrollments_total', 'favourite_total', 'tag', 'onboarding'
         )
 
 
@@ -271,8 +274,6 @@ class GeneralCourseDataSerializer(serializers.Serializer):
     self_paced = serializers.BooleanField(read_only=True)
 
     # TMA fields
-    passing_grade = serializers.DecimalField(
-        source='lowest_passing_grade', max_digits=5, decimal_places=2, read_only=True)
     language = serializers.CharField(read_only=True)
     tma_course = serializers.SerializerMethodField()
         
@@ -382,21 +383,24 @@ class CourseDetailsSerializer(serializers.ModelSerializer):
     average_days_to_complete = serializers.SerializerMethodField()
     users_completed = serializers.SerializerMethodField()
 
-    # TMA fields
+    ### TMA additional fields ###
     passing_grade = serializers.DecimalField(
         source='lowest_passing_grade', max_digits=5, decimal_places=2, read_only=True)
     language = serializers.CharField(read_only=True)
     tma_course = serializers.SerializerMethodField()
-    tma_active_learners = serializers.SerializerMethodField()
     tma_learners_enrolled = serializers.SerializerMethodField()
     tma_learners_passed = serializers.SerializerMethodField()
+    tma_learners_invited = serializers.SerializerMethodField()
+    tma_completed = serializers.SerializerMethodField()
+    tma_partially_completed = serializers.SerializerMethodField()
+    tma_average_score = serializers.SerializerMethodField()
 
     # TODO: Consider if we want to add a hyperlink field to the learner details endpoint
 
     class Meta:
         model = CourseOverview
         fields = ['course_id', 'course_name', 'course_code', 'org', 'start_date',
-                  'end_date', 'self_paced', 'passing_grade', 'language', 'staff', 'learners_enrolled', 'tma_learners_enrolled', 'tma_active_learners', 'tma_learners_passed', 'average_progress', 'average_days_to_complete', 'users_completed', 'tma_course' ]
+                  'end_date', 'self_paced', 'passing_grade', 'language', 'staff', 'learners_enrolled', 'tma_learners_enrolled', 'tma_learners_passed', 'tma_learners_invited','tma_completed', 'tma_partially_completed', 'tma_average_score', 'average_progress', 'average_days_to_complete', 'users_completed', 'tma_course' ]
         read_only_fields = fields
 
     def to_representation(self, instance):
@@ -461,8 +465,12 @@ class CourseDetailsSerializer(serializers.ModelSerializer):
             date_for=datetime.datetime.utcnow(),
             months_back=HISTORY_MONTHS_BACK,
             )
-    # TMA
+    
+    ### TMA additional fields ###
     def get_tma_course(self, course_overview):
+        """
+            Retrieves all needed information from TmaCourseOverview in a dict entitled "tma_course"
+        """
         qs = TmaCourseOverview.objects.filter(course_overview_edx_id=course_overview.id)
         if qs:
             for obj in qs:
@@ -470,37 +478,86 @@ class CourseDetailsSerializer(serializers.ModelSerializer):
         else:
             return {}
 
-    def get_tma_active_learners(self, course_overview):
-        qs = CourseEnrollment.objects.filter(course_id=course_overview.id)
-        active_learners = 0
-        if qs:
-            for obj in qs:
-                if obj.is_active:
-                    active_learners = active_learners + 1
-            return active_learners
-        else:
-            return active_learners
-
     def get_tma_learners_enrolled(self, course_overview):
         qs = CourseEnrollment.objects.filter(course_id=course_overview.id)
-        enrolled_learners = 0
         if qs:
-            for obj in qs:
-                enrolled_learners = enrolled_learners + 1
-            return enrolled_learners
+            return qs.count()
         else:
-            return enrolled_learners
+            return 0
 
     def get_tma_learners_passed(self, course_overview):
+        """
         qs = TmaCourseEnrollment.objects.filter(course_enrollment_edx__course_id=course_overview.id)
         passed_learners = 0
         if qs:
             for obj in qs:
-                passed_learners = passed_learners + 1
+                if obj.has_validated_course:
+                    passed_learners = passed_learners + 1
             return passed_learners
         else:
             return passed_learners
+        """
+        qs = TmaCourseEnrollment.objects.filter(course_enrollment_edx__course_id=course_overview.id, has_validated_course=True)
+        if qs:
+            return qs.count()
+        else:
+            return 0
+
+    def get_tma_learners_invited(self, course_overview):
+        qs = CourseEnrollmentAllowed.objects.filter(course_id=course_overview.id)
+        if qs:
+            return qs.count()
+        else:
+            return 0
     
+    def get_tma_completed(self, course_overview):
+        """
+            Gets all learners real completion for a course, i.e not completion as passed exercises but completion as visited blocks.
+        """
+        """
+        qs = TmaCourseEnrollment.objects.filter(course_enrollment_edx__course_id=course_overview.id)
+        users_fully_completed = 0
+        if qs:
+            for obj in qs:
+                if obj.completion_rate == 1:
+                    users_fully_completed = users_fully_completed + 1
+            return users_fully_completed
+        else:
+            return users_fully_completed
+        """
+        qs = TmaCourseEnrollment.objects.filter(course_enrollment_edx__course_id=course_overview.id, completion_rate=1)
+        if qs:
+            return qs.count()
+        else:
+            return 0
+
+    def get_tma_partially_completed(self, course_overview):
+        qs = TmaCourseEnrollment.objects.filter(course_enrollment_edx__course_id=course_overview.id)
+        users_partially_completed = 0
+        if qs:
+            for obj in qs:
+                if obj.completion_rate > 0 and obj.completion_rate < 1:
+                    users_partially_completed = users_partially_completed + 1
+            return users_partially_completed
+        else:
+            return users_partially_completed
+
+    def get_tma_average_score(self, course_overview):
+        """
+        qs = TmaCourseEnrollment.objects.filter(course_enrollment_edx__course_id=course_overview.id)
+        average_score = 0
+        if qs:
+            for obj in qs:
+                average_score = average_score + obj.best_student_grade
+            return (average_score/qs.count())
+        else:
+            return average_score
+        """
+        qs = TmaCourseEnrollment.objects.filter(course_enrollment_edx__course_id=course_overview.id).aggregate(Avg('best_student_grade'))
+        if qs:
+            return qs.get("best_student_grade__avg")
+        else:
+            return 0
 
 class GeneralSiteMetricsSerializer(serializers.Serializer):
     """

@@ -64,34 +64,34 @@ class CoursesListItem extends Component {
           <div className={styles['stats-section-inner']}>
             <div className={styles['single-stat']}>
               <span className={styles['stat-label']}>
-                Learners enrolled:
+                Learners invited:
               </span>
               <span className={styles['stat-value']}>
-                {this.props.learnersEnrolled}
+                {this.props.learnersInvited}
               </span>
             </div>
             <div className={styles['single-stat']}>
               <span className={styles['stat-label']}>
-                Average progress:
+                % started:
               </span>
               <span className={styles['stat-value']}>
-                {(this.props.averageProgress*100).toFixed(2)}%
+                {(this.props.learnersStarted*100).toFixed(2)}%
               </span>
             </div>
             <div className={styles['single-stat']}>
               <span className={styles['stat-label']}>
-                Average days to complete:
+                % completed:
               </span>
               <span className={styles['stat-value']}>
-                {this.props.averageCompletionTime ? this.props.averageCompletionTime : 'n/a'}
+                {(this.props.learnersCompleted*100).toFixed(2)}%
               </span>
             </div>
             <div className={styles['single-stat']}>
               <span className={styles['stat-label']}>
-                No. of learners to complete:
+                No. not started:
               </span>
               <span className={styles['stat-value']}>
-                {this.props.numberLearnersCompleted}
+                {this.props.learnersNotStarted}
               </span>
             </div>
           </div>
@@ -116,10 +116,10 @@ CoursesListItem.propTypes = {
   courseIsSelfPaced: PropTypes.bool,
   startDate: PropTypes.string,
   endDate: PropTypes.string,
-  learnersEnrolled: PropTypes.number,
-  averageProgress: PropTypes.number,
-  averageCompletionTime: PropTypes.number,
-  numberLearnersCompleted: PropTypes.number,
+  learnersInvited: PropTypes.number,
+  learnersStarted: PropTypes.number,
+  learnersCompleted: PropTypes.number,
+  learnersNotStarted: PropTypes.number
 };
 
 export default CoursesListItem;

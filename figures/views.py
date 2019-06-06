@@ -98,6 +98,9 @@ def figures_home(request):
         'figures_api_url': '//api.example.com',
     }
 
+    # TMA #
+    #call_command('populate_figures_metrics', '--no-delay')
+    
     return render(request, 'figures/index.html', context)
 
 
@@ -108,7 +111,6 @@ def figures_home(request):
                   login_url=UNAUTHORIZED_USER_REDIRECT_URL,
                   redirect_field_name=None)
 def populate_metrics_from_view(request):
-    log.info('COUCOU HIBOU')
     course_id = request.GET.get('course_id')
     populate_single_cdm(course_id, None, False)
     
