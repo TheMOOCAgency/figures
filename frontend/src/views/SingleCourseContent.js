@@ -100,7 +100,7 @@ class SingleCourseContent extends Component {
           />
           <BaseStatCard
             cardTitle='Invited'
-            mainValue={0}
+            mainValue={this.state.courseData.get('tma_learners_invited')}
             //secondaryValue={0}
             //compareToPercent={true}
             compareToPrevious={false}
@@ -109,7 +109,7 @@ class SingleCourseContent extends Component {
           />
           <BaseStatCard
             cardTitle='Not started'
-            mainValue={(this.state.courseData.get('tma_learners_enrolled') - this.state.courseData.get('tma_active_learners'))}
+            mainValue={(this.state.courseData.get('tma_learners_enrolled') - this.state.courseData.getIn(['tma_course', 'active_enrollments_total']))}
             secondaryValue={this.state.courseData.get('tma_learners_enrolled')}
             compareToPercent={true}
             compareToPrevious={false}
@@ -118,7 +118,7 @@ class SingleCourseContent extends Component {
           />
           <BaseStatCard
             cardTitle='Started'
-            mainValue={this.state.courseData.get('tma_active_learners')}
+            mainValue={this.state.courseData.getIn(['tma_course', 'active_enrollments_total'])}
             secondaryValue={this.state.courseData.get('tma_learners_enrolled')}
             compareToPercent={true}
             compareToPrevious={false}
@@ -130,19 +130,20 @@ class SingleCourseContent extends Component {
           </div>
           <BaseStatCard
             cardTitle='Fully Completed'
-            mainValue={this.state.courseData.getIn(['users_completed', 'current_month'], 0)}
+            mainValue={this.state.courseData.get('tma_completed')}
             compareToPrevious={false}
             enableHistory={false}
           />
           <BaseStatCard
             cardTitle='Partially Completed'
-            mainValue={this.state.courseData.getIn(['users_completed', 'current_month'], 0)}
+            mainValue={this.state.courseData.get('tma_partially_completed')}
             compareToPrevious={false}
             enableHistory={false}
           />
           <BaseStatCard
             cardTitle='Participation rate'
-            mainValue={this.state.courseData.getIn(['users_completed', 'current_month'], 0)}
+            mainValue={(this.state.courseData.get('tma_completed') + this.state.courseData.get('tma_partially_completed'))}
+            secondaryValue={this.state.courseData.get('tma_learners_passed')}
             dataType='percentage'
             compareToPrevious={false}
             enableHistory={false}
@@ -161,13 +162,13 @@ class SingleCourseContent extends Component {
           />
           <BaseStatCard
             cardTitle='Non certified'
-            mainValue={this.state.courseData.get('tma_active_learners') - this.state.courseData.get('tma_learners_passed')}
+            mainValue={this.state.courseData.getIn(['tma_course', 'active_enrollments_total']) - this.state.courseData.get('tma_learners_passed')}
             compareToPrevious={false}
             enableHistory={false}
           />
           <BaseStatCard
             cardTitle='Average score'
-            mainValue={this.state.courseData.getIn(['users_completed', 'current_month'], 0)}
+            mainValue={this.state.courseData.getIn(['tma_course', 'tma_average_score'])}
             dataType='percentage'
             compareToPrevious={false}
             enableHistory={false}

@@ -51,15 +51,15 @@ class CoursesList extends Component {
         <CoursesListItem
           courseName={item.get('course_name')}
           courseId={item.get('course_id')}
-          courseCode={item.get('course_code')}
           courseIsSelfPaced={item.get('self_paced')}
           startDate={item.get('start_date')}
           endDate={item.get('end_date')}
-          courseStaff={item.get('staff')}
-          averageCompletionTime={item.getIn(['average_days_to_complete', 'current_month'])}
-          averageProgress={item.getIn(['average_progress', 'current_month'])}
-          learnersEnrolled={item.getIn(['learners_enrolled', 'current_month'])}
-          numberLearnersCompleted={item.getIn(['users_completed', 'current_month'])}
+          learnersInvited={item.get('tma_learners_invited')}
+          learnersStarted={
+            (item.getIn(['tma_course', 'active_enrollments_total']) / item.get('tma_learners_enrolled')).toFixed(2)
+          }
+          learnersCompleted={(item.get('tma_completed') / item.get('tma_learners_enrolled')).toFixed(2)}
+          learnersNotStarted={(item.get('tma_learners_enrolled') - item.getIn(['tma_course', 'active_enrollments_total']))}
           tag={item.getIn(['tma_course', 'tag'])}
           language={item.get('language')}
           key={index}
