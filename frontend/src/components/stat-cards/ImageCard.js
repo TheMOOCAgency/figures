@@ -17,10 +17,10 @@ class ImageCard extends Component {
 
   render() {
     return (
-      <div className={cx({ 'stat-card': true, 'span-2': (this.state.cardWidth === 2), 'span-3': (this.state.cardWidth === 3), 'span-4': (this.state.cardWidth === 4)})}>
+      <div className={cx({'transparent-stat-card': true, 'stat-card': false, 'span-2': (this.state.cardWidth === 2), 'span-3': (this.state.cardWidth === 3), 'span-4': (this.state.cardWidth === 4)})}>
         <div className={styles['main-content']}>
           <div className={styles['image-container']}>
-            <img src={this.props.cardImage} className={styles['card-img']} alt="phileas"></img>
+            {/*<img src={this.props.cardImage} className={styles['card-img']} alt="phileas"></img>*/}
           </div>
         </div>
       </div>

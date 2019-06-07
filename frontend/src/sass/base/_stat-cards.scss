@@ -2,6 +2,14 @@
 @import '~base/sass/base/functions';
 @import '~base/sass/base/grid';
 
+.transparent-stat-card {
+  border: none;
+  background-color: #fff;
+  box-shadow: none;
+  padding: calcRem(20);
+  display: flex;
+}
+
 .stat-card {
   border: calcRem(1) solid #efefef;
   background-color: #fff;
