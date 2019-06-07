@@ -144,7 +144,7 @@ class SingleCourseContent extends Component {
           />
           <BaseStatCard
             cardTitle='Participation rate'
-            mainValue={(this.state.courseData.get('tma_completed') + this.state.courseData.get('tma_partially_completed'))}
+            mainValue={this.state.courseData.get('tma_partially_completed')}
             secondaryValue={this.state.courseData.get('tma_learners_passed')}
             dataType='percentage'
             compareToPrevious={false}
