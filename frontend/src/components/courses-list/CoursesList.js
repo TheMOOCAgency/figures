@@ -56,9 +56,13 @@ class CoursesList extends Component {
           endDate={item.get('end_date')}
           learnersInvited={item.get('tma_learners_invited')}
           learnersStarted={
-            (item.getIn(['tma_course', 'active_enrollments_total']) / item.get('tma_learners_enrolled')).toFixed(2)
+            (item.get('tma_learners_enrolled') !== 0) ?
+            (item.getIn(['tma_course', 'active_enrollments_total']) / item.get('tma_learners_enrolled')).toFixed(2) : 0
           }
-          learnersCompleted={(item.get('tma_completed') / item.get('tma_learners_enrolled')).toFixed(2)}
+          learnersCompleted={
+            (item.get('tma_learners_enrolled') !== 0) ?
+            (item.get('tma_completed') / item.get('tma_learners_enrolled')).toFixed(2) : 0
+          }
           learnersNotStarted={(item.get('tma_learners_enrolled') - item.getIn(['tma_course', 'active_enrollments_total']))}
           tag={item.getIn(['tma_course', 'tag'])}
           language={item.get('language')}

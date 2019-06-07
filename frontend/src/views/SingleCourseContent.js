@@ -61,11 +61,13 @@ class SingleCourseContent extends Component {
   }
 
   /*** TMA FUNCTIONS ***/
+  /*
   populateMetrics = () => {
     fetch(apiConfig.updateData, { credentials: "same-origin" })
     .then(response => console.log(response))
     .then(data => console.log(data))
   }
+  */
 
   render() {
     return (
