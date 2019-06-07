@@ -14,3 +14,23 @@
     padding-left: calcRem(20);
     line-height: 100%;
   }
+
+.refresh-img {
+  width: 2.4rem;
+  padding-left: 1rem;
+  cursor: pointer;
+}
+
+.download-btn {
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 1.5rem;
+  text-align: center;
+  padding: 1rem;
+  border: 0.2rem solid #0090c1;
+  border-radius: 5rem;
+  color: #0090c1;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}

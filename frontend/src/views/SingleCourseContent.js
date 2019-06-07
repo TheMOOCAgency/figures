@@ -61,13 +61,11 @@ class SingleCourseContent extends Component {
   }
 
   /*** TMA FUNCTIONS ***/
-  /*
-  populateMetrics = () => {
-    fetch(apiConfig.updateData, { credentials: "same-origin" })
+  generateCsv = () => {
+    fetch('', { credentials: "same-origin" })
     .then(response => console.log(response))
     .then(data => console.log(data))
   }
-  */
 
   render() {
     return (
@@ -174,6 +172,25 @@ class SingleCourseContent extends Component {
             dataType='percentage'
             compareToPrevious={false}
             enableHistory={false}
+          />
+          <ImageCard
+            cardImage={'/static/tma-static/images/logo-phileas.jpg'}
+          />
+          {/* <span className={styles['download-btn']} onClick={this.generateCsv()}>Download report</span>
+          <ImageCard
+            cardImage={'/static/tma-static/images/logo-phileas.jpg'}
+          />
+          <ImageCard
+            cardImage={'/static/tma-static/images/logo-phileas.jpg'}
+          />
+          <ImageCard
+            cardImage={'/static/tma-static/images/logo-phileas.jpg'}
+          />
+          <ImageCard
+            cardImage={'/static/tma-static/images/logo-phileas.jpg'}
+    /> */}
+          <ImageCard
+            cardImage={'/static/tma-static/images/logo-phileas.jpg'}
           />
           <ImageCard
             cardImage={'/static/tma-static/images/logo-phileas.jpg'}

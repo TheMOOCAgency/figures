@@ -11,8 +11,10 @@
   }
 
   .course-title {
-    font-size: calcRem(36);
-    line-height: 130%;
+    margin-top: 4rem;
+    font-size: calcRem(22);
+    font-weight: bold;
+    line-height: 100%;
   }
   
   .course-id {
@@ -22,17 +24,13 @@
 
   .course-likes {
     font-size: calcRem(14);
-  }
-
-  .refresh-img {
-    width: 2.4rem;
-    padding-left: 1rem;
-    cursor: pointer;
+    font-weight: 600;
   }
 
   .course-info {
     display: block;
     font-size: calcRem(14);
+    font-weight: 600;
     margin-bottom: calcRem(5);
     line-height: 130%;
     text-align: left;
@@ -48,13 +46,13 @@
 
     .course-date {
       display: block;
-      font-weight: normal;
     }
   }
   .course-tma-info-left {
     display: inline-block;
     width: 75%;
     font-size: calcRem(14);
+    font-weight: 600;
     margin-bottom: calcRem(5);
     line-height: 130%;
     text-align: left;
@@ -70,7 +68,6 @@
 
     .course-date {
       display: block;
-      font-weight: normal;
     }
   }
 
@@ -78,6 +75,7 @@
     display: inline-block;
     width: 25%;
     font-size: calcRem(14);
+    font-weight: 600;
     margin-bottom: calcRem(5);
     line-height: 130%;
     text-align: left;
@@ -93,7 +91,6 @@
 
     .course-date {
       display: block;
-      font-weight: normal;
     }
   }
 
