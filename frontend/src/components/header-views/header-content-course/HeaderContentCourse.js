@@ -57,9 +57,9 @@ class HeaderContentCourse extends Component {
         <div className={cx({ 'main-content': true, 'container': true})}>
           <div className={styles['course-info']}>
             <span className={styles['course-date']}>Microsite : {this.props.microsite}</span>
-            <span className={styles['course-date']}>Last update : xx/xx/xx 
+            {/*<span className={styles['course-date']}>Last update : xx/xx/xx 
               <img className={styles['refresh-img']} onClick={this.props.updateData} src="/static/tma-static/images/circle-arrows.png" alt="refresh"></img>
-            </span>
+              </span>*/}
           </div>
           <div className={styles['course-title']}>
             {this.props.courseName}
