@@ -5,6 +5,9 @@ import styles from './_base-stat-card.scss';
 import classNames from 'classnames/bind';
 import StatBarGraph from 'base/components/stat-graphs/stat-bar-graph/StatBarGraph';
 
+// TMA imports
+import ReactTooltip from 'react-tooltip'
+
 let cx = classNames.bind(styles);
 
 
@@ -59,7 +62,7 @@ class BaseStatCard extends Component {
             {(this.props.compareToPrevious && !this.props.singleValue) && (
               <div className={styles['previous-comparison']}>
                 <span className={styles['comparison-value']}>{(this.props.dataType === 'percentage') ? (
-                  ((this.props.mainValue - valueHistory.getIn([valueHistory.size-2, 'value']))*100).toFixed(2)) :
+                  ((this.props.mainValue - valueHistory.getIn([valueHistory.size-2, 'value']))*100).toFixed(0)) :
                   (this.props.mainValue - valueHistory.getIn([valueHistory.size-2, 'value']))}{(this.props.dataType === 'percentage') && '%'}
                 </span>
                 <span className={styles['comparison-text']}>{this.props.replaceText ? this.props.replaceText : "since last month"}</span>
@@ -68,7 +71,7 @@ class BaseStatCard extends Component {
             {(this.props.compareToPercent && !this.props.singleValue) && (
               <div className={styles['previous-comparison']}>
                 <span className={styles['comparison-value']}>
-                  {(this.props.mainValue / this.props.secondaryValue).toFixed(2) * 100}%
+                  {(this.props.mainValue / this.props.secondaryValue).toFixed(0) * 100}%
                 </span>
                 <span className={styles['comparison-text']}>{this.props.replaceText ? this.props.replaceText : "since last month"}</span>
               </div>
@@ -79,6 +82,16 @@ class BaseStatCard extends Component {
           ) : (
             <span className={styles['history-toggle-faux']}></span>
           )}
+
+          {this.props.enableTooltip && <img 
+            data-tip="Auxerunt haec vulgi sordidioris audaciam,<br>quod cum ingravesceret penuria commeatuum"
+            src="/static/tma-static/images/information.png"
+            alt="info"
+            className={styles['info-img']}
+            data-multiline={true}
+            />
+          }
+          <ReactTooltip/>
         </div>
         {(this.state.historyExpanded && this.props.enableHistory) && (
           <div className={styles['history-content']}>

@@ -47,7 +47,7 @@ class HeaderContentMaus extends Component {
         <div className={cx({ 'main-content': true, 'container': true})}>
           <div className={styles['users-count']}>
             <span className={styles['number']}>{currentPeriodValue}</span>
-            <span className={styles['text']}>active users (MAUs) this month</span>
+            <span className={styles['text']}>active users this month</span>
           </div>
           <span className={styles['text-separator']} />
           <div className={styles['comparison-box']}>

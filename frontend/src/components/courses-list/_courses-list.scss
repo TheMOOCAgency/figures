@@ -58,5 +58,13 @@
     display: grid;
     grid-gap: calcRem(20);
     grid-auto-flow: dense;
+
+    .no-results {
+      display: block;
+      font-weight: bold;
+      color: #2C2A2F;
+      font-size: 1.6rem;
+      margin: 2rem;
+    }
   }
 }
