@@ -72,20 +72,21 @@ class SingleCourseContent extends Component {
       <div className="ef--layout-root">
         <HeaderAreaLayout>
           <HeaderContentCourse
-            microsite = {this.state.courseData.getIn(['org'])}
-            startDate = {this.state.courseData.getIn(['start_date'])}
-            endDate = {this.state.courseData.getIn(['end_date'])}
-            courseName = {this.state.courseData.getIn(['course_name'])}
-            courseId = {this.state.courseData.getIn(['course_id'])}
-            likesTotal = {this.state.courseData.getIn(['tma_course', 'liked_total'])}
-            isMandatory = {this.state.courseData.getIn(['tma_course', 'is_mandatory'])}
-            tag = {this.state.courseData.getIn(['tma_course', 'tag'])}
+            microsite={this.state.courseData.getIn(['org'])}
+            startDate={this.state.courseData.getIn(['start_date'])}
+            endDate={this.state.courseData.getIn(['end_date'])}
+            courseCode={this.state.courseData.getIn(['course_code'])}
+            courseName={this.state.courseData.getIn(['course_name'])}
+            courseId={this.state.courseData.getIn(['course_id'])}
+            likesTotal={this.state.courseData.getIn(['tma_course', 'liked_total'])}
+            isMandatory={this.state.courseData.getIn(['tma_course', 'is_mandatory'])}
+            tag={this.state.courseData.getIn(['tma_course', 'tag'])}
             language={this.state.courseData.getIn(['language'])}
-            isManagerOnly = {this.state.courseData.getIn(['tma_course', 'is_manager_only'])}
-            isSelfPaced = {this.state.courseData.getIn(['self_paced'])}
-            requiredGrade = {this.state.courseData.getIn(['passing_grade'])}
-            learnersEnrolled = {this.state.courseData.getIn(['learners_enrolled'])}
-            updateData = {this.populateMetrics}
+            isManagerOnly={this.state.courseData.getIn(['tma_course', 'is_manager_only'])}
+            isSelfPaced={this.state.courseData.getIn(['self_paced'])}
+            requiredGrade={this.state.courseData.getIn(['passing_grade'])}
+            learnersEnrolled={this.state.courseData.getIn(['learners_enrolled'])}
+            updateData={this.populateMetrics}
           />
         </HeaderAreaLayout>
         <div className={cx({ 'container': true, 'base-grid-layout': true, 'dashboard-content': true})}>
@@ -94,9 +95,10 @@ class SingleCourseContent extends Component {
           </div>
 
           <BaseStatCard
-            cardTitle='No. of learners'
+            cardTitle='Nb. of learners'
             mainValue={this.state.courseData.getIn(['learners_enrolled', 'current_month'], 0)}
             valueHistory={this.state.courseData.getIn(['learners_enrolled', 'history'], [])}
+            enableTooltip={true}
           />
           <BaseStatCard
             cardTitle='Invited'
@@ -106,6 +108,7 @@ class SingleCourseContent extends Component {
             compareToPrevious={false}
             enableHistory={false}
             replaceText='of learners'
+            enableTooltip={true}
           />
           <BaseStatCard
             cardTitle='Not started'
@@ -115,6 +118,7 @@ class SingleCourseContent extends Component {
             compareToPrevious={false}
             enableHistory={false}
             replaceText='of learners'
+            enableTooltip={true}
           />
           <BaseStatCard
             cardTitle='Started'
@@ -124,6 +128,7 @@ class SingleCourseContent extends Component {
             compareToPrevious={false}
             enableHistory={false}
             replaceText='of learners'
+            enableTooltip={true}
           />
           <div className={styles['header']}>
             <div className={styles['header-title']}>Learner Engagement</div>
@@ -133,12 +138,14 @@ class SingleCourseContent extends Component {
             mainValue={this.state.courseData.get('tma_completed')}
             compareToPrevious={false}
             enableHistory={false}
+            enableTooltip={true}
           />
           <BaseStatCard
             cardTitle='Partially Completed'
             mainValue={this.state.courseData.get('tma_partially_completed')}
             compareToPrevious={false}
             enableHistory={false}
+            enableTooltip={true}
           />
           <BaseStatCard
             cardTitle='Participation rate'
@@ -147,6 +154,7 @@ class SingleCourseContent extends Component {
             dataType='percentage'
             compareToPrevious={false}
             enableHistory={false}
+            enableTooltip={true}
           />
           <ImageCard
             cardImage={'/static/tma-static/images/logo-phileas.jpg'}
@@ -159,12 +167,14 @@ class SingleCourseContent extends Component {
             mainValue={this.state.courseData.get('tma_learners_passed')}
             compareToPrevious={false}
             enableHistory={false}
+            enableTooltip={true}
           />
           <BaseStatCard
             cardTitle='Non certified'
             mainValue={this.state.courseData.getIn(['tma_course', 'active_enrollments_total']) - this.state.courseData.get('tma_learners_passed')}
             compareToPrevious={false}
             enableHistory={false}
+            enableTooltip={true}
           />
           <BaseStatCard
             cardTitle='Average score'
@@ -172,6 +182,7 @@ class SingleCourseContent extends Component {
             dataType='percentage'
             compareToPrevious={false}
             enableHistory={false}
+            enableTooltip={true}
           />
           <ImageCard
             cardImage={'/static/tma-static/images/logo-phileas.jpg'}

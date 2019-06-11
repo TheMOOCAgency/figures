@@ -8,6 +8,7 @@ import HeaderContentMaus from 'base/components/header-views/header-content-maus/
 import BaseStatCard from 'base/components/stat-cards/BaseStatCard';
 import CoursesList from 'base/components/courses-list/CoursesList';
 import apiConfig from 'base/apiConfig';
+// TMA imports
 import TopCoursesStatCard from '../components/stat-cards/TopCoursesCard';
 
 let cx = classNames.bind(styles);
@@ -48,11 +49,13 @@ class DashboardContent extends Component {
             cardTitle='Registered learners'
             mainValue={this.props.generalData.getIn(['total_site_users', 'current_month'])}
             valueHistory={this.props.generalData.getIn(['total_site_users', 'history'])}
+            enableTooltip={true}
           />
           <BaseStatCard
             cardTitle='Course enrollments'
             mainValue={this.props.generalData.getIn(['total_course_enrollments', 'current_month'])}
             valueHistory={this.props.generalData.getIn(['total_course_enrollments', 'history'])}
+            enableTooltip={true}
           />
           <TopCoursesStatCard
             cardTitle='Top courses'

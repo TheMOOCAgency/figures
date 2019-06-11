@@ -8,7 +8,7 @@ const parseCourseDate = (fetchedDate) => {
     return "-";
   } else if (Date.parse(fetchedDate)) {
     const tempDate = new Date(fetchedDate);
-    return tempDate.toUTCString();
+    return tempDate.toDateString();
   } else {
     return fetchedDate;
   }
@@ -64,7 +64,7 @@ class CoursesListItem extends Component {
           <div className={styles['stats-section-inner']}>
             <div className={styles['single-stat']}>
               <span className={styles['stat-label']}>
-                Learners invited:
+                Learners invited
               </span>
               <span className={styles['stat-value']}>
                 {this.props.learnersInvited}
@@ -72,23 +72,23 @@ class CoursesListItem extends Component {
             </div>
             <div className={styles['single-stat']}>
               <span className={styles['stat-label']}>
-                % started:
+                % started
               </span>
               <span className={styles['stat-value']}>
-                {(this.props.learnersStarted*100).toFixed(2)}%
+                {(this.props.learnersStarted*100)}%
               </span>
             </div>
             <div className={styles['single-stat']}>
               <span className={styles['stat-label']}>
-                % completed:
+                % completed
               </span>
               <span className={styles['stat-value']}>
-                {(this.props.learnersCompleted*100).toFixed(2)}%
+                {(this.props.learnersCompleted*100)}%
               </span>
             </div>
             <div className={styles['single-stat']}>
               <span className={styles['stat-label']}>
-                No. not started:
+                Nb. not started
               </span>
               <span className={styles['stat-value']}>
                 {this.props.learnersNotStarted}

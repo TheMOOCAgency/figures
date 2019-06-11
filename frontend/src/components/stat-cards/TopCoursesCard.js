@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import styles from './_base-stat-card.scss';
 import classNames from 'classnames/bind';
@@ -26,13 +27,13 @@ class TopCoursesStatCard extends Component {
     const coursesListSliced = this.getTopCourses()
     const topItems = coursesListSliced.map((item, index) => {
         return (
-          <div key={index}>
-              <div className={(index === 0) ? styles['top-one-value-box'] : styles['top-value-box']}>
-                <span className={(index === 0) ? styles['top-one-value'] : styles['top-value']}>{index+1}</span>
-                  <span className={styles['top-course-name']}>{item.get('course_name')}</span>
-              </div>
-          </div>
-        )
+            <div className={(index === 0) ? styles['top-one-value-box'] : styles['top-value-box']} key={index}>
+              <span className={(index === 0) ? styles['top-one-value'] : styles['top-value']}>{index+1}</span>
+              <Link to={'/figures/course/' + item.get('course_id')} className={styles['top-course-link']}>
+                <span className={styles['top-course-name']}>{item.get('course_name')}</span>
+              </Link>
+            </div>
+        )      
     });
     
     return (

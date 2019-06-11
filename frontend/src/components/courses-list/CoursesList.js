@@ -23,11 +23,11 @@ class CoursesList extends Component {
     let coursesList = this.state.coursesList;
     /* TMA specifing sorting filters */
     if (parameter === 'tag') {
-      coursesList = coursesList.sortBy(item => item.getIn(['tma_course', 'tag']));
+      coursesList = this.props.coursesList.sortBy(item => item.getIn(['tma_course', 'tag']));
     } else if (parameter === 'mandatory') {
-      coursesList = coursesList.filter(item => item.getIn(['tma_course', 'is_mandatory']) === true);
+      coursesList = this.props.coursesList.filter(item => item.getIn(['tma_course', 'is_mandatory']) === true);
     } else if (parameter === 'language') {
-      coursesList = coursesList.sortBy(item => item.get('language'))
+      coursesList = this.props.coursesList.sortBy(item => item.get('language'))
     } else if (parameter === 'all') {
       coursesList = this.props.coursesList;
     }
@@ -46,7 +46,7 @@ class CoursesList extends Component {
   }
 
   render() {
-    const courseItems = this.state.coursesList.map((item, index) => {
+      const courseItems = this.state.coursesList.map((item, index) => {
       return (
         <CoursesListItem
           courseName={item.get('course_name')}
@@ -57,11 +57,11 @@ class CoursesList extends Component {
           learnersInvited={item.get('tma_learners_invited')}
           learnersStarted={
             (item.get('tma_learners_enrolled') !== 0) ?
-            (item.getIn(['tma_course', 'active_enrollments_total']) / item.get('tma_learners_enrolled')).toFixed(2) : 0
+            (item.getIn(['tma_course', 'active_enrollments_total']) / item.get('tma_learners_enrolled')).toFixed(0) : 0
           }
           learnersCompleted={
             (item.get('tma_learners_enrolled') !== 0) ?
-            (item.get('tma_completed') / item.get('tma_learners_enrolled')).toFixed(2) : 0
+            (item.get('tma_completed') / item.get('tma_learners_enrolled')).toFixed(0) : 0
           }
           learnersNotStarted={(item.get('tma_learners_enrolled') - item.getIn(['tma_course', 'active_enrollments_total']))}
           tag={item.getIn(['tma_course', 'tag'])}
@@ -88,7 +88,7 @@ class CoursesList extends Component {
           </div>
         </div>
         <div className={styles['items-container']}>
-          {courseItems}
+          {courseItems.size === 0 ? <span className={styles['no-results']}>No results were found matching your request.</span> : courseItems}
         </div>
       </section>
     )

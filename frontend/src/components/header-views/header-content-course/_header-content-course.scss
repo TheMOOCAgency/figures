@@ -12,6 +12,7 @@
 
   .course-title {
     margin-top: 4rem;
+    margin-bottom: 3rem;
     font-size: calcRem(22);
     font-weight: bold;
     line-height: 100%;
@@ -25,6 +26,12 @@
   .course-likes {
     font-size: calcRem(14);
     font-weight: 600;
+  }
+
+  .course-codes {
+    font-size: calcRem(14);
+    font-weight: 600;
+    text-transform: uppercase;
   }
 
   .course-info {
@@ -42,10 +49,6 @@
     .course-info-separator {
       margin-left: calcRem(10);
       margin-right: calcRem(10);
-    }
-
-    .course-date {
-      display: block;
     }
   }
   .course-tma-info-left {
@@ -73,12 +76,12 @@
 
   .course-tma-info-right {
     display: inline-block;
-    width: 25%;
+    width: 90%;
     font-size: calcRem(14);
     font-weight: 600;
     margin-bottom: calcRem(5);
     line-height: 130%;
-    text-align: left;
+    text-align: right;
     
     .course-code {
       font-weight: 900;

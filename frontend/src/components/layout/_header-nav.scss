@@ -3,6 +3,7 @@
 
 .header-nav {
   margin-left: auto;
+  margin-right: 1rem;
   display: flex;
   align-items: center;
 }
@@ -11,7 +12,7 @@ a.header-nav__link {
   margin-right: calcRem(30);
   font-size: $base-font-size;
   font-weight: 600;
-  color: pick-visible-color($primary-color, #fff, $base-text-color);
+  color: pick-visible-color($primary-color, #fff, $base-text-color) !important;
   text-decoration: none;
   position: relative;
 
@@ -21,13 +22,13 @@ a.header-nav__link {
     height: calcRem(2);
     width: 0;
     left: 0;
-    background-color: pick-visible-color($primary-color, #fff, $base-text-color);
+    background-color: pick-visible-color($primary-color, #fff, $base-text-color) !important;
     content: '';
     transition: all 0.2s ease-in-out;
   }
 
   &:hover {
-    color: pick-visible-color($primary-color, #fff, $base-text-color);
+    color: pick-visible-color($primary-color, #fff, $base-text-color) !important;
 
     &:after {
       width: 100%;
@@ -35,7 +36,7 @@ a.header-nav__link {
   }
 
   &:focus {
-    color: pick-visible-color($primary-color, #fff, $base-text-color);
+    color: pick-visible-color($primary-color, #fff, $base-text-color) !important;
   }
 
   &.active {

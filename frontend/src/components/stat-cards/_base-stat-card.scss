@@ -3,9 +3,19 @@
 @import '~base/sass/base/grid';
 @import '~base/sass/base/stat-cards';
 
-.stat-card {
+.transparent-stat-card {
+  border: none;
+  background-color: transparent;
+  box-shadow: none;
+  padding: 2rem;
+  display: flex;
+}
 
+.stat-card {
+  
   .main-content {
+    width: 100%;
+
     .main-data-container {
       display: flex;
       align-items: center;
@@ -83,7 +93,15 @@
 
       .top-course-name {
         font-size: calcRem(12);
-      }      
+      }
+      
+      .top-course-link, .top-course-link:hover, .top-course-link:focus {
+        color: $primary-color;
+        text-decoration: none;
+      }
+      .top-course-link:hover, .top-course-link:focus {
+        text-decoration: underline;
+      }
     }
 
     .image-container {
@@ -92,6 +110,12 @@
       .card-img {
         height: 8rem;
       }
+    }
+
+    .info-img {
+      height: auto;
+      width: 1.5rem;
+      align-self: flex-end;
     }
 
     .history-toggle {
