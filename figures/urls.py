@@ -81,7 +81,4 @@ urlpatterns = [
     url(r'^api/general-site-metrics', views.GeneralSiteMetricsView.as_view(),
         name='general-site-metrics'),
     url(r'^(?:.*)/?$', views.figures_home, name='router-catch-all'),
-
-    # TMA POPULATE METRICS
-    url(r'^api/tma_update_data', views.populate_metrics_from_view, name='populate_metrics_from_view')
 ]

@@ -62,7 +62,10 @@ class SingleCourseContent extends Component {
 
   /*** TMA FUNCTIONS ***/
   generateCsv = () => {
-    fetch('', { credentials: "same-origin" })
+    fetch('/courses/'+this.props.courseId+'/instructor/api/problem_grade_report', { 
+        credentials: "same-origin",
+        method: "POST"
+    })
     .then(response => console.log(response))
     .then(data => console.log(data))
   }
@@ -195,19 +198,13 @@ class SingleCourseContent extends Component {
           <ImageCard
             cardImage={'/static/tma-static/images/logo-phileas.jpg'}
           />
-          {/* <span className={styles['download-btn']} onClick={this.generateCsv()}>Download report</span>
+          <span className={styles['download-btn']} onClick={this.generateCsv}>Download report</span>
           <ImageCard
             cardImage={'/static/tma-static/images/logo-phileas.jpg'}
           />
           <ImageCard
             cardImage={'/static/tma-static/images/logo-phileas.jpg'}
           />
-          <ImageCard
-            cardImage={'/static/tma-static/images/logo-phileas.jpg'}
-          />
-          <ImageCard
-            cardImage={'/static/tma-static/images/logo-phileas.jpg'}
-    /> */}
           <ImageCard
             cardImage={'/static/tma-static/images/logo-phileas.jpg'}
           />

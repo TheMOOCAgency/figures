@@ -78,9 +78,6 @@ UNAUTHORIZED_USER_REDIRECT_URL = '/'
 
 @ensure_csrf_cookie
 @login_required
-@user_passes_test(lambda u: u.is_active,
-                  login_url=UNAUTHORIZED_USER_REDIRECT_URL,
-                  redirect_field_name=None)
 def figures_home(request):
     '''Renders the JavaScript SPA dashboard
 
@@ -102,23 +99,6 @@ def figures_home(request):
     #call_command('populate_figures_metrics', '--no-delay')
     
     return render(request, 'figures/index.html', context)
-
-
-### TMA ###
-@ensure_csrf_cookie
-@login_required
-@user_passes_test(lambda u: u.is_active,
-                  login_url=UNAUTHORIZED_USER_REDIRECT_URL,
-                  redirect_field_name=None)
-def populate_metrics_from_view(request):
-    course_id = request.GET.get('course_id')
-    populate_single_cdm(course_id, None, False)
-    
-    context = {
-        "last_update": datetime.now().strftime('%d-%m-%Y')
-    }
-    
-    return HttpResponse(context)
 
 
 #
