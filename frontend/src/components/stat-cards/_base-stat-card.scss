@@ -12,6 +12,12 @@
 }
 
 .stat-card {
+
+  .info-img {
+    height: auto;
+    width: 1.5rem;
+    align-self: flex-end;
+  }
   
   .main-content {
     width: 100%;
@@ -100,7 +106,7 @@
         text-decoration: none;
       }
       .top-course-link:hover, .top-course-link:focus {
-        text-decoration: underline;
+        text-decoration: underline !important;
       }
     }
 
@@ -110,12 +116,6 @@
       .card-img {
         height: 8rem;
       }
-    }
-
-    .info-img {
-      height: auto;
-      width: 1.5rem;
-      align-self: flex-end;
     }
 
     .history-toggle {

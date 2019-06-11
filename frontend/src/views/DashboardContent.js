@@ -49,17 +49,17 @@ class DashboardContent extends Component {
             cardTitle='Registered learners'
             mainValue={this.props.generalData.getIn(['total_site_users', 'current_month'])}
             valueHistory={this.props.generalData.getIn(['total_site_users', 'history'])}
-            enableTooltip={true}
           />
           <BaseStatCard
             cardTitle='Course enrollments'
             mainValue={this.props.generalData.getIn(['total_course_enrollments', 'current_month'])}
             valueHistory={this.props.generalData.getIn(['total_course_enrollments', 'history'])}
-            enableTooltip={true}
           />
           <TopCoursesStatCard
             cardTitle='Top courses'
             coursesList={this.state.coursesDetailed}
+            enableTooltip={true}
+            tooltipText='Courses ordred by number of likes.'
           />
           <CoursesList
             coursesList={this.state.coursesDetailed}

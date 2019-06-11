@@ -98,7 +98,6 @@ class SingleCourseContent extends Component {
             cardTitle='Nb. of learners'
             mainValue={this.state.courseData.getIn(['learners_enrolled', 'current_month'], 0)}
             valueHistory={this.state.courseData.getIn(['learners_enrolled', 'history'], [])}
-            enableTooltip={true}
           />
           <BaseStatCard
             cardTitle='Invited'
@@ -109,6 +108,7 @@ class SingleCourseContent extends Component {
             enableHistory={false}
             replaceText='of learners'
             enableTooltip={true}
+            tooltipText="Nb. of learners invited by email"
           />
           <BaseStatCard
             cardTitle='Not started'
@@ -119,6 +119,7 @@ class SingleCourseContent extends Component {
             enableHistory={false}
             replaceText='of learners'
             enableTooltip={true}
+            tooltipText="Registered but inactive learners."
           />
           <BaseStatCard
             cardTitle='Started'
@@ -129,6 +130,7 @@ class SingleCourseContent extends Component {
             enableHistory={false}
             replaceText='of learners'
             enableTooltip={true}
+            tooltipText="Registered and active learners."
           />
           <div className={styles['header']}>
             <div className={styles['header-title']}>Learner Engagement</div>
@@ -139,6 +141,7 @@ class SingleCourseContent extends Component {
             compareToPrevious={false}
             enableHistory={false}
             enableTooltip={true}
+            tooltipText="Learners who visited every unit of the course."
           />
           <BaseStatCard
             cardTitle='Partially Completed'
@@ -146,6 +149,7 @@ class SingleCourseContent extends Component {
             compareToPrevious={false}
             enableHistory={false}
             enableTooltip={true}
+            tooltipText="Learners who visited at least one unit of the course."
           />
           <BaseStatCard
             cardTitle='Participation rate'
@@ -155,6 +159,7 @@ class SingleCourseContent extends Component {
             compareToPrevious={false}
             enableHistory={false}
             enableTooltip={true}
+            tooltipText="Nb. of learners who partially completed / Nb. of learners."
           />
           <ImageCard
             cardImage={'/static/tma-static/images/logo-phileas.jpg'}
@@ -168,6 +173,7 @@ class SingleCourseContent extends Component {
             compareToPrevious={false}
             enableHistory={false}
             enableTooltip={true}
+            tooltipText="Learners who validated the course."
           />
           <BaseStatCard
             cardTitle='Non certified'
@@ -175,6 +181,7 @@ class SingleCourseContent extends Component {
             compareToPrevious={false}
             enableHistory={false}
             enableTooltip={true}
+            tooltipText="Learners who did not validate the course."
           />
           <BaseStatCard
             cardTitle='Average score'
@@ -183,6 +190,7 @@ class SingleCourseContent extends Component {
             compareToPrevious={false}
             enableHistory={false}
             enableTooltip={true}
+            tooltipText="Average score of all learners for this course."
           />
           <ImageCard
             cardImage={'/static/tma-static/images/logo-phileas.jpg'}

@@ -763,7 +763,7 @@ textarea.input__2lx3TsF4, input[type="text"].input__2lx3TsF4, input[type="url"].
   padding: 0.5rem 1rem;
   border: 0.2rem solid #fff;
   border-radius: 5rem;
-  color: #fff;
+  color: #fff !important;
   text-decoration: none;
   cursor: pointer;
   transition: all 0.2s ease-in-out; }
@@ -1006,6 +1006,11 @@ textarea.input__2lx3TsF4, input[type="text"].input__2lx3TsF4, input[type="url"].
   padding: 2rem;
   display: flex; }
 
+.stat-card__8KlPliuf .info-img__5OtenCbW {
+  height: auto;
+  width: 1.5rem;
+  align-self: flex-end; }
+
 .stat-card__8KlPliuf .main-content__2EajxZJI {
   width: 100%; }
   .stat-card__8KlPliuf .main-content__2EajxZJI .main-data-container__1v_uQWRD {
@@ -1070,15 +1075,11 @@ textarea.input__2lx3TsF4, input[type="text"].input__2lx3TsF4, input[type="url"].
       color: #0090c1;
       text-decoration: none; }
     .stat-card__8KlPliuf .main-content__2EajxZJI .top-courses-data-container__1uGl_SP9 .top-course-link__-Go_CAFJ:hover, .stat-card__8KlPliuf .main-content__2EajxZJI .top-courses-data-container__1uGl_SP9 .top-course-link__-Go_CAFJ:focus {
-      text-decoration: underline; }
+      text-decoration: underline !important; }
   .stat-card__8KlPliuf .main-content__2EajxZJI .image-container__gtgPPjQG {
     margin: auto; }
     .stat-card__8KlPliuf .main-content__2EajxZJI .image-container__gtgPPjQG .card-img__UQ-JpLBg {
       height: 8rem; }
-  .stat-card__8KlPliuf .main-content__2EajxZJI .info-img__5OtenCbW {
-    height: auto;
-    width: 1.5rem;
-    align-self: flex-end; }
   .stat-card__8KlPliuf .main-content__2EajxZJI .history-toggle__2H2SpgkX {
     background: none;
     text-shadow: none;
