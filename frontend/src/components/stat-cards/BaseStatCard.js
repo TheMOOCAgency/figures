@@ -84,7 +84,7 @@ class BaseStatCard extends Component {
           )}
 
           {this.props.enableTooltip && <img 
-            data-tip="Auxerunt haec vulgi sordidioris audaciam,<br>quod cum ingravesceret penuria commeatuum"
+            data-tip={this.props.tooltipText}
             src="/static/tma-static/images/information.png"
             alt="info"
             className={styles['info-img']}

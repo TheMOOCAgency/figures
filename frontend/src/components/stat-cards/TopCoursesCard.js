@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import styles from './_base-stat-card.scss';
 import classNames from 'classnames/bind';
-//import { cpus } from 'os';
+import ReactTooltip from 'react-tooltip'
 
 let cx = classNames.bind(styles);
 
@@ -44,6 +44,15 @@ class TopCoursesStatCard extends Component {
             {topItems}
           </div>
         </div>
+        {this.props.enableTooltip && <img 
+          data-tip={this.props.tooltipText}
+          src="/static/tma-static/images/information.png"
+          alt="info"
+          className={styles['info-img']}
+          data-multiline={true}
+          />
+        }
+        <ReactTooltip/>
       </div>
     )
   }
