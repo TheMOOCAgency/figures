@@ -7,11 +7,10 @@ import styles from './_single-course-content.scss';
 import HeaderAreaLayout from 'base/components/layout/HeaderAreaLayout';
 import HeaderContentCourse from 'base/components/header-views/header-content-course/HeaderContentCourse';
 import BaseStatCard from 'base/components/stat-cards/BaseStatCard';
-import ImageCard from 'base/components/stat-cards/ImageCard';
 //import LearnerStatistics from 'base/components/learner-statistics/LearnerStatistics';
 //import CourseLearnersList from 'base/components/course-learners-list/CourseLearnersList';
 import apiConfig from 'base/apiConfig';
-import { timingSafeEqual } from 'crypto';
+//import { timingSafeEqual } from 'crypto';
 
 let cx = classNames.bind(styles);
 
@@ -128,18 +127,15 @@ class SingleCourseContent extends Component {
 
           <BaseStatCard
             cardTitle='Nb. of learners'
-            mainValue={this.state.courseData.getIn(['learners_enrolled', 'current_month'], 0)}
+            mainValue={this.state.courseData.getIn(['learners_enrolled', 'current_month'])}
             valueHistory={this.state.courseData.getIn(['learners_enrolled', 'history'], [])}
           />
           <BaseStatCard
             cardTitle='Invited'
             mainValue={this.state.courseData.get('tma_learners_invited')}
-            //secondaryValue={0}
-            //compareToPercent={true}
             compareToPrevious={false}
             enableHistory={false}
             replaceText='of learners'
-            enableTooltip={true}
             tooltipText="Nb. of learners invited by email"
           />
           <BaseStatCard
@@ -150,7 +146,6 @@ class SingleCourseContent extends Component {
             compareToPrevious={false}
             enableHistory={false}
             replaceText='of learners'
-            enableTooltip={true}
             tooltipText="Registered but inactive learners."
           />
           <BaseStatCard
@@ -161,7 +156,6 @@ class SingleCourseContent extends Component {
             compareToPrevious={false}
             enableHistory={false}
             replaceText='of learners'
-            enableTooltip={true}
             tooltipText="Registered and active learners."
           />
           <div className={styles['header']}>
@@ -172,7 +166,6 @@ class SingleCourseContent extends Component {
             mainValue={this.state.courseData.get('tma_completed')}
             compareToPrevious={false}
             enableHistory={false}
-            enableTooltip={true}
             tooltipText="Learners who visited every unit of the course."
           />
           <BaseStatCard
@@ -180,22 +173,18 @@ class SingleCourseContent extends Component {
             mainValue={this.state.courseData.get('tma_partially_completed')}
             compareToPrevious={false}
             enableHistory={false}
-            enableTooltip={true}
             tooltipText="Learners who visited at least one unit of the course."
           />
           <BaseStatCard
             cardTitle='Participation rate'
             mainValue={this.state.courseData.get('tma_partially_completed')}
-            secondaryValue={this.state.courseData.get('tma_learners_passed')}
+            secondaryValue={this.state.courseData.get('tma_learners_enrolled')}
             dataType='percentage'
             compareToPrevious={false}
             enableHistory={false}
-            enableTooltip={true}
             tooltipText="Nb. of learners who partially completed / Nb. of learners."
           />
-          <ImageCard
-            cardImage={'/static/tma-static/images/logo-phileas.jpg'}
-          />
+
           <div className={styles['header']}>
             <div className={styles['header-title']}>Completion</div>
           </div>
@@ -204,7 +193,6 @@ class SingleCourseContent extends Component {
             mainValue={this.state.courseData.get('tma_learners_passed')}
             compareToPrevious={false}
             enableHistory={false}
-            enableTooltip={true}
             tooltipText="Learners who validated the course."
           />
           <BaseStatCard
@@ -212,7 +200,6 @@ class SingleCourseContent extends Component {
             mainValue={this.state.courseData.getIn(['tma_course', 'active_enrollments_total']) - this.state.courseData.get('tma_learners_passed')}
             compareToPrevious={false}
             enableHistory={false}
-            enableTooltip={true}
             tooltipText="Learners who did not validate the course."
           />
           <BaseStatCard
@@ -221,13 +208,8 @@ class SingleCourseContent extends Component {
             dataType='percentage'
             compareToPrevious={false}
             enableHistory={false}
-            enableTooltip={true}
             tooltipText="Average score of all learners for this course."
           />
-          <ImageCard
-            cardImage={'/static/tma-static/images/logo-phileas.jpg'}
-          />
-          
           <div className={styles['report-box']}>
             <span className={styles['download-btn']} onClick={this.generateGradeReport}>Download report</span>
           </div>
@@ -237,19 +219,6 @@ class SingleCourseContent extends Component {
           <div className={styles['report-box']}>
             {this.state.gradeReports && <a className={styles['report-link']} href={this.state.gradeReports['url']}>{this.state.gradeReports['name']}</a>}
           </div>
-
-          <ImageCard
-            cardImage={'/static/tma-static/images/logo-phileas.jpg'}
-          />
-          <ImageCard
-            cardImage={'/static/tma-static/images/logo-phileas.jpg'}
-          />
-          <ImageCard
-            cardImage={'/static/tma-static/images/logo-phileas.jpg'}
-          />
-          <ImageCard
-            cardImage={'/static/tma-static/images/logo-phileas.jpg'}
-          />
           {/*
             <LearnerStatistics
               learnersData = {this.state.learnersList}
