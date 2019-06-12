@@ -51,7 +51,7 @@ class CoursesListItem extends Component {
             </div>,
             <div key='endDate' className={styles['label-value']}>
               <span className={styles['label']}>End date:</span>
-              <span className={styles['value']}>{parseCourseDate(this.props.startDate)}</span>
+              <span className={styles['value']}>{this.props.endDate ? parseCourseDate(this.props.endDate) : 'No end date'}</span>
             </div>
           ]}
           {/*<div className={styles['label-value']}>
