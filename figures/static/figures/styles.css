@@ -1907,18 +1907,28 @@ textarea.input__2lx3TsF4, input[type="text"].input__2lx3TsF4, input[type="url"].
   padding-left: 1rem;
   cursor: pointer; }
 
-.download-btn__2epvCPt0 {
-  text-transform: uppercase;
-  font-weight: bold;
-  font-size: 1.5rem;
-  text-align: center;
-  padding: 1rem;
-  border: 0.2rem solid #0090c1;
-  border-radius: 5rem;
-  color: #0090c1;
-  text-decoration: none;
-  cursor: pointer;
-  transition: all 0.2s ease-in-out; }
+.report-box__GTD1Tzti {
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+  .report-box__GTD1Tzti .download-btn__2epvCPt0 {
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 1.5rem;
+    text-align: center;
+    padding: 1rem;
+    border: 0.2rem solid #0090c1;
+    border-radius: 5rem;
+    color: #0090c1;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out; }
+  .report-box__GTD1Tzti .report-link__2o2RWXMH {
+    display: block;
+    font-weight: bold;
+    color: #2C2A2F;
+    font-size: 1.3rem;
+    margin: 0 0 1rem; }
 @charset "UTF-8";
 /*
  * Picks a colour from two options based on which one is more visible

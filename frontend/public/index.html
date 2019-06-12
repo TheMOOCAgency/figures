@@ -27,7 +27,6 @@
       You need to enable JavaScript to run this app.
     </noscript>
     <div id="edx-figures-app"></div>
-    <input type="hidden" id="csrf_token" name="csrfmiddlewaretoken" value="{% csrf_token %}">
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
@@ -39,4 +38,22 @@
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
   </body>
+  <script>
+    function getCookie(name) {
+      var cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+          var cookies = document.cookie.split(';');
+          for (var i = 0; i < cookies.length; i++) {
+              var cookie = cookies[i].trim();
+              // Does this cookie string begin with the name we want?
+              if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                  cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                  break;
+              }
+          }
+      }
+      return cookieValue;
+    }
+    window.csrftoken = getCookie('csrftoken');
+  </script>
 </html>
