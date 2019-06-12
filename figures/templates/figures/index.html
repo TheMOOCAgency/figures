@@ -14,10 +14,9 @@
     style="display:none">
   </div>
   <div id="edx-figures-app" class="edx-figures-app"></div>
-  <p>{% figures_api_url %}</p>
   <script>__REACT_DEVTOOLS_GLOBAL_HOOK__ = parent.__REACT_DEVTOOLS_GLOBAL_HOOK__</script>
   <script>
-    window.csrf = "{% csrf_token %}"
+    window.csrf = "{{ csrf_token }}"
   </script>
   {% render_bundle 'main' config='FIGURES_APP' %}
 {% endblock %}
