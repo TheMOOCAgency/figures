@@ -11,6 +11,7 @@ import ImageCard from 'base/components/stat-cards/ImageCard';
 //import LearnerStatistics from 'base/components/learner-statistics/LearnerStatistics';
 //import CourseLearnersList from 'base/components/course-learners-list/CourseLearnersList';
 import apiConfig from 'base/apiConfig';
+import { timingSafeEqual } from 'crypto';
 
 let cx = classNames.bind(styles);
 
@@ -23,6 +24,8 @@ class SingleCourseContent extends Component {
       allLearnersLoaded: true,
       learnersList: Immutable.List(),
       apiFetchMoreLearnersUrl: null,
+      gradeReports: [],
+      downloadStatus: ''
     };
 
     this.fetchCourseData = this.fetchCourseData.bind(this);
@@ -61,14 +64,40 @@ class SingleCourseContent extends Component {
   }
 
   /*** TMA FUNCTIONS ***/
-  generateCsv = () => {
-    fetch('/courses/'+this.props.courseId+'/instructor/api/problem_grade_report', { 
+  getReportsList = () => {
+    // Fetching list of last generated reports
+    fetch('/courses/'+this.props.courseId+'/instructor/api/list_report_downloads', { 
         credentials: "same-origin",
-        method: "POST"
+        method: "POST",
+        headers: {
+          'X-CSRFToken': window.csrftoken
+        }
     })
-    .then(response => console.log(response))
-    .then(data => console.log(data))
+    .then(response => response.json())
+    .then((json) => {
+      this.setState({
+        downloadStatus: "Please click the link to download the report.",
+        gradeReports: json.downloads[0]
+      });
+    });
   }
+
+  generateGradeReport = () => {
+    this.setState({downloadStatus: "Your report is being generated, please wait."})
+    // Generating new grade report
+    fetch('/courses/'+this.props.courseId+'/instructor/api/problem_grade_report', { 
+      credentials: "same-origin",
+      method: "POST",
+      headers: {
+        'X-CSRFToken': window.csrftoken
+      }
+    })
+    .then(response => response.json())
+    .then(() => {
+      this.getReportsList();
+    });
+  }
+  /*** END ***/
 
   render() {
     return (
@@ -198,7 +227,17 @@ class SingleCourseContent extends Component {
           <ImageCard
             cardImage={'/static/tma-static/images/logo-phileas.jpg'}
           />
-          <span className={styles['download-btn']} onClick={this.generateCsv}>Download report</span>
+          
+          <div className={styles['report-box']}>
+            <span className={styles['download-btn']} onClick={this.generateGradeReport}>Download report</span>
+          </div>
+          <div className={styles['report-box']}>
+            <span className={styles['report-link']}>{this.state.downloadStatus}</span>
+          </div>
+          <div className={styles['report-box']}>
+            {this.state.gradeReports && <a className={styles['report-link']} href={this.state.gradeReports['url']}>{this.state.gradeReports['name']}</a>}
+          </div>
+
           <ImageCard
             cardImage={'/static/tma-static/images/logo-phileas.jpg'}
           />
