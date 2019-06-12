@@ -70,7 +70,7 @@ class SingleCourseContent extends Component {
         credentials: "same-origin",
         method: "POST",
         headers: {
-          'X-CSRFToken': window.sessionStorage.getItem('csrftoken')
+          'X-CSRFToken': window.csrf
         }
     })
     .then(response => response.json())
@@ -89,7 +89,7 @@ class SingleCourseContent extends Component {
       credentials: "same-origin",
       method: "POST",
       headers: {
-        'X-CSRFToken': window.sessionStorage.getItem('csrftoken')
+        'X-CSRFToken': window.csrf
       }
     })
     .then(response => response.json())
