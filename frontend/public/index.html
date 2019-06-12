@@ -54,6 +54,6 @@
       }
       return cookieValue;
     }
-    window.csrftoken = getCookie('csrftoken');
+    window.sessionStorage.setItem('csrftoken', getCookie('csrftoken'))
   </script>
 </html>
