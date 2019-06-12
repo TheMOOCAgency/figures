@@ -7,6 +7,7 @@ import styles from './_single-course-content.scss';
 import HeaderAreaLayout from 'base/components/layout/HeaderAreaLayout';
 import HeaderContentCourse from 'base/components/header-views/header-content-course/HeaderContentCourse';
 import BaseStatCard from 'base/components/stat-cards/BaseStatCard';
+import ImageCard from 'base/components/stat-cards/ImageCard';
 //import LearnerStatistics from 'base/components/learner-statistics/LearnerStatistics';
 //import CourseLearnersList from 'base/components/course-learners-list/CourseLearnersList';
 import apiConfig from 'base/apiConfig';
@@ -69,7 +70,7 @@ class SingleCourseContent extends Component {
         credentials: "same-origin",
         method: "POST",
         headers: {
-          'X-CSRFToken': window.csrftoken
+          'X-CSRFToken': window.sessionStorage.getItem('csrftoken')
         }
     })
     .then(response => response.json())
@@ -88,7 +89,7 @@ class SingleCourseContent extends Component {
       credentials: "same-origin",
       method: "POST",
       headers: {
-        'X-CSRFToken': window.csrftoken
+        'X-CSRFToken': window.sessionStorage.getItem('csrftoken')
       }
     })
     .then(response => response.json())
@@ -210,6 +211,8 @@ class SingleCourseContent extends Component {
             enableHistory={false}
             tooltipText="Average score of all learners for this course."
           />
+          <ImageCard />
+          <ImageCard />
           <div className={styles['report-box']}>
             <span className={styles['download-btn']} onClick={this.generateGradeReport}>Download report</span>
           </div>
