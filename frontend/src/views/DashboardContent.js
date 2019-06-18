@@ -59,7 +59,7 @@ class DashboardContent extends Component {
             cardTitle='Top courses'
             coursesList={this.state.coursesDetailed}
             enableTooltip={true}
-            tooltipText='Courses ordred by number of likes.'
+            tooltipText='Courses ordered by number of enrollments.'
           />
           <CoursesList
             coursesList={this.state.coursesDetailed}

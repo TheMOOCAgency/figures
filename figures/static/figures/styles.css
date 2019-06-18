@@ -769,7 +769,7 @@ textarea.input__2lx3TsF4, input[type="text"].input__2lx3TsF4, input[type="url"].
   transition: all 0.2s ease-in-out; }
   .header-content-maus__n4bSS6At .mau-history-link__16rPYXnf:hover {
     background-color: #fff;
-    color: #0090c1; }
+    color: #0090c1 !important; }
 
 .header-content-maus__n4bSS6At .bar-tooltip__DK96Xbuc {
   position: relative;
@@ -1321,11 +1321,24 @@ textarea.input__2lx3TsF4, input[type="text"].input__2lx3TsF4, input[type="url"].
     .courses-list__1AnTO3KB .sort-container__2rScvzNe ul {
       padding: 0;
       margin: 0;
-      display: flex; }
+      display: flex;
+      align-items: center;
+      justify-content: center; }
+    .courses-list__1AnTO3KB .sort-container__2rScvzNe select {
+      min-width: 9rem;
+      margin: auto;
+      padding: 0.5rem;
+      border: 2px solid #b9c6d4;
+      color: #2C2A2F;
+      background-color: white;
+      text-transform: none;
+      line-height: normal;
+      font-size: 1.4rem;
+      cursor: pointer; }
     .courses-list__1AnTO3KB .sort-container__2rScvzNe .sort-item__1-9QF4um {
       list-style-type: none;
       font-size: 1.4rem;
-      margin: 1rem 1rem 0 1rem;
+      margin: 0 1rem 0 1rem;
       color: #2C2A2F;
       transition: 0.2s ease-in-out;
       cursor: pointer; }
@@ -1361,11 +1374,12 @@ textarea.input__2lx3TsF4, input[type="text"].input__2lx3TsF4, input[type="url"].
   box-shadow: 0 0.2rem 0.4rem 0 rgba(0, 0, 0, 0.25);
   padding: 2rem;
   transition: all 0.3s ease-in-out;
-  display: flex; }
+  display: flex;
+  text-decoration: none !important; }
   .course-list-item__2AxpWSSa:hover {
     box-shadow: 0 0.6rem 1.2rem 0 rgba(0, 0, 0, 0.25);
     cursor: pointer;
-    text-decoration: none; }
+    text-decoration: none !important; }
   .course-list-item__2AxpWSSa .sections-separator__1vRhLOgx {
     display: flex;
     margin: 0 2rem;

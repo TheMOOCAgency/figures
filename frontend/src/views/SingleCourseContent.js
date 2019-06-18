@@ -76,7 +76,7 @@ class SingleCourseContent extends Component {
     .then(response => response.json())
     .then((json) => {
       this.setState({
-        downloadStatus: "Please click the link to download the report.",
+        downloadStatus: "Please click the link to download the report :",
         gradeReports: json.downloads[0]
       });
     });
@@ -217,7 +217,7 @@ class SingleCourseContent extends Component {
             <span className={styles['download-btn']} onClick={this.generateGradeReport}>Download report</span>
           </div>
           <div className={styles['report-box']}>
-            <span className={styles['report-link']}>{this.state.downloadStatus} :</span>
+            <span className={styles['report-link']}>{this.state.downloadStatus}</span>
           </div>
           <div className={styles['report-box']}>
             {this.state.gradeReports && <a className={styles['report-link']} href={this.state.gradeReports['url']}>{this.state.gradeReports['name']}</a>}

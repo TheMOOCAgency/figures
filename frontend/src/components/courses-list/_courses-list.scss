@@ -34,12 +34,27 @@
       padding: 0;
       margin: 0;
       display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
+    select {
+      min-width: 9rem;
+      margin: auto;
+      padding: calcRem(5);
+      border: 2px solid #b9c6d4;
+      color: #2C2A2F;
+      background-color: white;
+      text-transform: none;
+      line-height: normal;
+      font-size: calcRem(14);
+      cursor: pointer;
+    }
+    
     .sort-item {
       list-style-type: none;
       font-size: calcRem(14);
-      margin: calcRem(10) calcRem(10) 0 calcRem(10);
+      margin: 0 calcRem(10) 0 calcRem(10);
       color: $base-text-color;
       transition: 0.2s ease-in-out;
       cursor: pointer;

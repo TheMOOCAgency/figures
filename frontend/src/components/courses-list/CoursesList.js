@@ -13,28 +13,42 @@ class CoursesList extends Component {
 
     this.state = {
       sortListBy: '',
+      sortListValue: '',
       coursesList: List()
     };
 
     this.changeSorting = this.changeSorting.bind(this);
   }
 
-  changeSorting = (parameter) => {
+  /* TMA tags list and custom sorting*/
+  getTags() {
+    let all = this.state.coursesList.map((item) => item.getIn(['tma_course', 'tag']));
+    all = all.toArray().toString().split(',');
+    return all.filter((item, i, self) => self.indexOf(item) === i)
+  }
+
+  getLanguages() {
+    let languages = this.state.coursesList.map((item) => item.get('language'));
+    return languages.filter((item, i, self) => self.indexOf(item) === i);
+  }
+
+  /* TMA specific sorting filters */
+  changeSorting = (parameter, event) => {
     let coursesList = this.state.coursesList;
-    /* TMA specifing sorting filters */
     if (parameter === 'tag') {
-      coursesList = this.props.coursesList.sortBy(item => item.getIn(['tma_course', 'tag']));
+      coursesList = this.props.coursesList.filter(item => item.getIn(['tma_course', 'tag']) === event.target.value);
     } else if (parameter === 'mandatory') {
-      coursesList = this.props.coursesList.filter(item => item.getIn(['tma_course', 'is_mandatory']) === true);
+      coursesList = this.props.coursesList.filter(item => item.getIn(['tma_course', 'is_mandatory']) === Boolean(event.target.value));
     } else if (parameter === 'language') {
-      coursesList = this.props.coursesList.sortBy(item => item.get('language'))
+      coursesList = this.props.coursesList.sortBy(item => item.get('language') === event.target.value)
     } else if (parameter === 'all') {
       coursesList = this.props.coursesList;
     }
     this.setState({
       coursesList: coursesList,
       sortListBy: parameter,
-    })
+      sortListValue: event.target.value
+    });
   }
 
   componentWillReceiveProps = (nextProps) => {
@@ -46,7 +60,17 @@ class CoursesList extends Component {
   }
 
   render() {
-      const courseItems = this.state.coursesList.map((item, index) => {
+    const tags = this.getTags().map((tag) => {
+      return (
+        <option value={tag}>{tag}</option>
+      )
+    });
+    const languages = this.getLanguages().map((lang) => {
+      return (
+        <option value={lang}>{lang}</option>
+      )
+    });
+    const courseItems = this.state.coursesList.map((item, index) => {
       return (
         <CoursesListItem
           courseName={item.get('course_name')}
@@ -81,9 +105,25 @@ class CoursesList extends Component {
             <span>Sort by:</span>
             <ul>
               <li onClick={this.changeSorting.bind(this, 'all')} className={cx({ 'sort-item': true, 'active': (this.state.sortListBy === 'all')})}>All</li>
-              <li onClick={this.changeSorting.bind(this, 'tag')} className={cx({ 'sort-item': true, 'active': (this.state.sortListBy === 'tag')})}>Tag</li>
-              <li onClick={this.changeSorting.bind(this, 'language')} className={cx({ 'sort-item': true, 'active': (this.state.sortListBy === 'language')})}>Language</li>
-              <li onClick={this.changeSorting.bind(this, 'mandatory')} className={cx({ 'sort-item': true, 'active': (this.state.sortListBy === 'mandatory')})}>Mandatory</li>
+              <li className={cx({ 'sort-item': true, 'active': (this.state.sortListBy === 'tag')})}>
+                <select onChange={this.changeSorting.bind(this, 'tag')}>
+                  <option value="">- Tag -</option>
+                  {tags}
+                </select>
+               </li>
+              <li onClick={this.changeSorting.bind(this, 'language')} className={cx({ 'sort-item': true, 'active': (this.state.sortListBy === 'language')})}>
+                <select>
+                  <option value="">- Language -</option>
+                  {languages}
+                </select>
+              </li>
+              <li onClick={this.changeSorting.bind(this, 'mandatory')} className={cx({ 'sort-item': true, 'active': (this.state.sortListBy === 'mandatory')})}>
+                <select>
+                  <option value="">- Mandatory -</option>
+                  <option value="true">Yes</option>
+                  <option value="false">No</option>
+                </select>
+              </li>
             </ul>
           </div>
         </div>

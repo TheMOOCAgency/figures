@@ -12,12 +12,13 @@ class MauDetailsContent extends Component {
 
   render() {
     let previousValue = 0;
-    const mausRender = this.props.mauHistory.map((period, index) => {
+    const mausRender = this.props.mauHistory.reverse().map((period, index) => {
       const difference = period.value - previousValue;
       previousValue = period.value;
+      const date = new Date(period.period).toLocaleDateString().split('/').slice(1).join('/');
       return (
         <li key={index} className={styles['content-row']}>
-          <span className={styles['period']}>{period.period}</span>
+          <span className={styles['period']}>{date}</span>
           <span className={styles['mau-count']}>{period.value}</span>
           <span className={cx({ 'difference': true, 'positive': (difference > 0), 'negative': (difference < 0)})}>{(difference > 0) ? "+" : ""}{difference}</span>
         </li>
@@ -55,7 +56,7 @@ class MauDetailsContent extends Component {
 
 const mapStateToProps = (state, ownProps) => ({
   mauHistory: state.generalData.data['monthly_active_users']['history']
-})
+});
 
 export default connect(
   mapStateToProps,
