@@ -3,11 +3,10 @@
 @import '~base/sass/base/grid';
 
 .header-content-course {
-
+  margin: calcRem(30) auto;
 
   .main-content {
     text-align: center;
-    margin: calcRem(30) auto calcRem(40);
   }
 
   .course-title {
@@ -32,6 +31,17 @@
     font-size: calcRem(14);
     font-weight: 600;
     text-transform: uppercase;
+    align-self: center;
+    vertical-align: middle;
+    display: inline-flex;
+  }
+
+  .info-img {
+    height: auto;
+    width: 1.5rem;
+    align-self: flex-end;
+    margin-left: 0.5rem;
+    cursor: pointer;
   }
 
   .course-info {
@@ -74,14 +84,19 @@
     }
   }
 
-  .course-tma-info-right {
-    display: inline-block;
-    width: 90%;
-    font-size: calcRem(14);
+  /*
+  .course-tma-info-tooltip {
+    display: none;
+    width: 20rem;
+    height: auto;
+    font-size: 1.4rem;
     font-weight: 600;
-    margin-bottom: calcRem(5);
+    margin-bottom: 0.5rem;
+    padding: 1rem;
     line-height: 130%;
-    text-align: right;
+    text-align: left;
+    position: absolute;
+    background-color: rgba(128,128,128,0.6);
     
     .course-code {
       font-weight: 900;
@@ -96,6 +111,7 @@
       display: block;
     }
   }
+*/
 
   .learners-info {
     font-size: calcRem(12);

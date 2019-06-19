@@ -4,6 +4,7 @@
 @import '~base/sass/base/stat-cards';
 
 .header {
+    display: flex;
     margin: calcRem(10) 0;
     grid-column-end: span 4;
   }
@@ -13,7 +14,7 @@
     font-size: calcRem(22);
     padding-left: calcRem(20);
     line-height: 100%;
-  }
+}
 
 .refresh-img {
   width: 2.4rem;
@@ -29,7 +30,7 @@
   .download-btn {
     text-transform: uppercase;
     font-weight: bold;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     text-align: center;
     padding: 1rem;
     border: 0.2rem solid #0090c1;

@@ -7,7 +7,7 @@ import styles from './_single-course-content.scss';
 import HeaderAreaLayout from 'base/components/layout/HeaderAreaLayout';
 import HeaderContentCourse from 'base/components/header-views/header-content-course/HeaderContentCourse';
 import BaseStatCard from 'base/components/stat-cards/BaseStatCard';
-import ImageCard from 'base/components/stat-cards/ImageCard';
+//import ImageCard from 'base/components/stat-cards/ImageCard';
 //import LearnerStatistics from 'base/components/learner-statistics/LearnerStatistics';
 //import CourseLearnersList from 'base/components/course-learners-list/CourseLearnersList';
 import apiConfig from 'base/apiConfig';
@@ -118,9 +118,19 @@ class SingleCourseContent extends Component {
             isSelfPaced={this.state.courseData.getIn(['self_paced'])}
             requiredGrade={this.state.courseData.getIn(['passing_grade'])}
             learnersEnrolled={this.state.courseData.getIn(['learners_enrolled'])}
-            updateData={this.populateMetrics}
           />
         </HeaderAreaLayout>
+        <div className={cx({ 'container': true, 'base-grid-layout': true, 'dashboard-content': true})}>
+          <div className={styles['report-box']}>
+            <span className={styles['download-btn']} onClick={this.generateGradeReport}>Download report</span>
+          </div>
+          <div className={styles['report-box']}>
+            <span className={styles['report-link']}>{this.state.downloadStatus}</span>
+          </div>
+          <div className={styles['report-box']}>
+            {this.state.gradeReports && <a className={styles['report-link']} href={this.state.gradeReports['url']}>{this.state.gradeReports['name']}</a>}
+          </div>
+        </div>
         <div className={cx({ 'container': true, 'base-grid-layout': true, 'dashboard-content': true})}>
           <div className={styles['header']}>
             <div className={styles['header-title']}>Course Activity</div>
@@ -159,6 +169,8 @@ class SingleCourseContent extends Component {
             replaceText='of learners'
             tooltipText="Registered and active learners."
           />
+        </div>
+        <div className={cx({ 'container': true, 'base-grid-layout': true, 'dashboard-content': true})}>
           <div className={styles['header']}>
             <div className={styles['header-title']}>Learner Engagement</div>
           </div>
@@ -185,7 +197,8 @@ class SingleCourseContent extends Component {
             enableHistory={false}
             tooltipText="Nb. of learners who partially completed / Nb. of learners."
           />
-
+        </div>
+        <div className={cx({ 'container': true, 'base-grid-layout': true, 'dashboard-content': true})}>
           <div className={styles['header']}>
             <div className={styles['header-title']}>Completion</div>
           </div>
@@ -211,19 +224,8 @@ class SingleCourseContent extends Component {
             enableHistory={false}
             tooltipText="Average score of all learners for this course."
           />
-          <ImageCard />
-          <ImageCard />
-          <div className={styles['report-box']}>
-            <span className={styles['download-btn']} onClick={this.generateGradeReport}>Download report</span>
-          </div>
-          <div className={styles['report-box']}>
-            <span className={styles['report-link']}>{this.state.downloadStatus}</span>
-          </div>
-          <div className={styles['report-box']}>
-            {this.state.gradeReports && <a className={styles['report-link']} href={this.state.gradeReports['url']}>{this.state.gradeReports['name']}</a>}
-          </div>
-          <ImageCard />
-          <ImageCard />
+        </div>
+        <div className={cx({ 'container': true, 'base-grid-layout': true, 'dashboard-content': true})}>
           {/*
             <LearnerStatistics
               learnersData = {this.state.learnersList}

@@ -96,12 +96,11 @@ class BaseStatCard extends Component {
           )}
 
           {/* tooltip */}
-          {this.props.tooltipText && <img 
+          {this.props.tooltipText && <img
             data-tip={this.props.tooltipText}
             src="/static/tma-static/images/information.png"
             alt="info"
             className={styles['info-img']}
-            data-multiline={true}
             />
           }
           <ReactTooltip/>
