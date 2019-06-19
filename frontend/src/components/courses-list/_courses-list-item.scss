@@ -2,17 +2,18 @@
 @import '~base/sass/base/functions';
 
 .course-list-item {
-  border: calcRem(1) solid #efefef;
+  /*border: calcRem(1) solid #efefef;*/
   background-color: #fff;
-  box-shadow: 0 calcRem(2) calcRem(4) 0 rgba(0,0,0,0.25);
+  /*box-shadow: 0 calcRem(2) calcRem(4) 0 rgba(0,0,0,0.25);*/
   padding: calcRem(20);
   transition: all 0.3s ease-in-out;
   display: flex;
+  text-decoration: none !important;
 
   &:hover {
     box-shadow: 0 calcRem(6) calcRem(12) 0 rgba(0,0,0,0.25);
     cursor: pointer;
-    text-decoration: none;
+    text-decoration: none !important;
   }
 
   .sections-separator {

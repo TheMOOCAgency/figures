@@ -431,7 +431,7 @@ class CourseDetailsSerializer(serializers.ModelSerializer):
             func=get_course_enrolled_users_for_time_period,
             date_for=datetime.datetime.utcnow(),
             months_back=HISTORY_MONTHS_BACK,
-            )
+        )
 
     def get_average_progress(self, course_overview):
         """

@@ -2,30 +2,10 @@ import React, { Component } from 'react';
 import classNames from 'classnames/bind';
 import styles from './_header-content-course.scss';
 import { ResponsiveContainer, BarChart, Bar, XAxis, Tooltip } from 'recharts';
+// TMA imports
+import ReactTooltip from 'react-tooltip'
 
 let cx = classNames.bind(styles);
-
-const parseCourseDate = (fetchedDate) => {
-  if (fetchedDate === null) {
-    return "-";
-  } else if (Date.parse(fetchedDate)) {
-    let tempDate = new Date(fetchedDate);
-    tempDate = (tempDate.getMonth()+1) +'/'+ tempDate.getDay() +'/'+ tempDate.getFullYear();
-    return tempDate;
-  } else {
-    return fetchedDate;
-  }
-}
-
-const parseLanguage = (language) => {
-  if (language) {
-    if (language === 'fr') {
-      return 'French';
-    } else if (language === 'en') {
-      return 'English'
-    }
-  }
-}
 
 class CustomTooltip extends Component {
 
@@ -48,8 +28,39 @@ class CustomTooltip extends Component {
 
 class HeaderContentCourse extends Component {
 
-  render() {
+  parseCourseDate = (fetchedDate) => {
+    if (fetchedDate === null) {
+      return "-";
+    } else if (Date.parse(fetchedDate)) {
+      let tempDate = new Date(fetchedDate);
+      tempDate = (tempDate.getMonth()+1) +'/'+ tempDate.getDay() +'/'+ tempDate.getFullYear();
+      return tempDate;
+    } else {
+      return fetchedDate;
+    }
+  }
+  
+  parseLanguage = (language) => {
+    if (language) {
+      if (language === 'fr') {
+        return 'French';
+      } else if (language === 'en') {
+        return 'English'
+      }
+    }
+  }
 
+  courseInfoTooltip() {
+    return (
+      'Mandatory : ' + (this.props.isMandatory ? 'Yes' : 'No') + '<br/>' +
+      'Tag : ' + this.props.tag + '<br/>' +
+      'Language : ' + this.parseLanguage(this.props.language) + '<br/>' + 
+      'Target : ' + (this.props.isManagerOnly ? 'Manager Only' : 'No restriction') + '<br/>' +
+      'Score required : ' + (this.props.requiredGrade * 100).toString() + '%<br/>'
+    )
+  }
+
+  render() {
     const displayCourseHeaderGraph = false;
 
     return (
@@ -61,8 +72,8 @@ class HeaderContentCourse extends Component {
               <span> This course is self-paced</span>
              :
               <span>
-                {' ' + parseCourseDate(this.props.startDate)}
-                {this.props.endDate ? ' - ' + parseCourseDate(this.props.endDate) : ' - No end date'}
+                {' ' + this.parseCourseDate(this.props.startDate)}
+                {this.props.endDate ? ' - ' + this.parseCourseDate(this.props.endDate) : ' - No end date'}
               </span>
             }
           </div>
@@ -75,13 +86,17 @@ class HeaderContentCourse extends Component {
           <div className={styles['course-likes']}>
             {this.props.likesTotal} likes
             </div>*/}
-          <div className={styles['course-codes']}>{this.props.courseCode} | {this.props.microsite} | {this.props.tag}</div>
-          <div className={styles['course-tma-info-right']}>
-            <span className={styles['course-date']}>Mandatory : {this.props.isMandatory ? "Yes" : "No"}</span>
-            <span className={styles['course-date']}>Language : {parseLanguage(this.props.language)}</span>
-            <span className={styles['course-date']}>Target : {this.props.isManagerOnly ? "Manager Only" : "No Restriction"}</span>
-            <span className={styles['course-date']}>Score required : {this.props.requiredGrade * 100}%  </span>
+          <div className={styles['course-codes']}>{this.props.courseCode} | {this.props.microsite} | {this.props.tag} |
+            <img
+              data-for="header-tooltip"
+              data-tip={this.courseInfoTooltip()}
+              data-multiline={true}
+              src="/static/tma-static/images/information-white.png"
+              alt="info"
+              className={styles['info-img']}
+            />
           </div>
+          <ReactTooltip id="header-tooltip"/>
           {displayCourseHeaderGraph ? [
             <span className={styles['text-separator']} />,
             <div className={styles['learners-info']}>

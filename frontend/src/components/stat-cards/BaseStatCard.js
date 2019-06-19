@@ -82,7 +82,7 @@ class BaseStatCard extends Component {
             {(this.props.compareToPercent && !this.props.singleValue) && (
               <div className={styles['previous-comparison']}>
                 <span className={styles['comparison-value']}>
-                  {(this.props.mainValue / this.props.secondaryValue).toFixed(2) * 100}%
+                  {(this.props.mainValue === 0 || this.props.secondaryValue === 0) ? 0 : (this.props.mainValue / this.props.secondaryValue).toFixed(2) * 100}%
                 </span>
                 <span className={styles['comparison-text']}>{this.props.replaceText ? this.props.replaceText : "since last month"}</span>
               </div>
@@ -96,12 +96,11 @@ class BaseStatCard extends Component {
           )}
 
           {/* tooltip */}
-          {this.props.tooltipText && <img 
+          {this.props.tooltipText && <img
             data-tip={this.props.tooltipText}
             src="/static/tma-static/images/information.png"
             alt="info"
             className={styles['info-img']}
-            data-multiline={true}
             />
           }
           <ReactTooltip/>

@@ -4,7 +4,7 @@
   width: 100%;
   max-width: $max-grid-width;
   margin: 0 auto;
-  padding: 0 calcRem(20);
+  padding: calcRem(10) calcRem(20);
 }
 
 .layout-root {
@@ -18,6 +18,13 @@
 .base-grid-layout {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
+  grid-gap: calcRem(20);
+  grid-auto-flow: dense;
+}
+
+.base-grid-layout-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   grid-gap: calcRem(20);
   grid-auto-flow: dense;
 }
