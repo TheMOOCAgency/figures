@@ -24,26 +24,34 @@ class CoursesList extends Component {
 
   /* TMA tags list and custom sorting*/
   getTags() {
-    console.log("getting tags")
     let all = this.state.coursesList.map((item) => item.getIn(['tma_course', 'tag']));
     all = all.toArray().toString().split(',');
-    let tags = all.filter((item, i, self) => self.indexOf(item) === i);
+    all = all.map(tag => tag.trim());
     this.setState({
-      tagsList: tags
+      tagsList: all.filter((item, i, self) => self.indexOf(item) === i)
     });
   }
 
   getLanguages() {
-    let languages = this.state.coursesList.map((item) => item.get('language'));
-    languages = languages.filter((item, i, self) => self.indexOf(item) === i);
+    let languages = this.state.coursesList.map((item) => this.parseLanguage(item.get('language')));
+    let languagesList = languages.filter((item, i, self) => self.indexOf(item) === i);
     this.setState({
-      languagesList: languages
+      languagesList: languagesList
     });
+  }
+
+  parseLanguage = (language) => {
+    if (language) {
+      if (language === 'fr') {
+        return 'French';
+      } else if (language === 'en') {
+        return 'English'
+      }
+    }
   }
 
   changeSorting = (parameter, event) => {
     let coursesList = this.state.coursesList;
-    // Get filtered coursesList
     switch (parameter) {
       case 'tag':
         if (event.target.value === '') {
@@ -56,7 +64,6 @@ class CoursesList extends Component {
         if (event.target.value === '') {
           coursesList = this.props.coursesList;
         } else {
-          console.log(Boolean(event.target.value))
           coursesList = this.props.coursesList.filter(item => item.getIn(['tma_course', 'is_mandatory']) === (('true' === event.target.value)));
         }
         break;
@@ -73,7 +80,6 @@ class CoursesList extends Component {
       default:
         coursesList = this.props.coursesList;
     };
-    // Set as state
     this.setState({
       coursesList: coursesList,
       sortListBy: parameter,
@@ -85,16 +91,15 @@ class CoursesList extends Component {
     if (nextProps !== this.props) {
       this.setState({
         coursesList: List(nextProps.coursesList)
+      }, () => {
+        //console.log(this.state.coursesList)
+        this.getTags();
+        this.getLanguages();
       });
-      console.log(this.state.coursesList)
-      this.getTags();
-      this.getLanguages();
     }
   }
 
-
   render() {
-    //console.log(this.state.coursesList)
     const courseItems = this.state.coursesList.map((item, index) => {
       return (
         <CoursesListItem
@@ -131,7 +136,7 @@ class CoursesList extends Component {
             <ul>
               <li onClick={this.changeSorting.bind(this, 'all')} className={cx({ 'sort-item': true, 'active': (this.state.sortListBy === 'all')})}>All</li>
               <li className={cx({ 'sort-item': true, 'active': (this.state.sortListBy === 'tag')})}>
-                <select onChange={this.changeSorting.bind(this, 'tag')}>
+                <select value={this.state.sortListBy !== 'tag' ? '' : this.state.sortListValue} onChange={this.changeSorting.bind(this, 'tag')}>
                   <option value="">- Tag -</option>
                   {this.state.tagsList.map((tag, i) => 
                     <option value={tag} key={i}>{tag}</option>
@@ -139,12 +144,15 @@ class CoursesList extends Component {
                 </select>
                </li>
               <li onClick={this.changeSorting.bind(this, 'language')} className={cx({ 'sort-item': true, 'active': (this.state.sortListBy === 'language')})}>
-                <select>
+                <select value={this.state.sortListBy !== 'language' ? '' : this.state.sortListValue} onChange={this.changeSorting.bind(this, 'language')}>
                   <option value="">- Language -</option>
+                  {this.state.languagesList.map((lang, i) => 
+                    <option value={lang} key={i}>{lang}</option>
+                  )}
                 </select>
               </li>
               <li onClick={this.changeSorting.bind(this, 'mandatory')} className={cx({ 'sort-item': true, 'active': (this.state.sortListBy === 'mandatory')})}>
-                <select>
+                <select value={this.state.sortListBy !== 'mandatory' ? '' : this.state.sortListValue} onChange={this.changeSorting.bind(this, 'mandatory')}>
                   <option value="">- Mandatory -</option>
                   <option value="true">Yes</option>
                   <option value="false">No</option>
