@@ -290,7 +290,7 @@ class CourseDailyMetricsLoader(object):
             defaults=dict(
                 enrollment_count=data['enrollment_count'],
                 active_learners_today=data['active_learners_today'],
-                average_progress=str(data['average_progress']),
+                average_progress=str(round(data['average_progress'], 2)),
                 average_days_to_complete=int(round(data['average_days_to_complete'])),
                 num_learners_completed=data['num_learners_completed'],
             )
