@@ -1,0 +1,36 @@
+@import '~base/sass/base/variables';
+@import '~base/sass/base/functions';
+@import '~base/sass/base/grid';
+@import '~base/sass/base/stat-cards';
+
+.course-learners-stats {
+    margin: calcRem(20) 0;
+    grid-column-end: span 4;
+    width: 100%;
+    height: 20rem;
+    background-color: lightgray;
+
+    .stat-tab {
+        text-transform: uppercase;
+        font-weight: bold;
+        font-size: 1.3rem;
+        text-align: center;
+        padding: 1rem;
+        border: 0.1rem solid #0090c1;
+        border-radius: 0.5rem;
+        color: #0090c1;
+        text-decoration: none;
+        cursor: pointer;
+        transition: all 0.2s ease-in-out;
+    }
+    .stat-tab:hover {
+        box-shadow: 0 0.6rem 1.2rem 0 rgba(0, 0, 0, 0.25);
+    }
+
+    .learners-stats-box {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-gap: 2rem;
+        grid-auto-flow: dense;
+    }
+}

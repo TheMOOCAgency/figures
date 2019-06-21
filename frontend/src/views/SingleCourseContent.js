@@ -7,11 +7,13 @@ import styles from './_single-course-content.scss';
 import HeaderAreaLayout from 'base/components/layout/HeaderAreaLayout';
 import HeaderContentCourse from 'base/components/header-views/header-content-course/HeaderContentCourse';
 import BaseStatCard from 'base/components/stat-cards/BaseStatCard';
-//import ImageCard from 'base/components/stat-cards/ImageCard';
 //import LearnerStatistics from 'base/components/learner-statistics/LearnerStatistics';
 //import CourseLearnersList from 'base/components/course-learners-list/CourseLearnersList';
 import apiConfig from 'base/apiConfig';
 //import { timingSafeEqual } from 'crypto';
+
+// IMPORT TMA
+import LearnerStats from 'base/components/course-learners-list/LearnerStats.js'
 
 let cx = classNames.bind(styles);
 
@@ -60,7 +62,7 @@ class SingleCourseContent extends Component {
 
   componentDidMount() {
     this.fetchCourseData();
-    //this.fetchLearnersData();
+    this.fetchLearnersData();
   }
 
   /*** TMA FUNCTIONS ***/
@@ -183,7 +185,7 @@ class SingleCourseContent extends Component {
           />
           <BaseStatCard
             cardTitle='Partially Completed'
-            mainValue={this.state.courseData.get('tma_partially_completed')}
+            mainValue={this.state.courseData.get('tma_partially_completed') + this.state.courseData.get('tma_completed')}
             compareToPrevious={false}
             enableHistory={false}
             tooltipText="Learners who visited at least one unit of the course."
@@ -226,8 +228,9 @@ class SingleCourseContent extends Component {
           />
         </div>
         <div className={cx({ 'container': true, 'base-grid-layout': true, 'dashboard-content': true})}>
-          {/*
-            <LearnerStatistics
+            <LearnerStats />
+            
+            {/*<LearnerStatistics
               learnersData = {this.state.learnersList}
             />
             <CourseLearnersList
@@ -235,8 +238,7 @@ class SingleCourseContent extends Component {
               allLearnersLoaded = {this.state.allLearnersLoaded}
               apiFetchMoreLearnersFunction = {this.fetchLearnersData}
               learnersData = {this.state.learnersList}
-            />
-          */}
+            />*/}
         </div>
       </div>
     );

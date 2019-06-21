@@ -3,6 +3,14 @@
 @import '~base/sass/base/grid';
 @import '~base/sass/base/stat-cards';
 
+.learner-stat-card {
+  margin: calcRem(20) 0;
+  grid-column-end: span 1;
+  height: 8rem;
+  width: auto;
+  border: 0.5rem solid lightgray;
+}
+
 .transparent-stat-card {
   border: none;
   background-color: transparent;
