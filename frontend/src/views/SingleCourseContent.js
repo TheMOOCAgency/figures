@@ -66,6 +66,32 @@ class SingleCourseContent extends Component {
   }
 
   /*** TMA FUNCTIONS ***/
+  generateGradeReport = () => {
+    // Options for API calls
+    const options = { 
+      credentials: "same-origin",
+      method: "POST",
+      headers: {
+        'X-CSRFToken': window.csrf
+      }
+    }
+    // Set status
+    this.setState({downloadStatus: "Your report is being generated, please wait."})
+    // Calls
+    fetch('/courses/'+this.props.courseId+'/instructor/api/problem_grade_report', options)
+    .then(() => {
+      fetch('/courses/'+this.props.courseId+'/instructor/api/list_report_downloads', options)
+      .then(response => response.json())
+      .then((json) => {
+        this.setState({
+          downloadStatus: "Please click the link to download the report :",
+          gradeReports: json.downloads[0]
+        });
+      });
+    });
+  }
+
+  /*
   getReportsList = () => {
     // Fetching list of last generated reports
     fetch('/courses/'+this.props.courseId+'/instructor/api/list_report_downloads', { 
@@ -96,9 +122,10 @@ class SingleCourseContent extends Component {
     })
     .then(response => response.json())
     .then(() => {
-      this.getReportsList();
+      await this.getReportsList();
     });
   }
+  */
   /*** END ***/
 
   render() {
@@ -228,9 +255,10 @@ class SingleCourseContent extends Component {
           />
         </div>
         <div className={cx({ 'container': true, 'base-grid-layout': true, 'dashboard-content': true})}>
+          {/*
             <LearnerStats />
             
-            {/*<LearnerStatistics
+            <LearnerStatistics
               learnersData = {this.state.learnersList}
             />
             <CourseLearnersList
