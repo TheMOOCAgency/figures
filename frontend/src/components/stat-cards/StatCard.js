@@ -3,13 +3,13 @@ import React, { Component } from 'react';
 //import Immutable from 'immutable';
 import styles from './_base-stat-card.scss';
 //import classNames from 'classnames/bind';
-//import StatBarGraph from 'base/components/stat-graphs/stat-bar-graph/StatBarGraph';
+import { ResponsiveContainer, BarChart, Bar } from 'recharts';
 
 class StatCard extends Component {
     render() {
         return(
             <div className={styles['learner-stat-card']}>
-
+                <span>Title</span>
             </div>
         )
     }

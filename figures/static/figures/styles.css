@@ -1034,7 +1034,8 @@ textarea.input__2lx3TsF4, input[type="text"].input__2lx3TsF4, input[type="url"].
   grid-column-end: span 1;
   height: 8rem;
   width: auto;
-  border: 0.5rem solid lightgray; }
+  border: 0.5rem solid lightgray;
+  background-color: white; }
 
 .transparent-stat-card__38ZfsqlJ {
   border: none;

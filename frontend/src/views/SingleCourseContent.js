@@ -27,7 +27,8 @@ class SingleCourseContent extends Component {
       learnersList: Immutable.List(),
       apiFetchMoreLearnersUrl: null,
       gradeReports: [],
-      downloadStatus: ''
+      downloadStatus: '',
+      fileUrl: ''
     };
 
     this.fetchCourseData = this.fetchCourseData.bind(this);
@@ -76,7 +77,7 @@ class SingleCourseContent extends Component {
       }
     }
     // Set status
-    this.setState({downloadStatus: "Your report is being generated, please wait."})
+    this.setState({downloadStatus: "Your report is being generated, please wait."});
     // Calls
     fetch('/courses/'+this.props.courseId+'/instructor/api/problem_grade_report', options)
     .then(() => {
@@ -85,47 +86,13 @@ class SingleCourseContent extends Component {
       .then((json) => {
         this.setState({
           downloadStatus: "Please click the link to download the report :",
-          gradeReports: json.downloads[0]
+          gradeReports: json.downloads[0],
+          fileUrl: json.downloads[0].url
         });
       });
     });
   }
 
-  /*
-  getReportsList = () => {
-    // Fetching list of last generated reports
-    fetch('/courses/'+this.props.courseId+'/instructor/api/list_report_downloads', { 
-        credentials: "same-origin",
-        method: "POST",
-        headers: {
-          'X-CSRFToken': window.csrf
-        }
-    })
-    .then(response => response.json())
-    .then((json) => {
-      this.setState({
-        downloadStatus: "Please click the link to download the report :",
-        gradeReports: json.downloads[0]
-      });
-    });
-  }
-
-  generateGradeReport = () => {
-    this.setState({downloadStatus: "Your report is being generated, please wait."})
-    // Generating new grade report
-    fetch('/courses/'+this.props.courseId+'/instructor/api/problem_grade_report', { 
-      credentials: "same-origin",
-      method: "POST",
-      headers: {
-        'X-CSRFToken': window.csrf
-      }
-    })
-    .then(response => response.json())
-    .then(() => {
-      await this.getReportsList();
-    });
-  }
-  */
   /*** END ***/
 
   render() {
@@ -256,8 +223,9 @@ class SingleCourseContent extends Component {
         </div>
         <div className={cx({ 'container': true, 'base-grid-layout': true, 'dashboard-content': true})}>
           {/*
-            <LearnerStats />
-            
+            <LearnerStats
+              url={this.state.fileUrl}
+            />
             <LearnerStatistics
               learnersData = {this.state.learnersList}
             />
