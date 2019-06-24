@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+//import { Link } from 'react-router-dom';
 import styles from './_learner-stats.scss';
-import classNames from 'classnames/bind';
+//import classNames from 'classnames/bind';
 import StatCard from '../stat-cards/StatCard'
 
 
-let cx = classNames.bind(styles);
+//let cx = classNames.bind(styles);
 
 class LearnerStats extends Component {
     render() {

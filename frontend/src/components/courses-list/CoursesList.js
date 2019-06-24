@@ -33,7 +33,7 @@ class CoursesList extends Component {
   }
 
   getLanguages() {
-    let languages = this.state.coursesList.map((item) => this.parseLanguage(item.get('language')));
+    let languages = this.state.coursesList.map((item) => item.get('language'));
     let languagesList = languages.filter((item, i, self) => self.indexOf(item) === i);
     this.setState({
       languagesList: languagesList
@@ -147,7 +147,7 @@ class CoursesList extends Component {
                 <select value={this.state.sortListBy !== 'language' ? '' : this.state.sortListValue} onChange={this.changeSorting.bind(this, 'language')}>
                   <option value="">- Language -</option>
                   {this.state.languagesList.map((lang, i) => 
-                    <option value={lang} key={i}>{lang}</option>
+                    <option value={lang} key={i}>{this.parseLanguage(lang)}</option>
                   )}
                 </select>
               </li>
