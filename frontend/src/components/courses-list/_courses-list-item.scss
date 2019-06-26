@@ -31,7 +31,7 @@
 
     .course-id {
       display: block;
-      font-size: calcRem(14);
+      font-size: calcRem(10);
       font-weight: bold;
       color: $primary-color;
       margin-bottom: calcRem(5);
@@ -39,7 +39,7 @@
 
     .course-name {
       display: block;
-      font-size: calcRem(18);
+      font-size: calcRem(14);
       font-weight: bold;
       color: $base-text-color;
       margin-bottom: calcRem(10);
@@ -60,7 +60,7 @@
       .value {
         display: inline-block;
         color: $base-text-color;
-        font-size: calcRem(14);
+        font-size: calcRem(10);
         margin-right: calcRem(10);
       }
     }
@@ -108,7 +108,7 @@
     flex-grow: 0;
 
     .course-button {
-      font-size: calcRem(14);
+      font-size: calcRem(10);
       padding: calcRem(10) calcRem(20);
       font-weight: bold;
       color: $primary-color;

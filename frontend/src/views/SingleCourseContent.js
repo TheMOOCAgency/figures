@@ -13,7 +13,7 @@ import apiConfig from 'base/apiConfig';
 //import { timingSafeEqual } from 'crypto';
 
 // IMPORT TMA
-import LearnerStats from 'base/components/course-learners-list/LearnerStats.js'
+//import LearnerStats from 'base/components/course-learners-list/LearnerStats.js'
 
 let cx = classNames.bind(styles);
 

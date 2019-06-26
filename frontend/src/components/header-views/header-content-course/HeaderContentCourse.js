@@ -33,7 +33,7 @@ class HeaderContentCourse extends Component {
       return "-";
     } else if (Date.parse(fetchedDate)) {
       let tempDate = new Date(fetchedDate);
-      tempDate = (tempDate.getMonth()+1) +'/'+ tempDate.getDay() +'/'+ tempDate.getFullYear();
+      tempDate = (tempDate.getMonth()+1) +'-'+ tempDate.getDate() +'-'+ tempDate.getFullYear();
       return tempDate;
     } else {
       return fetchedDate;
@@ -52,6 +52,12 @@ class HeaderContentCourse extends Component {
 
   courseInfoTooltip() {
     return (
+      'Date : ' + (this.props.isSelfPaced ? 
+        'self-paced' : 
+        (this.parseCourseDate(this.props.startDate) 
+        + (this.props.endDate ? (' - ' + this.parseCourseDate(this.props.endDate)) : ' - No end date')
+        ))
+        + '<br/>' +
       'Mandatory : ' + (this.props.isMandatory ? 'Yes' : 'No') + '<br/>' +
       'Tag : ' + this.props.tag + '<br/>' +
       'Language : ' + this.parseLanguage(this.props.language) + '<br/>' + 
