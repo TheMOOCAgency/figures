@@ -236,6 +236,8 @@ class SingleCourseContent extends Component {
               learnersData = {this.state.learnersList}
             />*/}
         </div>
+        <div className={cx({ 'container': true, 'base-grid-layout': true, 'dashboard-content': true})}>
+        </div>
       </div>
     );
   }

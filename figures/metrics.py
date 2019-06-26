@@ -47,6 +47,11 @@ from figures.helpers import (
 from figures.models import CourseDailyMetrics, SiteDailyMetrics
 import figures.sites
 
+# TMA imports
+import logging
+
+log = logging.getLogger()
+
 #
 # Helpers (consider moving to the ``helpers`` module
 #
@@ -490,6 +495,10 @@ def get_monthly_history_metric(func, site, date_for, months_back,
     else:
         # This should work for float too since '0 == 0.0' resolves to True
         current_month = 0
+
+    # Get history in chronological order
+    history.reverse()
+
     return dict(
         current_month=current_month,
         history=history,)
