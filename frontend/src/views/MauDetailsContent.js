@@ -55,7 +55,7 @@ class MauDetailsContent extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  mauHistory: state.generalData.data['monthly_active_users']['history'].reverse()
+  mauHistory: state.generalData.data['monthly_active_users']['history']
 });
 
 export default connect(

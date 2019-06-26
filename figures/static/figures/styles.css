@@ -306,7 +306,7 @@ button.selector-trigger-button__270oLx99 {
   text-transform: none;
   border-radius: 1rem;
   padding: 1.2rem 2rem;
-  font-size: 1.4rem;
+  font-size: 1rem;
   font-family: "Montserrat", sans-serif;
   font-weight: 600;
   transition: all 0.2s ease-in-out;
@@ -493,7 +493,7 @@ button.selector-trigger-button__2-fqpH4V {
   text-transform: none;
   border-radius: 1rem;
   padding: 1.2rem 2rem;
-  font-size: 1.4rem;
+  font-size: 1rem;
   font-family: "Montserrat", sans-serif;
   font-weight: 600;
   transition: all 0.2s ease-in-out;
@@ -3156,7 +3156,7 @@ textarea.input__2lx3TsF4, input[type="text"].input__2lx3TsF4, input[type="url"].
  * Usage: pick-visible-color($bg-color, $color-1, $color-2)
  */
 button.header-option-button__3GEIu84c {
-  font-size: 1.4rem;
+  font-size: 1rem;
   font-weight: 400;
   color: #fff;
   background-color: #0090c1;
@@ -3172,7 +3172,7 @@ button.header-option-button__3GEIu84c {
     text-decoration: none; }
 
 .header-more-options-button__HpYWlq5A {
-  font-size: 1.4rem;
+  font-size: 1rem;
   font-weight: 400;
   color: #fff;
   background-color: #0090c1;

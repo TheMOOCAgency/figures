@@ -72,7 +72,7 @@ class HeaderContentCourse extends Component {
     return (
       <section className={styles['header-content-course']}>
         <div className={cx({ 'main-content': true, 'container': true})}>
-          <div className={styles['course-info']}>
+          {/*<div className={styles['course-info']}>
             SCHEDULE : 
             {this.props.isSelfPaced ?
               <span> This course is self-paced</span>
@@ -83,6 +83,7 @@ class HeaderContentCourse extends Component {
               </span>
             }
           </div>
+          */}
           <div className={styles['course-title']}>
             {this.props.courseName}
           </div>
