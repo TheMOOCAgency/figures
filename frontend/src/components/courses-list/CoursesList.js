@@ -92,7 +92,6 @@ class CoursesList extends Component {
       this.setState({
         coursesList: List(nextProps.coursesList)
       }, () => {
-        //console.log(this.state.coursesList)
         this.getTags();
         this.getLanguages();
       });
