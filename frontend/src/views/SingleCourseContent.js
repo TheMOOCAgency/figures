@@ -29,7 +29,7 @@ class SingleCourseContent extends Component {
       // TMA States //
       gradeReports: [],
       downloadStatus: '',
-      fileUrl: ''
+      lastReport: {}
     };
 
     this.fetchCourseData = this.fetchCourseData.bind(this);
@@ -84,16 +84,16 @@ class SingleCourseContent extends Component {
     .then(response => response.json())
     .then((json) => {
       this.setState({
-        gradeReports: json.downloads[0],
-        fileUrl: json.downloads[0].url
+        gradeReports: json.downloads
       });
     });
   }
 
   generateGradeReport = () => {
     let courseId = this.props.courseId;
+    let options = this.optionsForApi()
     // Launch report task
-    fetch('/courses/'+ courseId +'/instructor/api/problem_grade_report', this.optionsForApi())
+    fetch('/courses/'+ courseId +'/instructor/api/problem_grade_report', options)
     .then(response => response.json())
     .then(() => {
       // Set status and get initial report list
@@ -102,14 +102,15 @@ class SingleCourseContent extends Component {
 
       // Check when report list has new report - means that task is done
       let intervalID = setInterval(function(){
-        fetch('/courses/'+ courseId +'/instructor/api/list_report_downloads', this.optionsForApi())
+        fetch('/courses/'+ courseId +'/instructor/api/list_report_downloads', options)
         .then(response => response.json())
         .then((json) => {
           // If new report in list, set state and clear interval
-          if (json.downloads.length > this.state.gradeReports) {
+          if (json.downloads.length > this.state.gradeReports.length) {
             this.setState({
-              gradeReports: json.downloads[0],
-              fileUrl: json.downloads[0].url
+              gradeReports: json.downloads,
+              lastReport: json.downloads[0],
+              downloadStatus: "To download the report, please click the link :"
             });
             clearInterval(intervalID);
           }
@@ -148,7 +149,7 @@ class SingleCourseContent extends Component {
             <span className={styles['report-link']}>{this.state.downloadStatus}</span>
           </div>
           <div className={styles['report-box']}>
-            {this.state.gradeReports && <a className={styles['report-link']} href={this.state.gradeReports['url']}>{this.state.gradeReports['name']}</a>}
+            {this.state.lastReport && <a className={styles['report-link']} href={this.state.lastReport.url}>{this.state.lastReport.name}</a>}
           </div>
         </div>
         <div className={cx({ 'container': true, 'base-grid-layout': true, 'dashboard-content': true})}>
@@ -248,7 +249,7 @@ class SingleCourseContent extends Component {
         <div className={cx({ 'container': true, 'base-grid-layout': true, 'dashboard-content': true})}>
           {/*
             <LearnerStats
-              url={this.state.fileUrl}
+              url={this.state.lastReport.url}
             />
             <LearnerStatistics
               learnersData = {this.state.learnersList}
