@@ -13,7 +13,7 @@ class MauDetailsContent extends Component {
   render() {
     let previousValue = 0;
     const mausRender = this.props.mauHistory.map((period, index) => {
-      const difference = period.value - previousValue;
+      const difference = previousValue - period.value;
       previousValue = period.value;
       const date = new Date(period.period).toLocaleDateString().split('/').slice(1).join('/');
       return (
