@@ -91,8 +91,9 @@ class SingleCourseContent extends Component {
   }
 
   generateGradeReport = () => {
+    let courseId = this.props.courseId;
     // Launch report task
-    fetch('/courses/'+this.props.courseId+'/instructor/api/problem_grade_report', this.optionsForApi())
+    fetch('/courses/'+ courseId +'/instructor/api/problem_grade_report', this.optionsForApi())
     .then(response => response.json())
     .then(() => {
       // Set status and get initial report list
@@ -101,7 +102,7 @@ class SingleCourseContent extends Component {
 
       // Check when report list has new report - means that task is done
       let intervalID = setInterval(function(){
-        fetch('/courses/'+this.props.courseId+'/instructor/api/list_report_downloads', this.optionsForApi())
+        fetch('/courses/'+ courseId +'/instructor/api/list_report_downloads', this.optionsForApi())
         .then(response => response.json())
         .then((json) => {
           // If new report in list, set state and clear interval
