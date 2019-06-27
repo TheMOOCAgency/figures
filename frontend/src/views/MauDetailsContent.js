@@ -11,10 +11,13 @@ let cx = classNames.bind(styles);
 class MauDetailsContent extends Component {
 
   render() {
-    let previousValue = 0;
-    const mausRender = this.props.mauHistory.map((period, index) => {
-      const difference = previousValue - period.value;
-      previousValue = period.value;
+    let nextValue = 0;
+    const mausRender = this.props.mauHistory.map((period, index, history) => { 
+      if ((index +1) < history.length) {
+        nextValue = history[index+1].value
+      }
+      const difference = period.value - nextValue;
+      nextValue = period.value;
       const date = new Date(period.period).toLocaleDateString().split('/').slice(1).join('/');
       return (
         <li key={index} className={styles['content-row']}>
