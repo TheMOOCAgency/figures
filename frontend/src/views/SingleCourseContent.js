@@ -26,6 +26,7 @@ class SingleCourseContent extends Component {
       allLearnersLoaded: true,
       learnersList: Immutable.List(),
       apiFetchMoreLearnersUrl: null,
+      // TMA States //
       gradeReports: [],
       downloadStatus: '',
       fileUrl: ''
@@ -67,32 +68,54 @@ class SingleCourseContent extends Component {
   }
 
   /*** TMA FUNCTIONS ***/
-  generateGradeReport = () => {
+  optionsForApi = () => {
     // Options for API calls
-    const options = { 
+    return { 
       credentials: "same-origin",
       method: "POST",
       headers: {
         'X-CSRFToken': window.csrf
       }
-    }
-    // Set status
-    this.setState({downloadStatus: "Your report is being generated, please wait."});
-    // Calls
-    fetch('/courses/'+this.props.courseId+'/instructor/api/problem_grade_report', options)
-    .then(() => {
-      fetch('/courses/'+this.props.courseId+'/instructor/api/list_report_downloads', options)
-      .then(response => response.json())
-      .then((json) => {
-        this.setState({
-          downloadStatus: "Please click the link to download the report :",
-          gradeReports: json.downloads[0],
-          fileUrl: json.downloads[0].url
-        });
+    };
+  }
+
+  getReportsList = () => {
+    fetch('/courses/'+this.props.courseId+'/instructor/api/list_report_downloads', this.optionsForApi())
+    .then(response => response.json())
+    .then((json) => {
+      this.setState({
+        gradeReports: json.downloads[0],
+        fileUrl: json.downloads[0].url
       });
     });
   }
 
+  generateGradeReport = () => {
+    // Launch report task
+    fetch('/courses/'+this.props.courseId+'/instructor/api/problem_grade_report', this.optionsForApi())
+    .then(response => response.json())
+    .then(() => {
+      // Set status and get initial report list
+      this.setState({downloadStatus: "Your report is being generated, please wait."});
+      this.getReportsList();
+
+      // Check when report list has new report - means that task is done
+      let intervalID = setInterval(function(){
+        fetch('/courses/'+this.props.courseId+'/instructor/api/list_report_downloads', this.optionsForApi())
+        .then(response => response.json())
+        .then((json) => {
+          // If new report in list, set state and clear interval
+          if (json.downloads.length > this.state.gradeReports) {
+            this.setState({
+              gradeReports: json.downloads[0],
+              fileUrl: json.downloads[0].url
+            });
+            clearInterval(intervalID);
+          }
+        })
+      }, 500)
+    }); 
+  }
   /*** END ***/
 
   render() {
