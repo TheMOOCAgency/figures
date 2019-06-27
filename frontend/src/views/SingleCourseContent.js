@@ -35,6 +35,7 @@ class SingleCourseContent extends Component {
     this.fetchCourseData = this.fetchCourseData.bind(this);
     this.fetchLearnersData = this.fetchLearnersData.bind(this);
     this.setLearnersData = this.setLearnersData.bind(this);
+    this.generateGradeReport = this.generateGradeReport.bind(this);
   }
 
   fetchCourseData = () => {
