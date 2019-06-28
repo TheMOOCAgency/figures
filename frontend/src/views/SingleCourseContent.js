@@ -90,33 +90,34 @@ class SingleCourseContent extends Component {
     });
   }
 
+  checkReportList = () => {
+    // Check when report list has new report - means that task is done
+    let intervalID = setInterval(function(){
+      fetch('/courses/'+ this.props.courseId +'/instructor/api/list_report_downloads', this.optionsForApi())
+      .then(response => response.json())
+      .then((json) => {
+        // If new report in list, set state and clear interval
+        if (json.downloads.length > this.state.gradeReports.length) {
+          this.setState({
+            gradeReports: json.downloads,
+            lastReport: json.downloads[0],
+            downloadStatus: "To download the report, please click the link :"
+          });
+          clearInterval(intervalID);
+        }
+      })
+    }, 500)
+  }
+
   generateGradeReport = () => {
-    let courseId = this.props.courseId;
-    let options = this.optionsForApi()
     // Launch report task
-    fetch('/courses/'+ courseId +'/instructor/api/problem_grade_report', options)
+    fetch('/courses/'+ this.props.courseId +'/instructor/api/problem_grade_report', this.optionsForApi())
     .then(response => response.json())
     .then(() => {
       // Set status and get initial report list
       this.setState({downloadStatus: "Your report is being generated, please wait."});
       this.getReportsList();
-
-      // Check when report list has new report - means that task is done
-      let intervalID = setInterval(function(){
-        fetch('/courses/'+ courseId +'/instructor/api/list_report_downloads', options)
-        .then(response => response.json())
-        .then((json) => {
-          // If new report in list, set state and clear interval
-          if (json.downloads.length > this.state.gradeReports.length) {
-            this.setState({
-              gradeReports: json.downloads,
-              lastReport: json.downloads[0],
-              downloadStatus: "To download the report, please click the link :"
-            });
-            clearInterval(intervalID);
-          }
-        })
-      }, 500)
+      this.checkReportList();
     }); 
   }
   /*** END ***/
