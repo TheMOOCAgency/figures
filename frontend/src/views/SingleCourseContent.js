@@ -69,19 +69,16 @@ class SingleCourseContent extends Component {
   }
 
   /*** TMA FUNCTIONS ***/
-  optionsForApi = () => {
+  getFetchOptions = () => {
     // Options for API calls
-    return { 
-      credentials: "same-origin",
-      method: "POST",
-      headers: {
+    return { credentials: "same-origin", method: "POST", headers: {
         'X-CSRFToken': window.csrf
       }
     };
   }
 
   getReportsList = () => {
-    fetch('/courses/'+this.props.courseId+'/instructor/api/list_report_downloads', this.optionsForApi())
+    fetch('/courses/'+this.props.courseId+'/instructor/api/list_report_downloads', this.getFetchOptions())
     .then(response => response.json())
     .then((json) => {
       this.setState({
@@ -90,19 +87,27 @@ class SingleCourseContent extends Component {
     });
   }
 
+  updateReportsList = (reports) => {
+    this.setState({
+      gradeReports: reports,
+      lastReport: reports[0],
+      downloadStatus: "To download the report, please click the link :"
+    });
+  }
+
   checkReportList = () => {
+    const courseId = this.props.coursId;
+    const options = this.optionsForApi();
+    const reports = this.state.gradeReports;
+    const update = this.updateReportsList;
     // Check when report list has new report - means that task is done
     let intervalID = setInterval(function(){
-      fetch('/courses/'+ this.props.courseId +'/instructor/api/list_report_downloads', this.optionsForApi())
+      fetch('/courses/'+ courseId +'/instructor/api/list_report_downloads', options)
       .then(response => response.json())
       .then((json) => {
         // If new report in list, set state and clear interval
-        if (json.downloads.length > this.state.gradeReports.length) {
-          this.setState({
-            gradeReports: json.downloads,
-            lastReport: json.downloads[0],
-            downloadStatus: "To download the report, please click the link :"
-          });
+        if (json.downloads.length > reports.length) {
+          update(json.downloads);
           clearInterval(intervalID);
         }
       })
