@@ -96,7 +96,7 @@ class SingleCourseContent extends Component {
   }
 
   checkReportList = () => {
-    const courseId = this.props.coursId;
+    const courseId = this.props.courseId;
     const options = this.optionsForApi();
     const reports = this.state.gradeReports;
     const update = this.updateReportsList;
