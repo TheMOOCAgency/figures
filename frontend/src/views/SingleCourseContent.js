@@ -77,21 +77,27 @@ class SingleCourseContent extends Component {
     };
   }
 
+  generateGradeReport = () => {
+    // Launch report task
+    fetch('/courses/'+ this.props.courseId +'/instructor/api/problem_grade_report', this.getFetchOptions())
+    .then(response => response.json())
+    .then(() => {
+      // Set status and get initial report list
+      this.setState({downloadStatus: "Your report is being generated, please wait."});
+      this.getReportsList();
+    }); 
+  }
+
   getReportsList = () => {
+    // Fetch initial report list
     fetch('/courses/'+this.props.courseId+'/instructor/api/list_report_downloads', this.getFetchOptions())
     .then(response => response.json())
     .then((json) => {
       this.setState({
         gradeReports: json.downloads
       });
-    });
-  }
-
-  updateReportsList = (reports) => {
-    this.setState({
-      gradeReports: reports,
-      lastReport: reports[0],
-      downloadStatus: "To download the report, please click the link :"
+      // Then wait for new report to be uploaded
+      this.checkReportList();
     });
   }
 
@@ -116,16 +122,12 @@ class SingleCourseContent extends Component {
     }, 500)
   }
 
-  generateGradeReport = () => {
-    // Launch report task
-    fetch('/courses/'+ this.props.courseId +'/instructor/api/problem_grade_report', this.getFetchOptions())
-    .then(response => response.json())
-    .then(() => {
-      // Set status and get initial report list
-      this.setState({downloadStatus: "Your report is being generated, please wait."});
-      this.getReportsList();
-      this.checkReportList();
-    }); 
+  updateReportsList = (reports) => {
+    this.setState({
+      gradeReports: reports,
+      lastReport: reports[0],
+      downloadStatus: "To download the report, please click the link :"
+    });
   }
   /*** END ***/
 
