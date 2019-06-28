@@ -391,6 +391,7 @@ class CourseDetailsSerializer(serializers.ModelSerializer):
     tma_learners_enrolled = serializers.SerializerMethodField()
     tma_learners_passed = serializers.SerializerMethodField()
     tma_learners_invited = serializers.SerializerMethodField()
+    tma_started = serializers.SerializerMethodField()
     tma_completed = serializers.SerializerMethodField()
     tma_partially_completed = serializers.SerializerMethodField()
     tma_average_score = serializers.SerializerMethodField()
@@ -400,7 +401,7 @@ class CourseDetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = CourseOverview
         fields = ['course_id', 'course_name', 'course_code', 'org', 'start_date',
-                  'end_date', 'self_paced', 'passing_grade', 'language', 'staff', 'learners_enrolled', 'tma_learners_enrolled', 'tma_learners_passed', 'tma_learners_invited','tma_completed', 'tma_partially_completed', 'tma_average_score', 'average_progress', 'average_days_to_complete', 'users_completed', 'tma_course' ]
+                  'end_date', 'self_paced', 'passing_grade', 'language', 'staff', 'learners_enrolled', 'tma_learners_enrolled', 'tma_learners_passed', 'tma_learners_invited', 'tma_started', 'tma_completed', 'tma_partially_completed', 'tma_average_score', 'average_progress', 'average_days_to_complete', 'users_completed', 'tma_course' ]
         read_only_fields = fields
 
     def to_representation(self, instance):
@@ -510,6 +511,13 @@ class CourseDetailsSerializer(serializers.ModelSerializer):
         else:
             return 0
     
+    def get_tma_started(self, course_overview):
+        qs = TmaCourseEnrollment.objects.filter(course_enrollment_edx__course_id=course_overview.id).exclude(completion_rate=0)
+        if qs:
+            return qs.count()
+        else:
+            return 0
+
     def get_tma_completed(self, course_overview):
         """
             Gets all learners real completion for a course, i.e not completion as passed exercises but completion as visited blocks.

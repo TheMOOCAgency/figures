@@ -184,7 +184,7 @@ class SingleCourseContent extends Component {
           />
           <BaseStatCard
             cardTitle='Not started'
-            mainValue={(this.state.courseData.get('tma_learners_enrolled') - this.state.courseData.getIn(['tma_course', 'active_enrollments_total']))}
+            mainValue={(this.state.courseData.get('tma_learners_enrolled') - this.state.courseData.get('tma_started'))}
             secondaryValue={this.state.courseData.get('tma_learners_enrolled')}
             compareToPercent={true}
             compareToPrevious={false}
@@ -194,7 +194,7 @@ class SingleCourseContent extends Component {
           />
           <BaseStatCard
             cardTitle='Started'
-            mainValue={this.state.courseData.getIn(['tma_course', 'active_enrollments_total'])}
+            mainValue={this.state.courseData.get('tma_started')}
             secondaryValue={this.state.courseData.get('tma_learners_enrolled')}
             compareToPercent={true}
             compareToPrevious={false}
@@ -216,19 +216,22 @@ class SingleCourseContent extends Component {
           />
           <BaseStatCard
             cardTitle='Partially Completed'
-            mainValue={this.state.courseData.get('tma_partially_completed') + this.state.courseData.get('tma_completed')}
+            mainValue={this.state.courseData.get('tma_partially_completed')}
             compareToPrevious={false}
             enableHistory={false}
             tooltipText="Learners who visited at least one unit of the course."
           />
           <BaseStatCard
             cardTitle='Participation rate'
-            mainValue={this.state.courseData.get('tma_partially_completed')}
-            secondaryValue={this.state.courseData.get('tma_learners_enrolled')}
+            mainValue={
+              (this.state.courseData.get('tma_learners_enrolled') !== 0) ?
+              ( (this.state.courseData.get('tma_completed') +  this.state.courseData.get('tma_partially_completed')) / this.state.courseData.get('tma_learners_enrolled') ) :
+              0
+            }
             dataType='percentage'
             compareToPrevious={false}
             enableHistory={false}
-            tooltipText="Nb. of learners who partially completed / Nb. of learners."
+            tooltipText="Nb. of learners who partially and fully completed / Nb. of learners."
           />
         </div>
         <div className={cx({ 'container': true, 'base-grid-layout': true, 'dashboard-content': true})}>
@@ -244,14 +247,20 @@ class SingleCourseContent extends Component {
           />
           <BaseStatCard
             cardTitle='Non certified'
-            mainValue={this.state.courseData.getIn(['tma_course', 'active_enrollments_total']) - this.state.courseData.get('tma_learners_passed')}
+            mainValue={
+              this.state.courseData.getIn(['tma_course', 'active_enrollments_total']) - this.state.courseData.get('tma_learners_passed')
+            }
             compareToPrevious={false}
             enableHistory={false}
             tooltipText="Learners who did not validate the course."
           />
           <BaseStatCard
             cardTitle='Average score'
-            mainValue={this.state.courseData.getIn(['tma_course', 'tma_average_score'])}
+            mainValue={
+              (this.state.courseData.get('tma_learners_passed') !== 0) ?
+              (this.state.courseData.get('tma_average_score') / this.state.courseData.get('tma_learners_passed')) :
+              0
+            }
             dataType='percentage'
             compareToPrevious={false}
             enableHistory={false}
