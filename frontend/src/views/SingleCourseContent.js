@@ -97,7 +97,7 @@ class SingleCourseContent extends Component {
 
   checkReportList = () => {
     const courseId = this.props.courseId;
-    const options = this.optionsForApi();
+    const options = this.getFetchOptions();
     const reports = this.state.gradeReports;
     const update = this.updateReportsList;
     // Check when report list has new report - means that task is done
@@ -116,7 +116,7 @@ class SingleCourseContent extends Component {
 
   generateGradeReport = () => {
     // Launch report task
-    fetch('/courses/'+ this.props.courseId +'/instructor/api/problem_grade_report', this.optionsForApi())
+    fetch('/courses/'+ this.props.courseId +'/instructor/api/problem_grade_report', this.getFetchOptions())
     .then(response => response.json())
     .then(() => {
       // Set status and get initial report list
