@@ -111,8 +111,6 @@ class SingleCourseContent extends Component {
       fetch('/courses/'+ courseId +'/instructor/api/list_report_downloads', options)
       .then(response => response.json())
       .then((json) => {
-        console.log(json.downloads)
-        console.log(reports)
         // If new report in list, set state and clear interval
         if (json.downloads.length > reports.length) {
           update(json.downloads);
@@ -132,7 +130,6 @@ class SingleCourseContent extends Component {
   /*** END ***/
 
   render() {
-    console.log(this.state)
     return (
       <div className="ef--layout-root">
         <HeaderAreaLayout>
@@ -248,7 +245,7 @@ class SingleCourseContent extends Component {
           <BaseStatCard
             cardTitle='Non certified'
             mainValue={
-              this.state.courseData.getIn(['tma_course', 'active_enrollments_total']) - this.state.courseData.get('tma_learners_passed')
+              this.state.courseData.get('tma_learners_enrolled') - this.state.courseData.get('tma_learners_passed')
             }
             compareToPrevious={false}
             enableHistory={false}

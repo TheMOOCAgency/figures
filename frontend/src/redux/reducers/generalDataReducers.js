@@ -64,7 +64,6 @@ const initialState = {
 const generalData = (state = initialState, action) => {
   switch (action.type) {
     case LOAD_GENERAL_DATA:
-      console.log(action.generalData)
       return Object.assign({}, state, {
         data: action.generalData
       })
