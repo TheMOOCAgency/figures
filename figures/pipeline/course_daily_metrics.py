@@ -19,7 +19,7 @@ from django.utils.timezone import utc
 
 from courseware.models import StudentModule
 from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
-from student.models import CourseEnrollment
+from student.models import CourseEnrollment, ManualEnrollmentAudit
 from student.roles import CourseCcxCoachRole, CourseInstructorRole, CourseStaffRole
 
 from figures.helpers import as_course_key, as_datetime, next_day, prev_day
@@ -36,6 +36,28 @@ logger = logging.getLogger(__name__)
 
 
 # Extraction helper methods
+def get_enrolled_and_invited_exclude_admins(course_id, date_for=None):
+    """
+    Copied over from CourseEnrollmentManager.num_enrolled_in_exclude_admins method
+    and modified to filter on date LT
+
+    If no date is provided then the date is not used as a filter
+    """
+    course_locator = as_course_key(course_id)
+
+    if getattr(course_id, 'ccx', None):
+        course_locator = course_id.to_course_locator()
+
+    staff = CourseStaffRole(course_locator).users_with_role()
+    admins = CourseInstructorRole(course_locator).users_with_role()
+    coaches = CourseCcxCoachRole(course_locator).users_with_role()
+    filter_args = dict(course_id=course_id, is_active=1)
+
+    if date_for:
+        filter_args.update(dict(created__lt=as_datetime(next_day(date_for))))
+
+    return CourseEnrollment.objects.filter(**filter_args).exclude(
+        user__in=staff).exclude(user__in=admins).exclude(user__in=coaches)
 
 
 def get_enrolled_in_exclude_admins(course_id, date_for=None):
@@ -242,7 +264,13 @@ class CourseDailyMetricsExtractor(object):
         # After we get this working, we can then define them declaratively
         # we can do a lambda for course_enrollments to get the count
 
-        data['enrollment_count'] = course_enrollments.count()
+        # TMA add leaners invited by email and not registered 
+        learners_invited = ManualEnrollmentAudit.objects.filter(enrollment__course_id=course_id, state_transition='from unenrolled to allowed to enroll').count()
+        data['enrollment_count'] = course_enrollments.count() + learners_invited
+        logger.info('LAAAA')
+        logger.info(course_enrollments.count())
+        logger.info(learners_invited)
+        
         active_learner_ids_today = get_active_learner_ids_today(
             course_id, date_for,)
         if active_learner_ids_today:

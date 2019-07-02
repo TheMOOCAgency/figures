@@ -64,34 +64,36 @@ class CoursesListItem extends Component {
           <div className={styles['stats-section-inner']}>
             <div className={styles['single-stat']}>
               <span className={styles['stat-label']}>
-                Learners invited
+                Nb. of Learners
               </span>
               <span className={styles['stat-value']}>
-                {this.props.learnersInvited}
+                {this.props.nbLeaners}
               </span>
             </div>
             <div className={styles['single-stat']}>
               <span className={styles['stat-label']}>
-                % started
+                % Completed
               </span>
               <span className={styles['stat-value']}>
-                {(this.props.learnersStarted*100)}%
+                {//Avoid division by zero
+                  this.props.nbLeaners === 0 ? 0 : (this.props.learnersCompleted / (this.props.nbLeaners).toFixed(2) * 100)
+                }%
               </span>
             </div>
             <div className={styles['single-stat']}>
               <span className={styles['stat-label']}>
-                % completed
+                Nb. of Completed
               </span>
               <span className={styles['stat-value']}>
-                {(this.props.learnersCompleted*100)}%
+                {(this.props.learnersCompleted)}
               </span>
             </div>
             <div className={styles['single-stat']}>
               <span className={styles['stat-label']}>
-                Nb. not started
+                Certificates Awarded
               </span>
               <span className={styles['stat-value']}>
-                {this.props.learnersNotStarted}
+                {this.props.certificatesAwarded}
               </span>
             </div>
           </div>

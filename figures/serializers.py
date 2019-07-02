@@ -493,7 +493,7 @@ class CourseDetailsSerializer(serializers.ModelSerializer):
         admins = CourseInstructorRole(course_overview.id).users_with_role()
         coaches = CourseCcxCoachRole(course_overview.id).users_with_role()
 
-        qs = TmaCourseEnrollment.objects.filter(course_enrollment_edx__user__id=2, course_enrollment_edx__course_id=course_overview.id, has_validated_course=True).exclude(course_enrollment_edx__user__in=staff).exclude(course_enrollment_edx__user__in=admins).exclude(course_enrollment_edx__user__in=coaches)
+        qs = TmaCourseEnrollment.objects.filter(course_enrollment_edx__course_id=course_overview.id, has_validated_course=True).exclude(course_enrollment_edx__user__in=staff).exclude(course_enrollment_edx__user__in=admins).exclude(course_enrollment_edx__user__in=coaches)
         if qs:
             return qs.count()
         else:

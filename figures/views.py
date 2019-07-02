@@ -59,9 +59,6 @@ import figures.helpers
 import figures.sites
 
 # TMA IMPORTS
-from figures.tasks import (
-    populate_single_cdm
-)
 from student.views.dashboard import get_org_black_and_whitelist_for_site
 from django.conf import settings
 from django.core.management import call_command
@@ -96,7 +93,7 @@ def figures_home(request):
     }
 
     # TMA #
-    #call_command('populate_figures_metrics', '--no-delay')
+    call_command('populate_figures_metrics', '--no-delay')
     
     return render(request, 'figures/index.html', context)
 
