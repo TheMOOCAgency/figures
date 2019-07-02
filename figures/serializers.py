@@ -54,7 +54,8 @@ import figures.sites
 
 # TMA imports
 from lms.djangoapps.tma_apps.models import TmaCourseOverview, TmaCourseEnrollment
-from student.models import User, CourseEnrollmentAllowed
+from student.roles import CourseCcxCoachRole, CourseInstructorRole, CourseStaffRole
+from student.models import User, ManualEnrollmentAudit
 from django.db.models import Avg
 import logging
 
@@ -136,7 +137,7 @@ class TmaCourseOverviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = TmaCourseOverview
         fields = (
-            'is_manager_only', 'is_mandatory', 'is_vodeclic', 'liked_total', 'active_enrollments_total', 'favourite_total', 'tag', 'onboarding'
+            'is_manager_only', 'is_mandatory', 'is_vodeclic', 'liked_total', 'favourite_total', 'tag', 'onboarding'
         )
 
 
@@ -480,67 +481,55 @@ class CourseDetailsSerializer(serializers.ModelSerializer):
             return {}
 
     def get_tma_learners_enrolled(self, course_overview):
-        qs = CourseEnrollment.objects.filter(course_id=course_overview.id)
+        from figures.pipeline.course_daily_metrics import get_enrolled_in_exclude_admins
+        qs = get_enrolled_in_exclude_admins(course_overview.id, None)
         if qs:
             return qs.count()
         else:
             return 0
 
     def get_tma_learners_passed(self, course_overview):
-        """
-        qs = TmaCourseEnrollment.objects.filter(course_enrollment_edx__course_id=course_overview.id)
-        passed_learners = 0
-        if qs:
-            for obj in qs:
-                if obj.has_validated_course:
-                    passed_learners = passed_learners + 1
-            return passed_learners
-        else:
-            return passed_learners
-        """
-        qs = TmaCourseEnrollment.objects.filter(course_enrollment_edx__course_id=course_overview.id, has_validated_course=True)
+        staff = CourseStaffRole(course_overview.id).users_with_role()
+        admins = CourseInstructorRole(course_overview.id).users_with_role()
+        coaches = CourseCcxCoachRole(course_overview.id).users_with_role()
+
+        qs = TmaCourseEnrollment.objects.filter(course_enrollment_edx__user__id=2, course_enrollment_edx__course_id=course_overview.id, has_validated_course=True).exclude(course_enrollment_edx__user__in=staff).exclude(course_enrollment_edx__user__in=admins).exclude(course_enrollment_edx__user__in=coaches)
         if qs:
             return qs.count()
         else:
             return 0
 
     def get_tma_learners_invited(self, course_overview):
-        qs = CourseEnrollmentAllowed.objects.filter(course_id=course_overview.id)
+        qs = ManualEnrollmentAudit.objects.filter(enrollment__course_id=course_overview.id)
         if qs:
             return qs.count()
         else:
             return 0
     
     def get_tma_started(self, course_overview):
-        qs = TmaCourseEnrollment.objects.filter(course_enrollment_edx__course_id=course_overview.id).exclude(completion_rate=0)
+        from figures.pipeline.course_daily_metrics import get_enrolled_in_exclude_admins
+        qs = get_enrolled_in_exclude_admins(course_overview.id, None)
+        qs = qs.filter(course_id=course_overview.id).exclude(tmacourseenrollment__completion_rate=0)
         if qs:
             return qs.count()
         else:
             return 0
 
     def get_tma_completed(self, course_overview):
-        """
-            Gets all learners real completion for a course, i.e not completion as passed exercises but completion as visited blocks.
-        """
-        """
-        qs = TmaCourseEnrollment.objects.filter(course_enrollment_edx__course_id=course_overview.id)
-        users_fully_completed = 0
-        if qs:
-            for obj in qs:
-                if obj.completion_rate == 1:
-                    users_fully_completed = users_fully_completed + 1
-            return users_fully_completed
-        else:
-            return users_fully_completed
-        """
-        qs = TmaCourseEnrollment.objects.filter(course_enrollment_edx__course_id=course_overview.id, completion_rate=1)
+        from figures.pipeline.course_daily_metrics import get_enrolled_in_exclude_admins
+        qs = get_enrolled_in_exclude_admins(course_overview.id, None)
+        qs = qs.filter(course_id=course_overview.id, tmacourseenrollment__completion_rate=1)
         if qs:
             return qs.count()
         else:
             return 0
 
     def get_tma_partially_completed(self, course_overview):
-        qs = TmaCourseEnrollment.objects.filter(course_enrollment_edx__course_id=course_overview.id)
+        staff = CourseStaffRole(course_overview.id).users_with_role()
+        admins = CourseInstructorRole(course_overview.id).users_with_role()
+        coaches = CourseCcxCoachRole(course_overview.id).users_with_role()
+
+        qs = TmaCourseEnrollment.objects.filter(course_enrollment_edx__course_id=course_overview.id).exclude(course_enrollment_edx__user__in=staff).exclude(course_enrollment_edx__user__in=admins).exclude(course_enrollment_edx__user__in=coaches)
         users_partially_completed = 0
         if qs:
             for obj in qs:
@@ -551,17 +540,11 @@ class CourseDetailsSerializer(serializers.ModelSerializer):
             return users_partially_completed
 
     def get_tma_average_score(self, course_overview):
-        """
-        qs = TmaCourseEnrollment.objects.filter(course_enrollment_edx__course_id=course_overview.id)
-        average_score = 0
-        if qs:
-            for obj in qs:
-                average_score = average_score + obj.best_student_grade
-            return (average_score/qs.count())
-        else:
-            return average_score
-        """
-        qs = TmaCourseEnrollment.objects.filter(course_enrollment_edx__course_id=course_overview.id).aggregate(Avg('best_student_grade'))
+        staff = CourseStaffRole(course_overview.id).users_with_role()
+        admins = CourseInstructorRole(course_overview.id).users_with_role()
+        coaches = CourseCcxCoachRole(course_overview.id).users_with_role()
+        
+        qs = TmaCourseEnrollment.objects.filter(course_enrollment_edx__course_id=course_overview.id).exclude(course_enrollment_edx__user__in=staff).exclude(course_enrollment_edx__user__in=admins).exclude(course_enrollment_edx__user__in=coaches).aggregate(Avg('best_student_grade'))
         if qs:
             return qs.get("best_student_grade__avg")
         else:

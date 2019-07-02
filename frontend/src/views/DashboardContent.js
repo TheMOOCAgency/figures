@@ -29,6 +29,7 @@ class DashboardContent extends Component {
       .then(response => response.json())
       .then(json => this.setState({
         coursesDetailed: Immutable.fromJS(json['results'])
+        //coursesDetailed: Immutable.fromJS(json)
       }))
   }
 

@@ -96,7 +96,6 @@ class AutoCompleteCourseSelect extends Component {
       <Link className={styles['suggestion-link']} to={'/figures/course/' + suggestion.courseId} onClick={this.modalTrigger}><span className={styles['suggestion-link__course-id']}>{suggestion.courseNumber}</span><span className={styles['suggestion-link__course-name']}>{suggestion.courseName}</span></Link>
     );
 
-
     return (
       <div className={styles['ac-course-selector']}>
         <button onClick={this.modalTrigger} className={cx({ 'selector-trigger-button': true, 'positive': !this.props.negativeStyleButton, 'negative': this.props.negativeStyleButton })}>{this.props.buttonText}</button>
