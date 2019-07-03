@@ -107,7 +107,7 @@ class CoursesList extends Component {
           courseIsSelfPaced={item.get('self_paced')}
           startDate={item.get('start_date')}
           endDate={item.get('end_date')}
-          nbLeaners={item.get('tma_learners_enrolled')}
+          nbLeaners={item.getIn(['learners_enrolled', 'current_month'])}
           learnersCompleted={item.get('tma_completed')}
           certificatesAwarded={item.get('tma_learners_passed')}
           tag={item.getIn(['tma_course', 'tag'])}
