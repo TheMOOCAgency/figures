@@ -55,7 +55,7 @@ import figures.sites
 # TMA imports
 from lms.djangoapps.tma_apps.models import TmaCourseOverview, TmaCourseEnrollment
 from student.roles import CourseCcxCoachRole, CourseInstructorRole, CourseStaffRole
-from student.models import User, ManualEnrollmentAudit
+from student.models import User, CourseEnrollmentAllowed
 from django.db.models import Avg
 import logging
 
@@ -493,14 +493,14 @@ class CourseDetailsSerializer(serializers.ModelSerializer):
         admins = CourseInstructorRole(course_overview.id).users_with_role()
         coaches = CourseCcxCoachRole(course_overview.id).users_with_role()
 
-        qs = TmaCourseEnrollment.objects.filter(course_enrollment_edx__user__id=2, course_enrollment_edx__course_id=course_overview.id, has_validated_course=True).exclude(course_enrollment_edx__user__in=staff).exclude(course_enrollment_edx__user__in=admins).exclude(course_enrollment_edx__user__in=coaches)
+        qs = TmaCourseEnrollment.objects.filter(course_enrollment_edx__course_id=course_overview.id, has_validated_course=True).exclude(course_enrollment_edx__user__in=staff).exclude(course_enrollment_edx__user__in=admins).exclude(course_enrollment_edx__user__in=coaches)
         if qs:
             return qs.count()
         else:
             return 0
 
     def get_tma_learners_invited(self, course_overview):
-        qs = ManualEnrollmentAudit.objects.filter(enrollment__course_id=course_overview.id)
+        qs = CourseEnrollmentAllowed.may_enroll_and_unenrolled(course_overview.id)
         if qs:
             return qs.count()
         else:
@@ -509,7 +509,7 @@ class CourseDetailsSerializer(serializers.ModelSerializer):
     def get_tma_started(self, course_overview):
         from figures.pipeline.course_daily_metrics import get_enrolled_in_exclude_admins
         qs = get_enrolled_in_exclude_admins(course_overview.id, None)
-        qs = qs.filter(course_id=course_overview.id).exclude(tmacourseenrollment__completion_rate=0)
+        qs = qs.filter(course_id=course_overview.id).exclude(tmacourseenrollment__completion_rate__gt=0)
         if qs:
             return qs.count()
         else:

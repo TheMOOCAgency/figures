@@ -181,8 +181,8 @@ class SingleCourseContent extends Component {
           />
           <BaseStatCard
             cardTitle='Not started'
-            mainValue={(this.state.courseData.get('tma_learners_enrolled') - this.state.courseData.get('tma_started'))}
-            secondaryValue={this.state.courseData.get('tma_learners_enrolled')}
+            mainValue={(this.state.courseData.getIn(['learners_enrolled', 'current_month']) - this.state.courseData.get('tma_started'))}
+            secondaryValue={this.state.courseData.getIn(['learners_enrolled', 'current_month'])}
             compareToPercent={true}
             compareToPrevious={false}
             enableHistory={false}
@@ -192,7 +192,7 @@ class SingleCourseContent extends Component {
           <BaseStatCard
             cardTitle='Started'
             mainValue={this.state.courseData.get('tma_started')}
-            secondaryValue={this.state.courseData.get('tma_learners_enrolled')}
+            secondaryValue={this.state.courseData.getIn(['learners_enrolled', 'current_month'])}
             compareToPercent={true}
             compareToPrevious={false}
             enableHistory={false}
@@ -221,8 +221,8 @@ class SingleCourseContent extends Component {
           <BaseStatCard
             cardTitle='Participation rate'
             mainValue={
-              (this.state.courseData.get('tma_learners_enrolled') !== 0) ?
-              ( (this.state.courseData.get('tma_completed') +  this.state.courseData.get('tma_partially_completed')) / this.state.courseData.get('tma_learners_enrolled') ) :
+              (this.state.courseData.getIn(['learners_enrolled', 'current_month']) !== 0) ?
+              ( (this.state.courseData.get('tma_completed') +  this.state.courseData.get('tma_partially_completed')) / this.state.courseData.getIn(['learners_enrolled', 'current_month']) ) :
               0
             }
             dataType='percentage'
@@ -245,7 +245,7 @@ class SingleCourseContent extends Component {
           <BaseStatCard
             cardTitle='Non certified'
             mainValue={
-              this.state.courseData.get('tma_learners_enrolled') - this.state.courseData.get('tma_learners_passed')
+              this.state.courseData.getIn(['learners_enrolled', 'current_month']) - this.state.courseData.get('tma_learners_passed')
             }
             compareToPrevious={false}
             enableHistory={false}

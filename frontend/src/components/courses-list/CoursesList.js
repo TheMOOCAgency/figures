@@ -107,16 +107,9 @@ class CoursesList extends Component {
           courseIsSelfPaced={item.get('self_paced')}
           startDate={item.get('start_date')}
           endDate={item.get('end_date')}
-          learnersInvited={item.get('tma_learners_invited')}
-          learnersStarted={
-            (item.get('tma_learners_enrolled') !== 0) ?
-            (item.getIn(['tma_started']) / item.get('tma_learners_enrolled')).toFixed(2) : 0
-          }
-          learnersCompleted={
-            (item.get('tma_learners_enrolled') !== 0) ?
-            (item.get('tma_completed') / item.get('tma_learners_enrolled')).toFixed(2) : 0
-          }
-          learnersNotStarted={(item.get('tma_learners_enrolled') - item.get('tma_started'))}
+          nbLeaners={item.getIn(['learners_enrolled', 'current_month'])}
+          learnersCompleted={item.get('tma_completed')}
+          certificatesAwarded={item.get('tma_learners_passed')}
           tag={item.getIn(['tma_course', 'tag'])}
           language={item.get('language')}
           key={index}
