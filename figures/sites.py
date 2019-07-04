@@ -104,9 +104,9 @@ def get_courses_for_site(site):
     """
     if figures.helpers.is_multisite():
         course_keys = get_course_keys_for_site(site)
-        courses = CourseOverview.objects.filter(id__in=course_keys)
+        courses = CourseOverview.objects.filter(id__in=course_keys).exclude(tmacoursoverview__is_vodeclic=True)
     else:
-        courses = CourseOverview.objects.all()
+        courses = CourseOverview.objects.filter(tmacoursoverview__is_vodeclic=False)
     return courses
 
 
@@ -155,7 +155,8 @@ def get_users_for_org(org):
         This function is specific to TMA multi-microsites platforms.
     """
     if bool(settings.FEATURES.get('FIGURES_HAS_MICROSITES', False)):
-        users = UserProfile.objects.filter(custom_field__microsite__icontains=org)
+        log.info(org)
+        users = UserProfile.objects.filter(custom_field__icontains=org)
     else:
         users = get_user_model().objects.all()
     return users

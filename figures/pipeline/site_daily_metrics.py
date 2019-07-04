@@ -124,7 +124,14 @@ class SiteDailyMetricsExtractor(object):
 
         data = dict()
 
-        site_users = figures.sites.get_users_for_site(site)
+        # TMA retrieve microsite org to get users
+        org = ""
+        if bool(settings.FEATURES.get('FIGURES_HAS_MICROSITES', False)):
+            org_whitelist,org_blacklist = get_org_black_and_whitelist_for_site()
+            if org_whitelist:
+                org = org_whitelist[0]
+
+        site_users = figures.sites.get_users_for_org(org)
         user_count = site_users.filter(
             date_joined__lt=as_datetime(next_day(date_for))).count()
         site_courses = figures.sites.get_courses_for_site(site)
@@ -138,16 +145,6 @@ class SiteDailyMetricsExtractor(object):
         data['total_user_count'] = user_count
         data['course_count'] = course_count
         data['total_enrollment_count'] = get_total_enrollment_count(site, date_for)
-
-        org = ""
-        if bool(settings.FEATURES.get('FIGURES_HAS_MICROSITES', False)):
-            # Get current org
-            org_whitelist,org_blacklist = get_org_black_and_whitelist_for_site()
-            if org_whitelist:
-                org = org_whitelist[0]
-
-        users = figures.sites.get_users_for_org(org)
-        log.info(users)
 
         return data
 
@@ -198,4 +195,5 @@ class SiteDailyMetricsLoader(object):
                 total_enrollment_count=data['total_enrollment_count'],
             )
         )
+        
         return site_metrics, created
