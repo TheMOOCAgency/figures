@@ -15,6 +15,13 @@ from figures.helpers import as_course_key, as_datetime, next_day, prev_day
 from figures.models import CourseDailyMetrics, SiteDailyMetrics
 import figures.sites
 
+# TMA IMPORTS
+import logging
+from django.conf import settings
+from student.views.dashboard import get_org_black_and_whitelist_for_site
+
+log = logging.getLogger()
+
 
 #
 # Standalone helper methods
@@ -131,6 +138,17 @@ class SiteDailyMetricsExtractor(object):
         data['total_user_count'] = user_count
         data['course_count'] = course_count
         data['total_enrollment_count'] = get_total_enrollment_count(site, date_for)
+
+        org = ""
+        if bool(settings.FEATURES.get('FIGURES_HAS_MICROSITES', False)):
+            # Get current org
+            org_whitelist,org_blacklist = get_org_black_and_whitelist_for_site()
+            if org_whitelist:
+                org = org_whitelist[0]
+
+        users = figures.sites.get_users_for_org(org)
+        log.info(users)
+
         return data
 
 

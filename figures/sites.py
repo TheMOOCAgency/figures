@@ -20,7 +20,7 @@ import organizations
 from openedx.core.djangoapps.content.course_overviews.models import (
     CourseOverview,
 )
-from student.models import CourseEnrollment
+from student.models import UserProfile, CourseEnrollment
 
 from figures.helpers import as_course_key
 import figures.helpers
@@ -143,6 +143,19 @@ def get_users_for_site(site):
     if figures.helpers.is_multisite():
         user_ids = get_user_ids_for_site(site)
         users = get_user_model().objects.filter(id__in=user_ids)
+    else:
+        users = get_user_model().objects.all()
+    return users
+
+
+def get_users_for_org(org):
+    """
+        If "FIGURES_HAS_MICROSITES" setting is true : returns the users registered in a specific microsite (the info is stored in auth_userprofile.custom_field)
+
+        This function is specific to TMA multi-microsites platforms.
+    """
+    if bool(settings.FEATURES.get('FIGURES_HAS_MICROSITES', False)):
+        users = UserProfile.objects.filter(custom_field__microsite__icontains=org)
     else:
         users = get_user_model().objects.all()
     return users
