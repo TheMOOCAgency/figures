@@ -26,7 +26,10 @@ from figures.helpers import as_course_key
 import figures.helpers
 
 # TMA IMPORTS
+from django.contrib.sites.models import Site
 from django.conf import settings
+from student.views.dashboard import get_org_black_and_whitelist_for_site
+
 import logging
 log = logging.getLogger()
 
@@ -79,6 +82,24 @@ def get_site_for_course(course_id):
     return site
 
 
+def get_org_for_course(course_id):
+    """
+    If "FIGURES_HAS_MICROSITES" setting is true : returns the site based on the org related to the course_id
+
+    This function is specific to TMA multi-microsites platforms.
+    """
+    site = None
+    if bool(settings.FEATURES.get('FIGURES_HAS_MICROSITES', False)):
+        for site in Site.objects.all()
+            org = site.domain.split('.')[0]
+            if org in str(course_id):
+                site = site    
+    else:
+        # Operating in single site / standalone mode, return the default site
+        site = Site.objects.get(id=settings.SITE_ID)
+    return site
+
+
 def get_organizations_for_site(site):
     """
     TODO: Refactor the functions in this module that make this call
@@ -104,18 +125,18 @@ def get_courses_for_site(site):
     """
     if figures.helpers.is_multisite():
         course_keys = get_course_keys_for_site(site)
-        courses = CourseOverview.objects.filter(id__in=course_keys).exclude(tmacoursoverview__is_vodeclic=True)
+        courses = CourseOverview.objects.filter(id__in=course_keys).exclude(tmacourseoverview__is_vodeclic=True)
     else:
-        courses = CourseOverview.objects.filter(tmacoursoverview__is_vodeclic=False)
+        courses = CourseOverview.objects.filter(tmacourseoverview__is_vodeclic=False)
     return courses
 
 
 def get_courses_for_org(org):
     """
-        If "FIGURES_HAS_MICROSITES" setting is true : returns the courses accessible by the user on the microsite, excluding Vodeclic courses
-        Else, returns all courses (except Vodeclic)
+    If "FIGURES_HAS_MICROSITES" setting is true : returns the courses accessible by the user on the microsite, excluding Vodeclic courses
+    Else, returns all courses (except Vodeclic)
 
-        This function is specific to TMA multi-microsites platforms.
+    This function is specific to TMA multi-microsites platforms.
     """
 
     if bool(settings.FEATURES.get('FIGURES_HAS_MICROSITES', False)):
@@ -150,13 +171,13 @@ def get_users_for_site(site):
 
 def get_users_for_org(org):
     """
-        If "FIGURES_HAS_MICROSITES" setting is true : returns the users registered in a specific microsite (the info is stored in auth_userprofile.custom_field)
+    If "FIGURES_HAS_MICROSITES" setting is true : returns the users registered in a specific microsite (the info is stored in auth_userprofile.custom_field)
 
-        This function is specific to TMA multi-microsites platforms.
+    This function is specific to TMA multi-microsites platforms.
     """
     if bool(settings.FEATURES.get('FIGURES_HAS_MICROSITES', False)):
         log.info(org)
-        users = UserProfile.objects.filter(custom_field__icontains=org)
+        users = get_user_model().objects.filter(profile__custom_field__icontains=org)
     else:
         users = get_user_model().objects.all()
     return users

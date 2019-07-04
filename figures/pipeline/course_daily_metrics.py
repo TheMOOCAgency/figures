@@ -293,7 +293,7 @@ class CourseDailyMetricsLoader(object):
         self.course_id = course_id
         # TODO: Consider adding extractor as optional param
         self.extractor = CourseDailyMetricsExtractor()
-        self.site = figures.sites.get_site_for_course(self.course_id)
+        self.site = figures.sites.get_org_for_course(self.course_id)
 
     def get_data(self, date_for):
         return self.extractor.extract(

@@ -124,17 +124,15 @@ class SiteDailyMetricsExtractor(object):
 
         data = dict()
 
-        # TMA retrieve microsite org to get users
-        org = ""
-        if bool(settings.FEATURES.get('FIGURES_HAS_MICROSITES', False)):
-            org_whitelist,org_blacklist = get_org_black_and_whitelist_for_site()
-            if org_whitelist:
-                org = org_whitelist[0]
+        # TMA retrieve org 
+        org = site.domain.split('.')[0]
 
+        # Specific TMA function :
         site_users = figures.sites.get_users_for_org(org)
         user_count = site_users.filter(
             date_joined__lt=as_datetime(next_day(date_for))).count()
-        site_courses = figures.sites.get_courses_for_site(site)
+        # Specific TMA function :
+        site_courses = figures.sites.get_courses_for_org(org)
         course_count = site_courses.filter(
             created__lt=as_datetime(next_day(date_for))).count()
 
