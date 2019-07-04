@@ -288,7 +288,7 @@ class GeneralCourseDataSerializer(serializers.Serializer):
         We do this because the figures.metrics calls we are making require the
         site object as a parameter
         """
-        self.site = figures.sites.get_site_for_course(instance)
+        self.site = figures.sites.get_org_for_course(instance)
         ret = super(GeneralCourseDataSerializer, self).to_representation(instance)
         return ret
 
@@ -411,7 +411,7 @@ class CourseDetailsSerializer(serializers.ModelSerializer):
         We do this because the figures.metrics calls we are making require the
         site object as a parameter
         """
-        self.site = figures.sites.get_site_for_course(instance)
+        self.site = figures.sites.get_org_for_course(instance)
         ret = super(CourseDetailsSerializer, self).to_representation(instance)
         return ret
 
