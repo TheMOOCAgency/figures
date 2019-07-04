@@ -308,9 +308,6 @@ class CourseDailyMetricsLoader(object):
         Raises django.core.exceptions.ValidationError if the record fails
         validation
         """
-        log.info('LALALALALAL')
-        log.info(self.site)
-
         cdm, created = CourseDailyMetrics.objects.update_or_create(
             course_id=self.course_id,
             site=self.site,
