@@ -266,7 +266,9 @@ def get_total_site_users_for_time_period(site, start_date, end_date, **kwargs):
         filter_args = dict(
             date_joined__lt=next_day(end_date),
         )
-        users = figures.sites.get_users_for_site(site)
+        # TMA retrieve org 
+        org = site.domain.split('.')[0]
+        users = figures.sites.get_users_for_org(org)
         return users.filter(**filter_args).count()
 
     def calc_from_site_daily_metrics():
