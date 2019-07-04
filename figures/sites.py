@@ -88,12 +88,12 @@ def get_org_for_course(course_id):
 
     This function is specific to TMA multi-microsites platforms.
     """
-    site = None
+    site = Site.objects.get(id=settings.SITE_ID)
     if bool(settings.FEATURES.get('FIGURES_HAS_MICROSITES', False)):
-        for site in Site.objects.all()
-            org = site.domain.split('.')[0]
+        for site_obj in Site.objects.all():
+            org = site_obj.domain.split('.')[0]
             if org in str(course_id):
-                site = site    
+                site = site_obj
     else:
         # Operating in single site / standalone mode, return the default site
         site = Site.objects.get(id=settings.SITE_ID)
@@ -176,7 +176,6 @@ def get_users_for_org(org):
     This function is specific to TMA multi-microsites platforms.
     """
     if bool(settings.FEATURES.get('FIGURES_HAS_MICROSITES', False)):
-        log.info(org)
         users = get_user_model().objects.filter(profile__custom_field__icontains=org)
     else:
         users = get_user_model().objects.all()
