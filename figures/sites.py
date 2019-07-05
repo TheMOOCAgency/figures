@@ -176,7 +176,8 @@ def get_users_for_org(org):
     This function is specific to TMA multi-microsites platforms.
     """
     if bool(settings.FEATURES.get('FIGURES_HAS_MICROSITES', False)):
-        users = get_user_model().objects.filter(courseenrollment__course_id__contains=org)
+        ce = CourseEnrollment.objects.filter(course__org__contains=org, course__tmacourseoverview__is_vodeclic=False).values_list('user_id', flat=True)
+        users = get_user_model().objects.filter(id__in=ce)
     else:
         users = get_user_model().objects.all()
     return users
