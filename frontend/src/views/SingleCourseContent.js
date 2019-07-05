@@ -251,18 +251,20 @@ class SingleCourseContent extends Component {
             enableHistory={false}
             tooltipText="Learners who did not validate the course."
           />
-          <BaseStatCard
-            cardTitle='Average score'
-            mainValue={
-              (this.state.courseData.get('tma_learners_passed') !== 0) ?
-              (this.state.courseData.get('tma_average_score') / this.state.courseData.get('tma_learners_passed')) :
-              0
-            }
-            dataType='percentage'
-            compareToPrevious={false}
-            enableHistory={false}
-            tooltipText="Average score of all learners for this course."
-          />
+          {this.state.courseData.getIn(['tma_course', 'is_course_graded']) && 
+            <BaseStatCard
+              cardTitle='Average score'
+              mainValue={
+                (this.state.courseData.get('tma_learners_passed') !== 0) ?
+                (this.state.courseData.get('tma_average_score') / this.state.courseData.get('tma_learners_passed')) :
+                0
+              }
+              dataType='percentage'
+              compareToPrevious={false}
+              enableHistory={false}
+              tooltipText="Average score of all learners for this course."
+            />
+          }
         </div>
         <div className={cx({ 'container': true, 'base-grid-layout': true, 'dashboard-content': true})}>
           {/*

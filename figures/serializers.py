@@ -137,7 +137,7 @@ class TmaCourseOverviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = TmaCourseOverview
         fields = (
-            'is_manager_only', 'is_mandatory', 'is_vodeclic', 'liked_total', 'favourite_total', 'tag', 'onboarding'
+            'is_manager_only', 'is_mandatory', 'is_vodeclic', 'liked_total', 'favourite_total', 'is_course_graded', 'tag', 'onboarding'
         )
 
 
