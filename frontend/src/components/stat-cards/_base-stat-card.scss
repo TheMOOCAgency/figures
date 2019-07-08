@@ -4,6 +4,7 @@
 @import '~base/sass/base/stat-cards';
 
 .learner-stat-card {
+  font-size: calcRem(10);
   margin: calcRem(20) 0;
   grid-column-end: span 1;
   height: 8rem;
