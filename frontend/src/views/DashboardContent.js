@@ -28,7 +28,7 @@ class DashboardContent extends Component {
     fetch(apiConfig.coursesDetailed, { credentials: "same-origin" })
       .then(response => response.json())
       .then(json => this.setState({
-        coursesDetailed: Immutable.fromJS(json['results'])
+        coursesDetailed: Immutable.fromJS(json)
         //coursesDetailed: Immutable.fromJS(json)
       }))
   }

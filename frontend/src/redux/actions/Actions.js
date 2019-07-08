@@ -25,7 +25,7 @@ export function fetchCoursesIndex () {
     dispatch(addActiveApiFetch())
     return fetch(apiConfig.coursesGeneral, { credentials: "same-origin" })
       .then(response => response.json())
-      .then(json => dispatch(loadCoursesIndex(json['results'])))
+      .then(json => dispatch(loadCoursesIndex(json)))
       .then(dispatch(removeActiveApiFetch()));
   }
 }
@@ -44,7 +44,7 @@ export function fetchUserIndex () {
     dispatch(addActiveApiFetch())
     return fetch(apiConfig.learnersGeneral, { credentials: "same-origin" })
       .then(response => response.json())
-      .then(json => dispatch(loadUserIndex(json.results)))
+      .then(json => dispatch(loadUserIndex(json)))
       .then(dispatch(removeActiveApiFetch()));
   }
 }
