@@ -10,6 +10,12 @@ import organizations
 import figures.helpers
 import figures.sites
 
+# TMA imports
+from student.models import CourseAccessRole
+import logging
+
+log = logging.getLogger()
+
 
 class MultipleOrgsPerUserNotSupported(Exception):
     pass
@@ -82,7 +88,12 @@ def is_site_admin_user(request):
             else:
                 has_permission = False
         else:
-            has_permission = is_active_staff_or_superuser(request)
+            if CourseAccessRole.objects.filter(user_id=request.user.id):
+                log.info('User is staff or instructor for at least one course')
+                has_permission = True
+            else:
+                log.info('User not instructor of any course')
+                has_permission = is_active_staff_or_superuser(request)
     return has_permission
 
 

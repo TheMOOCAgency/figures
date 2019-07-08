@@ -59,6 +59,7 @@ import figures.helpers
 import figures.sites
 
 # TMA IMPORTS
+from student.models import CourseAccessRole
 from student.views.dashboard import get_org_black_and_whitelist_for_site
 from django.conf import settings
 from django.core.management import call_command
@@ -77,7 +78,6 @@ UNAUTHORIZED_USER_REDIRECT_URL = '/'
 @login_required
 def figures_home(request):
     '''Renders the JavaScript SPA dashboard
-
 
     TODO: Should we make this a view class?
 
@@ -295,7 +295,18 @@ class GeneralCourseDataViewSet(CommonAuthMixin, viewsets.ReadOnlyModelViewSet):
             org = ""
 
         queryset = figures.sites.get_courses_for_org(org)
-        return queryset
+
+        ### TMA ###
+        # If user is_staff or _is_superuser : access to all courses
+        if figures.permissions.is_active_staff_or_superuser(self.request):
+            log.info('User has all access')
+            return queryset
+        # Else, only access to managed courses as instructor or course staff
+        else:
+            log.info('User has restricted access')
+            courseids_with_access = CourseAccessRole.objects.filter(user_id=self.request.user.id).values_list('course_id', flat=True)
+            return queryset.filter(id__in=courseids_with_access)
+
 
     def retrieve(self, request, *args, **kwargs):
         course_id_str = kwargs.get('pk', '')
@@ -330,7 +341,17 @@ class CourseDetailsViewSet(CommonAuthMixin, viewsets.ReadOnlyModelViewSet):
             org = ""
 
         queryset = figures.sites.get_courses_for_org(org)
-        return queryset
+
+        ### TMA ###
+        # If user is_staff or _is_superuser : access to all courses
+        if figures.permissions.is_active_staff_or_superuser(self.request):
+            log.info('User has all access')
+            return queryset
+        # Else, only access to managed courses as instructor or course staff
+        else:
+            log.info('User has restricted access')
+            courseids_with_access = CourseAccessRole.objects.filter(user_id=self.request.user.id).values_list('course_id', flat=True)
+            return queryset.filter(id__in=courseids_with_access)
 
     def retrieve(self, request, *args, **kwargs):
         # NOTE: Duplicating code in GeneralCourseDataViewSet. Candidate to dry up
