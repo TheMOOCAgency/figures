@@ -823,6 +823,9 @@ class LearnerDetailsSerializer(serializers.ModelSerializer):
         allow_blank=True, required=False,)
     bio = serializers.CharField(source='profile.bio', required=False)
 
+    # TMA info #
+    rpid = serializers.CharField(source='profile.rpid', default=None,)
+
     # We may want to exclude this unless we want to show
     # profile images in Figures
     profile_image = serializers.SerializerMethodField()
@@ -837,7 +840,7 @@ class LearnerDetailsSerializer(serializers.ModelSerializer):
         model = get_user_model()
         editable = False
         fields = (
-            'id', 'username', 'name', 'email', 'country', 'is_active',
+            'id', 'username', 'name', 'email', 'rpid', 'country', 'is_active',
             'year_of_birth', 'level_of_education', 'gender', 'date_joined',
             'bio', 'courses', 'language_proficiencies', 'profile_image',
             )

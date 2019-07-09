@@ -4,8 +4,7 @@
 @import '~base/sass/base/stat-cards';
 
 .user-courses-list {
-  grid-column: span 3;
-  padding-left: calcRem(30);
+  grid-column: span 4;
 }
 
 .course-item {
@@ -40,6 +39,7 @@
       color: $base-text-color;
       margin-bottom: calcRem(10);
       line-height: 130%;
+      text-decoration: none;
     }
   }
 

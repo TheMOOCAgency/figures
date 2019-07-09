@@ -4,7 +4,7 @@
 @import '~base/sass/base/stat-cards';
 
 .user-content {
-  padding: calcRem(40) 0 calcRem(70);
+  padding: calcRem(10) calcRem(20) calcRem(10) calcRem(20);
 
   .user-information {
     grid-column-end: span 1;

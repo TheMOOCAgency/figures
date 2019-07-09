@@ -13,7 +13,7 @@ import apiConfig from 'base/apiConfig';
 //import { timingSafeEqual } from 'crypto';
 
 // IMPORT TMA
-//import LearnerStats from 'base/components/course-learners-list/LearnerStats.js'
+import LearnerStats from 'base/components/course-learners-list/LearnerStats.js'
 
 let cx = classNames.bind(styles);
 
@@ -267,19 +267,23 @@ class SingleCourseContent extends Component {
           }
         </div>
         <div className={cx({ 'container': true, 'base-grid-layout': true, 'dashboard-content': true})}>
-          {/*
+          {
+            /*
             <LearnerStats
               url={this.state.lastReport.url}
             />
+            
             <LearnerStatistics
               learnersData = {this.state.learnersList}
             />
+
             <CourseLearnersList
               courseId = {this.props.courseId}
               allLearnersLoaded = {this.state.allLearnersLoaded}
               apiFetchMoreLearnersFunction = {this.fetchLearnersData}
               learnersData = {this.state.learnersList}
-            />*/}
+            />*/
+          }
         </div>
         <div className={cx({ 'container': true, 'base-grid-layout': true, 'dashboard-content': true})}>
         </div>
