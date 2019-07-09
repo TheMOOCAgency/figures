@@ -2,7 +2,7 @@
 @import '~base/sass/base/functions';
 
 .header-content-user {
-  padding: 1rem 1rem 3rem 2rem;
+  padding: 5rem 1rem 10rem 1rem;
   position: relative;
   height: calcRem(80);
 
@@ -20,20 +20,21 @@
   }
 
   .user-name {
-    display: flex;
+    display: block;
     margin-top: calcRem(4);
     margin-bottom: calcRem(3);
     font-size: calcRem(22);
     font-weight: bold;
     line-height: 100%;
+    text-align: center;
   }
 
   .user-info {
-    display: flex;
+    display: block;
     padding: 0.5rem 0 0.5rem 0;
     font-size: calcRem(10);
     align-self: center;
-    vertical-align: middle;
+    text-align: center;
   }
   .user-info > a {
     color: white;
