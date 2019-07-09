@@ -2832,7 +2832,7 @@ textarea.input__2lx3TsF4, input[type="text"].input__2lx3TsF4, input[type="url"].
  * Usage: pick-visible-color($bg-color, $color-1, $color-2)
  */
 .header-content-user__2DVar5gk {
-  padding: 5rem 1rem 10rem 1rem;
+  padding: 0rem 1rem 14rem 1rem;
   position: relative;
   height: 8rem; }
   .header-content-user__2DVar5gk .user-image__3tJdyS1w {
@@ -2848,8 +2848,8 @@ textarea.input__2lx3TsF4, input[type="text"].input__2lx3TsF4, input[type="url"].
     border: 0.8rem solid rgba(44, 42, 47, 0.1); }
   .header-content-user__2DVar5gk .user-name__1tDGdjLN {
     display: block;
-    margin-top: 0.4rem;
-    margin-bottom: 0.3rem;
+    margin-top: 4rem;
+    margin-bottom: 3rem;
     font-size: 2.2rem;
     font-weight: bold;
     line-height: 100%;
@@ -2857,7 +2857,7 @@ textarea.input__2lx3TsF4, input[type="text"].input__2lx3TsF4, input[type="url"].
   .header-content-user__2DVar5gk .user-info__3EHKp97N {
     display: block;
     padding: 0.5rem 0 0.5rem 0;
-    font-size: 1rem;
+    font-size: 1.4rem;
     align-self: center;
     text-align: center; }
   .header-content-user__2DVar5gk .user-info__3EHKp97N > a {

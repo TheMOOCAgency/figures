@@ -2,7 +2,7 @@
 @import '~base/sass/base/functions';
 
 .header-content-user {
-  padding: 5rem 1rem 10rem 1rem;
+  padding: 0rem 1rem 14rem 1rem;
   position: relative;
   height: calcRem(80);
 
@@ -21,8 +21,8 @@
 
   .user-name {
     display: block;
-    margin-top: calcRem(4);
-    margin-bottom: calcRem(3);
+    margin-top: calcRem(40);
+    margin-bottom: calcRem(30);
     font-size: calcRem(22);
     font-weight: bold;
     line-height: 100%;
@@ -32,7 +32,7 @@
   .user-info {
     display: block;
     padding: 0.5rem 0 0.5rem 0;
-    font-size: calcRem(10);
+    font-size: calcRem(14);
     align-self: center;
     text-align: center;
   }
