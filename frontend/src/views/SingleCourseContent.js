@@ -268,10 +268,11 @@ class SingleCourseContent extends Component {
         </div>
         <div className={cx({ 'container': true, 'base-grid-layout': true, 'dashboard-content': true})}>
           {
+            /*
             <LearnerStats
               url={this.state.lastReport.url}
             />
-            /*
+            
             <LearnerStatistics
               learnersData = {this.state.learnersList}
             />
