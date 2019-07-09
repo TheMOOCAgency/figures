@@ -16,7 +16,7 @@
   margin-bottom: calcRem(20);
 
   .course-info {
-    width: calcRem(250);
+    width: calcRem(200);
     padding-right: calcRem(20);
     margin-right: calcRem(20);
     border-right: 1px solid lighten($base-text-color, 70%);
@@ -34,7 +34,7 @@
 
     .course-name {
       display: block;
-      font-size: calcRem(18);
+      font-size: calcRem(14);
       font-weight: bold;
       color: $base-text-color;
       margin-bottom: calcRem(10);

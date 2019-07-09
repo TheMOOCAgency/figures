@@ -2815,7 +2815,7 @@ textarea.input__2lx3TsF4, input[type="text"].input__2lx3TsF4, input[type="url"].
           width: 8rem;
           padding-right: 2rem; }
         .user-content__T58hNXvn .user-information__gj2KRKKu .user-details__3iELyUHM li .value__4aOEZ8t3 {
-          font-size: 1.4rem;
+          font-size: 1rem;
           flex-shrink: 1;
           flex-grow: 1;
           width: 100%; }
@@ -2832,7 +2832,7 @@ textarea.input__2lx3TsF4, input[type="text"].input__2lx3TsF4, input[type="url"].
  * Usage: pick-visible-color($bg-color, $color-1, $color-2)
  */
 .header-content-user__2DVar5gk {
-  padding: 1rem 1rem 3rem 2rem;
+  padding: 5rem 1rem 10rem 1rem;
   position: relative;
   height: 8rem; }
   .header-content-user__2DVar5gk .user-image__3tJdyS1w {
@@ -2847,18 +2847,19 @@ textarea.input__2lx3TsF4, input[type="text"].input__2lx3TsF4, input[type="url"].
     margin-left: -6rem;
     border: 0.8rem solid rgba(44, 42, 47, 0.1); }
   .header-content-user__2DVar5gk .user-name__1tDGdjLN {
-    display: flex;
+    display: block;
     margin-top: 0.4rem;
     margin-bottom: 0.3rem;
     font-size: 2.2rem;
     font-weight: bold;
-    line-height: 100%; }
+    line-height: 100%;
+    text-align: center; }
   .header-content-user__2DVar5gk .user-info__3EHKp97N {
-    display: flex;
+    display: block;
     padding: 0.5rem 0 0.5rem 0;
     font-size: 1rem;
     align-self: center;
-    vertical-align: middle; }
+    text-align: center; }
   .header-content-user__2DVar5gk .user-info__3EHKp97N > a {
     color: white;
     text-decoration: none; }
@@ -3099,7 +3100,7 @@ textarea.input__2lx3TsF4, input[type="text"].input__2lx3TsF4, input[type="url"].
   padding-bottom: 2.8rem;
   margin-bottom: 2rem; }
   .course-item__2VrJr4AV .course-info__3H3LsV1p {
-    width: 25rem;
+    width: 20rem;
     padding-right: 2rem;
     margin-right: 2rem;
     border-right: 1px solid #dfdde1;
@@ -3114,7 +3115,7 @@ textarea.input__2lx3TsF4, input[type="text"].input__2lx3TsF4, input[type="url"].
       margin-bottom: 0.5rem; }
     .course-item__2VrJr4AV .course-info__3H3LsV1p .course-name__uoTNkmW5 {
       display: block;
-      font-size: 1.8rem;
+      font-size: 1.4rem;
       font-weight: bold;
       color: #2C2A2F;
       margin-bottom: 1rem;
