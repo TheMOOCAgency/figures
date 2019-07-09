@@ -29,6 +29,13 @@
   grid-auto-flow: dense;
 }
 
+.base-grid-layout-5 {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: calcRem(20);
+  grid-auto-flow: dense;
+}
+
 .grid-element {
 
   &--full-width {

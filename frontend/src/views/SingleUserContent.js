@@ -24,11 +24,13 @@ const educationLevelsDict = {
   "n-a": "Not available"
 }
 
+/*
 const genderDict = {
   "m": "Male",
   "f": "Female",
   "o": "Other / Prefer not to say"
 }
+*/
 
 let cx = classNames.bind(styles);
 
@@ -63,11 +65,12 @@ class SingleUserContent extends Component {
       <div className="ef--layout-root">
         <HeaderAreaLayout>
           <HeaderContentUser
-            image = {this.state.userData.getIn(['profile_image', 'image_url_large'])}
+            email = {this.state.userData.getIn(['email'])}
             name = {this.state.userData.getIn(['name'])}
+            rpid = {this.state.userData.getIn(['rpid'])}
           />
         </HeaderAreaLayout>
-        <div className={cx({ 'container': true, 'base-grid-layout': true, 'user-content': true})}>
+        <div className={cx({ 'container': true, 'base-grid-layout-5': true, 'user-content': true})}>
           <div className={styles['user-information']}>
             <div className={styles['name']}>
               {this.state.userData['name']}
@@ -78,16 +81,8 @@ class SingleUserContent extends Component {
                 <span className={styles['value']}>{this.state.userData.getIn(['username'])}</span>
               </li>
               <li>
-                <span className={styles['label']}>Year of birth:</span>
-                <span className={styles['value']}>{this.state.userData.getIn(['year_of_birth'])}</span>
-              </li>
-              <li>
-                <span className={styles['label']}>Gender:</span>
-                <span className={styles['value']}>{genderDict[this.state.userData.getIn(['gender'])]}</span>
-              </li>
-              <li>
                 <span className={styles['label']}>Date joined:</span>
-                <span className={styles['value']}>{dateJoined.toUTCString()}</span>
+                <span className={styles['value']}>{dateJoined.toDateString()}</span>
               </li>
               <li>
                 <span className={styles['label']}>Is active:</span>

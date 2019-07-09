@@ -35,7 +35,7 @@ class LearnerStats extends Component {
 
     getCourseStructure = () => {
         const structure = []
-        for (let [key, value] of Object.entries(this.state.learnersData[0])) {
+        for (let [key] of Object.entries(this.state.learnersData[0])) {
             if (key.includes('Earned')) {
                 structure.push(key)
             }
