@@ -12,6 +12,7 @@ import apiConfig from 'base/apiConfig';
 var countries = require("i18n-iso-countries");
 countries.registerLocale(require("i18n-iso-countries/langs/en.json"));
 
+/*
 const educationLevelsDict = {
   "p": "PhD or Doctorate",
   "m": "Master's or professional degree",
@@ -24,7 +25,6 @@ const educationLevelsDict = {
   "n-a": "Not available"
 }
 
-/*
 const genderDict = {
   "m": "Male",
   "f": "Female",
@@ -84,6 +84,7 @@ class SingleUserContent extends Component {
                 <span className={styles['label']}>Date joined:</span>
                 <span className={styles['value']}>{dateJoined.toDateString()}</span>
               </li>
+              {/*
               <li>
                 <span className={styles['label']}>Is active:</span>
                 <span className={styles['value']}>{this.state.userData.getIn(['is_active'], false) ? 'Active user' : 'User inactive'}</span>
@@ -100,6 +101,7 @@ class SingleUserContent extends Component {
                 <span className={styles['label']}>Level of education:</span>
                 <span className={styles['value']}>{this.state.userData.getIn(['level_of_education']) ? educationLevelsDict[this.state.userData.getIn(['level_of_education'])] : 'Not Available'}</span>
               </li>
+              */}
               <li>
                 <span className={styles['label']}>Email address:</span>
                 <span className={styles['value']}><a href={"mailto:" + this.state.userData.getIn(['email'])}>{this.state.userData.getIn(['email'])}</a></span>
