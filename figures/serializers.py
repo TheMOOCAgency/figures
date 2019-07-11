@@ -825,6 +825,7 @@ class LearnerDetailsSerializer(serializers.ModelSerializer):
 
     # TMA info #
     rpid = serializers.CharField(source='profile.rpid', default=None,)
+    iug = serializers.CharField(source='profile.iug', default=None,)
 
     # We may want to exclude this unless we want to show
     # profile images in Figures
@@ -840,7 +841,7 @@ class LearnerDetailsSerializer(serializers.ModelSerializer):
         model = get_user_model()
         editable = False
         fields = (
-            'id', 'username', 'name', 'email', 'rpid', 'country', 'is_active',
+            'id', 'username', 'name', 'email', 'rpid', 'iug', 'country', 'is_active',
             'year_of_birth', 'level_of_education', 'gender', 'date_joined',
             'bio', 'courses', 'language_proficiencies', 'profile_image',
             )
@@ -858,7 +859,6 @@ class LearnerDetailsSerializer(serializers.ModelSerializer):
         related serializers to explicitly link models not linked via FK
 
         """
-
         course_enrollments = figures.sites.get_course_enrollments_for_site(
             self.context.get('site')).filter(user=user)
         return LearnerCourseDetailsSerializer(course_enrollments, many=True).data

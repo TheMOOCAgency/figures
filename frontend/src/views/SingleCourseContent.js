@@ -170,6 +170,7 @@ class SingleCourseContent extends Component {
             cardTitle='Nb. of learners'
             mainValue={this.state.courseData.getIn(['learners_enrolled', 'current_month'])}
             valueHistory={this.state.courseData.getIn(['learners_enrolled', 'history'], [])}
+            tooltipText="Nb. of learners enrolled to the course and learners invited by email."
           />
           <BaseStatCard
             cardTitle='Invited'
@@ -187,7 +188,7 @@ class SingleCourseContent extends Component {
             compareToPrevious={false}
             enableHistory={false}
             replaceText='of learners'
-            tooltipText="Registered but inactive learners."
+            tooltipText="Inactive learners."
           />
           <BaseStatCard
             cardTitle='Started'
@@ -209,14 +210,14 @@ class SingleCourseContent extends Component {
             mainValue={this.state.courseData.get('tma_completed')}
             compareToPrevious={false}
             enableHistory={false}
-            tooltipText="Learners who visited every unit of the course."
+            tooltipText="Learners who visited every unit in the course. This does not mean that the learner has been awarded a certificate (ex : learner failed at the final quiz)"
           />
           <BaseStatCard
             cardTitle='Partially Completed'
             mainValue={this.state.courseData.get('tma_partially_completed')}
             compareToPrevious={false}
             enableHistory={false}
-            tooltipText="Learners who visited at least one unit of the course."
+            tooltipText="Learners who visited at least one unit of the course but not every unit of the course."
           />
           <BaseStatCard
             cardTitle='Participation rate'
@@ -233,14 +234,14 @@ class SingleCourseContent extends Component {
         </div>
         <div className={cx({ 'container': true, 'base-grid-layout': true, 'dashboard-content': true})}>
           <div className={styles['header']}>
-            <div className={styles['header-title']}>Completion</div>
+            <div className={styles['header-title']}>Learner Achievement</div>
           </div>
           <BaseStatCard
-            cardTitle='Certificates awarded'
+            cardTitle='Passed / Done'
             mainValue={this.state.courseData.get('tma_learners_passed')}
             compareToPrevious={false}
             enableHistory={false}
-            tooltipText="Learners who validated the course."
+            tooltipText="Learners who validated the course, either by succeeding the final exam or - in the case of a non graded course - by marking the course as done."
           />
           <BaseStatCard
             cardTitle='Non certified'
@@ -249,11 +250,11 @@ class SingleCourseContent extends Component {
             }
             compareToPrevious={false}
             enableHistory={false}
-            tooltipText="Learners who did not validate the course."
+            tooltipText=" Learners who were not awarded a certificate. Either because they did not attempted the final exam yet, or because they failed the final exam, or - in the case of a non graded course - because they did not mark the course as done."
           />
           {this.state.courseData.getIn(['tma_course', 'is_course_graded']) && 
             <BaseStatCard
-              cardTitle='Average score'
+              cardTitle='Average success score'
               mainValue={
                 (this.state.courseData.get('tma_learners_passed') !== 0) ?
                 (this.state.courseData.get('tma_average_score') / this.state.courseData.get('tma_learners_passed')) :
@@ -262,7 +263,7 @@ class SingleCourseContent extends Component {
               dataType='percentage'
               compareToPrevious={false}
               enableHistory={false}
-              tooltipText="Average score of all learners for this course."
+              tooltipText="Average score of all learners who were awarded a certificate."
             />
           }
         </div>
