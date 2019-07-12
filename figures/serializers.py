@@ -389,12 +389,12 @@ class CourseDetailsSerializer(serializers.ModelSerializer):
         source='lowest_passing_grade', max_digits=5, decimal_places=2, read_only=True)
     language = serializers.CharField(read_only=True)
     tma_course = serializers.SerializerMethodField()
-    tma_learners_enrolled = serializers.SerializerMethodField()
     tma_learners_passed = serializers.SerializerMethodField()
     tma_learners_invited = serializers.SerializerMethodField()
     tma_started = serializers.SerializerMethodField()
     tma_completed = serializers.SerializerMethodField()
     tma_partially_completed = serializers.SerializerMethodField()
+    tma_average_success_score = serializers.SerializerMethodField()
     tma_average_score = serializers.SerializerMethodField()
 
     # TODO: Consider if we want to add a hyperlink field to the learner details endpoint
@@ -402,7 +402,7 @@ class CourseDetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = CourseOverview
         fields = ['course_id', 'course_name', 'course_code', 'org', 'start_date',
-                  'end_date', 'self_paced', 'passing_grade', 'language', 'staff', 'learners_enrolled', 'tma_learners_enrolled', 'tma_learners_passed', 'tma_learners_invited', 'tma_started', 'tma_completed', 'tma_partially_completed', 'tma_average_score', 'average_progress', 'average_days_to_complete', 'users_completed', 'tma_course' ]
+                  'end_date', 'self_paced', 'passing_grade', 'language', 'staff', 'learners_enrolled', 'tma_learners_passed', 'tma_learners_invited', 'tma_started', 'tma_completed', 'tma_partially_completed', 'tma_average_success_score','tma_average_score', 'average_progress', 'average_days_to_complete', 'users_completed', 'tma_course' ]
         read_only_fields = fields
 
     def to_representation(self, instance):
@@ -471,7 +471,7 @@ class CourseDetailsSerializer(serializers.ModelSerializer):
     ### TMA additional fields ###
     def get_tma_course(self, course_overview):
         """
-            Retrieves all needed information from TmaCourseOverview in a dict entitled "tma_course"
+        Retrieves all needed information from TmaCourseOverview in a dict entitled "tma_course"
         """
         qs = TmaCourseOverview.objects.filter(course_overview_edx_id=course_overview.id)
         if qs:
@@ -480,15 +480,11 @@ class CourseDetailsSerializer(serializers.ModelSerializer):
         else:
             return {}
 
-    def get_tma_learners_enrolled(self, course_overview):
-        from figures.pipeline.course_daily_metrics import get_enrolled_in_exclude_admins
-        qs = get_enrolled_in_exclude_admins(course_overview.id, None)
-        if qs:
-            return qs.count()
-        else:
-            return 0
-
     def get_tma_learners_passed(self, course_overview):
+        """
+        Retrieves all learners who have has_validated_course=True in TmaCourseEnrollment
+        Excludes Staff-Admins-Coaches
+        """
         staff = CourseStaffRole(course_overview.id).users_with_role()
         admins = CourseInstructorRole(course_overview.id).users_with_role()
         coaches = CourseCcxCoachRole(course_overview.id).users_with_role()
@@ -500,6 +496,9 @@ class CourseDetailsSerializer(serializers.ModelSerializer):
             return 0
 
     def get_tma_learners_invited(self, course_overview):
+        """
+        Retrieves all learners who have been invited by email, but who are not yet registered on the platform
+        """
         qs = CourseEnrollmentAllowed.may_enroll_and_unenrolled(course_overview.id)
         if qs:
             return qs.count()
@@ -507,6 +506,10 @@ class CourseDetailsSerializer(serializers.ModelSerializer):
             return 0
     
     def get_tma_started(self, course_overview):
+        """
+        Retrieves all learners who have a TmaCourseEnrollment completion rate > 0
+        Excludes Staff-Admins-Coaches
+        """
         from figures.pipeline.course_daily_metrics import get_enrolled_in_exclude_admins
         qs = get_enrolled_in_exclude_admins(course_overview.id, None)
         qs = qs.filter(course_id=course_overview.id).exclude(tmacourseenrollment__completion_rate__gt=0)
@@ -516,6 +519,10 @@ class CourseDetailsSerializer(serializers.ModelSerializer):
             return 0
 
     def get_tma_completed(self, course_overview):
+        """
+        Retrieves all learners who have a TmaCourseEnrollment completion rate = 0
+        Excludes Staff-Admins-Coaches
+        """
         from figures.pipeline.course_daily_metrics import get_enrolled_in_exclude_admins
         qs = get_enrolled_in_exclude_admins(course_overview.id, None)
         qs = qs.filter(course_id=course_overview.id, tmacourseenrollment__completion_rate=1)
@@ -525,6 +532,10 @@ class CourseDetailsSerializer(serializers.ModelSerializer):
             return 0
 
     def get_tma_partially_completed(self, course_overview):
+        """
+        Retrieves all learners who have a TmaCourseEnrollment completion rate > 0 and < 1
+        Excludes Staff-Admins-Coaches
+        """
         staff = CourseStaffRole(course_overview.id).users_with_role()
         admins = CourseInstructorRole(course_overview.id).users_with_role()
         coaches = CourseCcxCoachRole(course_overview.id).users_with_role()
@@ -539,12 +550,31 @@ class CourseDetailsSerializer(serializers.ModelSerializer):
         else:
             return users_partially_completed
 
-    def get_tma_average_score(self, course_overview):
+    def get_tma_average_success_score(self, course_overview):
+        """
+        Calculate the average of all best student grades (in TmaCourseEnrollment) for learners who passed the course (has_validated_course=True)
+        Excludes Staff-Admins-Coaches
+        """
         staff = CourseStaffRole(course_overview.id).users_with_role()
         admins = CourseInstructorRole(course_overview.id).users_with_role()
         coaches = CourseCcxCoachRole(course_overview.id).users_with_role()
         
-        qs = TmaCourseEnrollment.objects.filter(course_enrollment_edx__course_id=course_overview.id).exclude(course_enrollment_edx__user__in=staff).exclude(course_enrollment_edx__user__in=admins).exclude(course_enrollment_edx__user__in=coaches).aggregate(Avg('best_student_grade'))
+        qs = TmaCourseEnrollment.objects.filter(course_enrollment_edx__course_id=course_overview.id, has_validated_course=True).exclude(course_enrollment_edx__user__in=staff).exclude(course_enrollment_edx__user__in=admins).exclude(course_enrollment_edx__user__in=coaches).aggregate(Avg('best_student_grade'))
+        if qs:
+            return qs.get("best_student_grade__avg")
+        else:
+            return 0
+
+    def get_tma_average_score(self, course_overview):
+        """
+        Calculate the average of all best student grades (in TmaCourseEnrollment) for learners who have a best student grade > 0
+        Excludes Staff-Admins-Coaches
+        """
+        staff = CourseStaffRole(course_overview.id).users_with_role()
+        admins = CourseInstructorRole(course_overview.id).users_with_role()
+        coaches = CourseCcxCoachRole(course_overview.id).users_with_role()
+        
+        qs = TmaCourseEnrollment.objects.filter(course_enrollment_edx__course_id=course_overview.id, best_student_grade__gt=0).exclude(course_enrollment_edx__user__in=staff).exclude(course_enrollment_edx__user__in=admins).exclude(course_enrollment_edx__user__in=coaches).aggregate(Avg('best_student_grade'))
         if qs:
             return qs.get("best_student_grade__avg")
         else:
@@ -757,6 +787,10 @@ class LearnerCourseDetailsSerializer(serializers.ModelSerializer):
         # learner specific progress
         course_progress_history = []
 
+        # TMA add score to course_progress_details
+        if course_progress['course_progress_details']:
+            course_progress['course_progress_details'].update({'best_student_grade': TmaCourseEnrollment(course_enrollment_edx=course_enrollment).best_student_grade})
+
         data = dict(
             course_completed=course_completed,
             course_progress=course_progress['progress_percent'],
@@ -825,6 +859,7 @@ class LearnerDetailsSerializer(serializers.ModelSerializer):
 
     # TMA info #
     rpid = serializers.CharField(source='profile.rpid', default=None,)
+    iug = serializers.CharField(source='profile.iug', default=None,)
 
     # We may want to exclude this unless we want to show
     # profile images in Figures
@@ -840,7 +875,7 @@ class LearnerDetailsSerializer(serializers.ModelSerializer):
         model = get_user_model()
         editable = False
         fields = (
-            'id', 'username', 'name', 'email', 'rpid', 'country', 'is_active',
+            'id', 'username', 'name', 'email', 'rpid', 'iug', 'country', 'is_active',
             'year_of_birth', 'level_of_education', 'gender', 'date_joined',
             'bio', 'courses', 'language_proficiencies', 'profile_image',
             )
@@ -858,7 +893,6 @@ class LearnerDetailsSerializer(serializers.ModelSerializer):
         related serializers to explicitly link models not linked via FK
 
         """
-
         course_enrollments = figures.sites.get_course_enrollments_for_site(
             self.context.get('site')).filter(user=user)
         return LearnerCourseDetailsSerializer(course_enrollments, many=True).data

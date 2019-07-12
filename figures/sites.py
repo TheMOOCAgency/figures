@@ -186,3 +186,16 @@ def get_users_for_org(org):
 def get_course_enrollments_for_site(site):
     course_keys = get_course_keys_for_site(site)
     return CourseEnrollment.objects.filter(course_id__in=course_keys)
+
+
+def get_course_enrollments_for_org(org):
+    """
+    If "FIGURES_HAS_MICROSITES" setting is true : returns all enrollments for a specific microsite
+
+    This function is specific to TMA multi-microsites platforms.
+    """
+    if bool(settings.FEATURES.get('FIGURES_HAS_MICROSITES', False)):
+        ce = CourseEnrollment.objects.filter(course__org__contains=org, course__tmacourseoverview__is_vodeclic=False)
+    else:
+        ce = CourseEnrollment.objects.filter(course__tmacourseoverview__is_vodeclic=False)
+    return ce

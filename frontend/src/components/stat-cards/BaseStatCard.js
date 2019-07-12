@@ -103,7 +103,7 @@ class BaseStatCard extends Component {
             className={styles['info-img']}
             />
           }
-          <ReactTooltip/>
+          <ReactTooltip html={true}/>
         </div>
         {(this.state.historyExpanded && this.props.enableHistory) && (
           <div className={styles['history-content']}>

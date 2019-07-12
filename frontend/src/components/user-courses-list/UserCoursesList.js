@@ -39,10 +39,10 @@ class UserCoursesList extends Component {
             </li>
             <li className={styles['stat']}>
               <span className={styles['stat-label']}>
-                Points earned:
+                Score:
               </span>
               <span className={styles['stat-value']}>
-                {course.getIn(['progress_data', 'course_progress_details', 'points_earned'], 0)} (of {course.getIn(['progress_data', 'course_progress_details', 'points_possible'], 0)})
+                {(course.getIn(['progress_data', 'course_progress_details', 'best_student_grade'], 0)*100).toFixed(2)}%
               </span>
             </li>
             <li className={styles['stat']}>

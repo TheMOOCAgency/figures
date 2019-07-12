@@ -68,6 +68,7 @@ class SingleUserContent extends Component {
             email = {this.state.userData.getIn(['email'])}
             name = {this.state.userData.getIn(['name'])}
             rpid = {this.state.userData.getIn(['rpid'])}
+            iug = {this.state.userData.getIn(['iug'])}
           />
         </HeaderAreaLayout>
         <div className={cx({ 'container': true, 'base-grid-layout-5': true, 'user-content': true})}>
