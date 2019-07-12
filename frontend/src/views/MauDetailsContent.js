@@ -12,7 +12,7 @@ class MauDetailsContent extends Component {
 
   render() {
     let nextValue = 0;
-    const mausRender = this.props.mauHistory.map((period, index, history) => { 
+    const mausRender = this.props.mauHistory.reverse().map((period, index, history) => { 
       if ((index +1) < history.length) {
         nextValue = history[index+1].value
       }
@@ -31,7 +31,7 @@ class MauDetailsContent extends Component {
     return (
       <div className="ef--layout-root">
         <HeaderAreaLayout>
-          <HeaderContentMaus />
+          <HeaderContentMaus/>
         </HeaderAreaLayout>
         <div className={cx({ 'container': true, 'base-grid-layout': true, 'mau-details-content': true})}>
           <section className={styles['mau-history-list']}>

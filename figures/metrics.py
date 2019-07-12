@@ -498,8 +498,8 @@ def get_monthly_history_metric(func, site, date_for, months_back,
         # This should work for float too since '0 == 0.0' resolves to True
         current_month = 0
 
-    # Get history in chronological order
-    history.reverse()
+    # TMA Get history in reverse : from recent to ancient
+    #history.reverse()
 
     return dict(
         current_month=current_month,
