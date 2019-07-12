@@ -150,17 +150,19 @@ class SingleCourseContent extends Component {
             learnersEnrolled={this.state.courseData.getIn(['learners_enrolled'])}
           />
         </HeaderAreaLayout>
-        <div className={cx({ 'container': true, 'base-grid-layout': true, 'dashboard-content': true})}>
+        <div>
           <div className={styles['report-box']}>
             <span className={styles['download-btn']} onClick={this.generateGradeReport}>Download report</span>
           </div>
           <div className={styles['report-box']}>
-            <span className={styles['report-link']}>{this.state.downloadStatus}</span>
+            <span className={styles['report-link'] + 'pt-3'}>{this.state.downloadStatus}</span>
           </div>
           <div className={styles['report-box']}>
             {this.state.lastReport && <a className={styles['report-link']} href={this.state.lastReport.url}>{this.state.lastReport.name}</a>}
           </div>
         </div>
+
+
         <div className={cx({ 'container': true, 'base-grid-layout': true, 'dashboard-content': true})}>
           <div className={styles['header']}>
             <div className={styles['header-title']}>Course Activity</div>
@@ -210,7 +212,7 @@ class SingleCourseContent extends Component {
             mainValue={this.state.courseData.get('tma_completed')}
             compareToPrevious={false}
             enableHistory={false}
-            tooltipText="Learners who visited every unit in the course. This does not mean that the learner has been awarded a certificate (ex : learner failed at the final quiz)"
+            tooltipText="Learners who visited every unit in the course.<br/>This does not mean that the learner has been awarded a certificate.<br/>(ex : learner failed at the final quiz)"
           />
           <BaseStatCard
             cardTitle='Partially Completed'
@@ -241,7 +243,7 @@ class SingleCourseContent extends Component {
             mainValue={this.state.courseData.get('tma_learners_passed')}
             compareToPrevious={false}
             enableHistory={false}
-            tooltipText="Learners who validated the course, either by succeeding the final exam or - in the case of a non graded course - by marking the course as done."
+            tooltipText="Learners who validated the course: <ul><li>By passing the final exam</li><li>In the case of a non graded course, by marking the course as done.</li></ul>"
           />
           <BaseStatCard
             cardTitle='Non certified'
@@ -250,20 +252,34 @@ class SingleCourseContent extends Component {
             }
             compareToPrevious={false}
             enableHistory={false}
-            tooltipText=" Learners who were not awarded a certificate. Either because they did not attempted the final exam yet, or because they failed the final exam, or - in the case of a non graded course - because they did not mark the course as done."
+            tooltipText=" Learners who were not awarded a certificate because : <ul><li>They did not attempt the final exam yet</li><li>They failed the final exam</li><li>In the case of a non graded course: because they did not mark the course as done.</li></ul>"
           />
           {this.state.courseData.getIn(['tma_course', 'is_course_graded']) && 
             <BaseStatCard
               cardTitle='Average success score'
               mainValue={
                 (this.state.courseData.get('tma_learners_passed') !== 0) ?
-                (this.state.courseData.get('tma_average_score') / this.state.courseData.get('tma_learners_passed')) :
+                (this.state.courseData.get('tma_average_success_score')) :
                 0
               }
               dataType='percentage'
               compareToPrevious={false}
               enableHistory={false}
               tooltipText="Average score of all learners who were awarded a certificate."
+            />
+          }
+          {this.state.courseData.getIn(['tma_course', 'is_course_graded']) && 
+            <BaseStatCard
+              cardTitle='Average score'
+              mainValue={
+                (this.state.courseData.get('tma_learners_passed') !== 0) ?
+                (this.state.courseData.get('tma_average_score')) :
+                0
+              }
+              dataType='percentage'
+              compareToPrevious={false}
+              enableHistory={false}
+              tooltipText="Average score of all learners with non-zero grade."
             />
           }
         </div>
