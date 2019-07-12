@@ -155,7 +155,7 @@ class SingleCourseContent extends Component {
             <span className={styles['download-btn']} onClick={this.generateGradeReport}>Download report</span>
           </div>
           <div className={styles['report-box']}>
-            <span className={styles['report-link'] + 'pt-3'}>{this.state.downloadStatus}</span>
+            <span className={styles['report-link']}>{this.state.downloadStatus}</span>
           </div>
           <div className={styles['report-box']}>
             {this.state.lastReport && <a className={styles['report-link']} href={this.state.lastReport.url}>{this.state.lastReport.name}</a>}
