@@ -750,6 +750,9 @@ class LearnerCourseDetailsSerializer(serializers.ModelSerializer):
         TODO: We will cache course grades, so we'll refactor this method to  use
         the cache, so we'll likely change the call to LearnerCourseGrades
         """
+        log.info(course_enrollment.user.email)
+        log.info(TmaCourseEnrollment(course_enrollment_edx=course_enrollment).best_student_grade)
+
         cert = GeneratedCertificate.objects.filter(
             user=course_enrollment.user,
             course_id=course_enrollment.course_id,
@@ -781,7 +784,7 @@ class LearnerCourseDetailsSerializer(serializers.ModelSerializer):
                 )
             course_progress = dict(
                 progress_percent=0.0,
-                course_progress_details=None)
+                course_progress_details={})
 
         # Empty list initially, then will fill after we implement capturing
         # learner specific progress
@@ -789,7 +792,10 @@ class LearnerCourseDetailsSerializer(serializers.ModelSerializer):
 
         # TMA add score to course_progress_details
         if course_progress['course_progress_details']:
-            course_progress['course_progress_details'].update({'best_student_grade': TmaCourseEnrollment(course_enrollment_edx=course_enrollment).best_student_grade})
+            try:
+                course_progress['course_progress_details'].update({'best_student_grade': TmaCourseEnrollment.objects.get(course_enrollment_edx=course_enrollment).best_student_grade})
+            except:
+                pass
 
         data = dict(
             course_completed=course_completed,
