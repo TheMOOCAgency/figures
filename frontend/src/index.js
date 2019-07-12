@@ -5,6 +5,7 @@ import { ConnectedRouter } from 'react-router-redux';
 import store, { history } from './redux/store';
 import App from './App';
 import './index.css';
+import './polyfill';
 
 ReactDOM.render(
   <Provider store={store}>
