@@ -12,7 +12,7 @@ class UserCoursesList extends Component {
   render() {
 
     const coursesRender = this.props.enrolledCoursesData.map((course, index) => {
-      const progressBarWidth = (course.getIn(['progress_data', 'course_progress'], 0)*100).toFixed(0) + '%';
+      const progressBarWidth = (course.getIn(['progress_data', 'course_progress_details', 'completion_rate'], 0)*100).toFixed(0) + '%';
 
       return (
         <div key={index} className={cx({'stat-card': true, 'course-item': true})}>
@@ -50,12 +50,12 @@ class UserCoursesList extends Component {
                 Overall progress:
               </span>
               <span className={styles['stat-value']}>
-                {(course.getIn(['progress_data', 'course_progress'], 0)*100).toFixed(2)}%
+                {(course.getIn(['progress_data', 'course_progress_details', 'completion_rate'], 0)*100).toFixed(2)}%
               </span>
             </li>
           </ul>
           <div className={styles['progress-bar']}>
-            <span className={cx({'bar': true, 'finished': course.getIn(['progress_data', 'course_completed'])})} style={{width: progressBarWidth}}></span>
+            <span className={cx({'bar': true, 'finished': course.getIn(['progress_data', 'course_progress_details', 'completion_rate'])})} style={{width: progressBarWidth}}></span>
           </div>
         </div>
       )

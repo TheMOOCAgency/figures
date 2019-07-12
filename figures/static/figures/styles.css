@@ -2889,6 +2889,7 @@ textarea.input__2lx3TsF4, input[type="text"].input__2lx3TsF4, input[type="url"].
       text-align: center; }
       .course-item__2VrJr4AV .user-stats__BQNUpV1s .stat__3lHJGULi .stat-label__1JpzuNcT {
         display: block;
+        min-height: 3rem;
         width: 100%;
         margin-bottom: 1rem;
         font-size: 1.2rem;

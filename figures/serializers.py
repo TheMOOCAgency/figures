@@ -793,7 +793,12 @@ class LearnerCourseDetailsSerializer(serializers.ModelSerializer):
         # TMA add score to course_progress_details
         if course_progress['course_progress_details']:
             try:
-                course_progress['course_progress_details'].update({'best_student_grade': TmaCourseEnrollment.objects.get(course_enrollment_edx=course_enrollment).best_student_grade})
+                course_progress['course_progress_details'].update(
+                    {
+                        'best_student_grade': TmaCourseEnrollment.objects.get(course_enrollment_edx=course_enrollment).best_student_grade,
+                        'completion_rate': TmaCourseEnrollment.objects.get(course_enrollment_edx=course_enrollment).completion_rate
+                    }
+                )
             except:
                 pass
 
