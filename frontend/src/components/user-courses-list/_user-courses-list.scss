@@ -60,6 +60,7 @@
 
       .stat-label {
         display: block;
+        min-height: 3rem;
         width: 100%;
         margin-bottom: calcRem(10);
         font-size: calcRem(12);
