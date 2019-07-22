@@ -1,0 +1,33 @@
+@import '~base/sass/base/variables';
+@import '~base/sass/base/functions';
+@import '~base/sass/base/grid';
+@import '~base/sass/base/stat-cards';
+
+.report-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .download-btn {
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 1.3rem;
+    text-align: center;
+    padding: 1rem;
+    border: 0.2rem solid #0090c1;
+    background-color: white;
+    border-radius: 5rem;
+    color: #0090c1;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+  }
+
+  .report-link {
+    display: block;
+    font-weight: bold;
+    color: #2C2A2F;
+    font-size: 1.3rem;
+    margin: 0 0 1rem;
+  }
+}

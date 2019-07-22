@@ -7,6 +7,7 @@ import styles from './_single-course-content.scss';
 import HeaderAreaLayout from 'base/components/layout/HeaderAreaLayout';
 import HeaderContentCourse from 'base/components/header-views/header-content-course/HeaderContentCourse';
 import BaseStatCard from 'base/components/stat-cards/BaseStatCard';
+import ReportsBox from 'base/components/reports/ReportsBox';
 //import LearnerStatistics from 'base/components/learner-statistics/LearnerStatistics';
 //import CourseLearnersList from 'base/components/course-learners-list/CourseLearnersList';
 import apiConfig from 'base/apiConfig';
@@ -26,16 +27,11 @@ class SingleCourseContent extends Component {
       allLearnersLoaded: true,
       learnersList: Immutable.List(),
       apiFetchMoreLearnersUrl: null,
-      // TMA States //
-      gradeReports: [],
-      downloadStatus: '',
-      lastReport: {}
     };
 
     this.fetchCourseData = this.fetchCourseData.bind(this);
     this.fetchLearnersData = this.fetchLearnersData.bind(this);
     this.setLearnersData = this.setLearnersData.bind(this);
-    this.generateGradeReport = this.generateGradeReport.bind(this);
   }
 
   fetchCourseData = () => {
@@ -68,67 +64,6 @@ class SingleCourseContent extends Component {
     this.fetchLearnersData();
   }
 
-  /*** TMA FUNCTIONS ***/
-  getFetchOptions = () => {
-    // Options for API calls
-    return { credentials: "same-origin", method: "POST", headers: {
-        'X-CSRFToken': window.csrf
-      }
-    };
-  }
-
-  generateGradeReport = () => {
-    // Launch report task
-    fetch('/courses/'+ this.props.courseId +'/instructor/api/problem_grade_report', this.getFetchOptions())
-    .then(response => response.json())
-    .then(() => {
-      // Set status and get initial report list
-      this.setState({downloadStatus: "Your report is being generated, please wait."});
-      this.getReportsList();
-    }); 
-  }
-
-  getReportsList = () => {
-    // Fetch initial report list
-    fetch('/courses/'+this.props.courseId+'/instructor/api/list_report_downloads', this.getFetchOptions())
-    .then(response => response.json())
-    .then((json) => {
-      this.setState({
-        gradeReports: json.downloads
-      });
-      // Then wait for new report to be uploaded
-      this.checkReportList();
-    });
-  }
-
-  checkReportList = () => {
-    const courseId = this.props.courseId;
-    const options = this.getFetchOptions();
-    const reports = this.state.gradeReports;
-    const update = this.updateReportsList;
-    // Check when report list has new report - means that task is done
-    let intervalID = setInterval(function(){
-      fetch('/courses/'+ courseId +'/instructor/api/list_report_downloads', options)
-      .then(response => response.json())
-      .then((json) => {
-        // If new report in list, set state and clear interval
-        if (json.downloads.length > reports.length) {
-          update(json.downloads);
-          clearInterval(intervalID);
-        }
-      })
-    }, 500)
-  }
-
-  updateReportsList = (reports) => {
-    this.setState({
-      gradeReports: reports,
-      lastReport: reports[0],
-      downloadStatus: "To download the report, please click the link :"
-    });
-  }
-  /*** END ***/
-
   render() {
     return (
       <div className="ef--layout-root">
@@ -150,19 +85,7 @@ class SingleCourseContent extends Component {
             learnersEnrolled={this.state.courseData.getIn(['learners_enrolled'])}
           />
         </HeaderAreaLayout>
-        <div>
-          <div className={styles['report-box']}>
-            <span className={styles['download-btn']} onClick={this.generateGradeReport}>Download report</span>
-          </div>
-          <div className={styles['report-box']}>
-            <span className={styles['report-link']}>{this.state.downloadStatus}</span>
-          </div>
-          <div className={styles['report-box']}>
-            {this.state.lastReport && <a className={styles['report-link']} href={this.state.lastReport.url}>{this.state.lastReport.name}</a>}
-          </div>
-        </div>
-
-
+        <ReportsBox courseId={this.state.courseData.getIn(['course_id'])}/>
         <div className={cx({ 'container': true, 'base-grid-layout': true, 'dashboard-content': true})}>
           <div className={styles['header']}>
             <div className={styles['header-title']}>Course Activity</div>
