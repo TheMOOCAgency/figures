@@ -2063,30 +2063,6 @@ textarea.input__2lx3TsF4, input[type="text"].input__2lx3TsF4, input[type="url"].
   width: 2.4rem;
   padding-left: 1rem;
   cursor: pointer; }
-
-.report-box__GTD1Tzti {
-  display: flex;
-  align-items: center;
-  justify-content: center; }
-  .report-box__GTD1Tzti .download-btn__2epvCPt0 {
-    text-transform: uppercase;
-    font-weight: bold;
-    font-size: 1.3rem;
-    text-align: center;
-    padding: 1rem;
-    border: 0.2rem solid #0090c1;
-    background-color: white;
-    border-radius: 5rem;
-    color: #0090c1;
-    text-decoration: none;
-    cursor: pointer;
-    transition: all 0.2s ease-in-out; }
-  .report-box__GTD1Tzti .report-link__2o2RWXMH {
-    display: block;
-    font-weight: bold;
-    color: #2C2A2F;
-    font-size: 1.3rem;
-    margin: 0 0 1rem; }
 @charset "UTF-8";
 /*
  * Picks a colour from two options based on which one is more visible
@@ -2315,6 +2291,253 @@ textarea.input__2lx3TsF4, input[type="text"].input__2lx3TsF4, input[type="url"].
   .bar-tooltip__2dHATWVG p {
     margin: 0;
     font-size: 1rem; }
+@charset "UTF-8";
+/*
+ * Picks a colour from two options based on which one is more visible
+ * on the given background colour.
+ *
+ * Usage: pick-visible-color($bg-color, $color-1, $color-2)
+ */
+/*
+ * Picks a colour from two options based on which one is more visible
+ * on the given background colour.
+ *
+ * Usage: pick-visible-color($bg-color, $color-1, $color-2)
+ */
+/*
+ * Picks a colour from two options based on which one is more visible
+ * on the given background colour.
+ *
+ * Usage: pick-visible-color($bg-color, $color-1, $color-2)
+ */
+.container__3HAetExL {
+  width: 100%;
+  max-width: 118rem;
+  margin: 0 auto;
+  padding: 1rem 2rem; }
+
+.layout-root__353MdM9y {
+  width: 100%;
+  padding: 0;
+  font-size: 10px;
+  font-family: "Montserrat", sans-serif;
+  -webkit-font-smoothing: antialiased; }
+
+.base-grid-layout__3yqSk4j_ {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 2rem;
+  grid-auto-flow: dense; }
+
+.base-grid-layout-3__2ThDQrua {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 2rem;
+  grid-auto-flow: dense; }
+
+.base-grid-layout-5__xtkufsvD {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: 2rem;
+  grid-auto-flow: dense; }
+
+.grid-element--full-width__1e5RQ_cO {
+  grid-column-end: span 4; }
+
+.grid-element--three-quarter__1z-wXvUL {
+  grid-column-end: span 3; }
+  @media (max-width: 102rem) {
+    .grid-element--three-quarter__1z-wXvUL {
+      grid-column-end: span 4; } }
+
+.grid-element--one-half__2-WzLC3Y {
+  grid-column-end: span 2; }
+  @media (max-width: 42rem) {
+    .grid-element--one-half__2-WzLC3Y {
+      grid-column-end: span 4; } }
+
+.grid-element--one-quarter__2s0-5rho {
+  grid-column-end: span 1; }
+  @media (max-width: 102rem) {
+    .grid-element--one-quarter__2s0-5rho {
+      grid-column-end: span 2; } }
+  @media (max-width: 42rem) {
+    .grid-element--one-quarter__2s0-5rho {
+      grid-column-end: span 4; } }
+
+.page-leave {
+  opacity: 1;
+  transition: all 0.4s ease-in-out; }
+
+.page-leave.page-leave-active {
+  opacity: 0;
+  transition: opacity .4s ease-in; }
+
+.page-enter {
+  opacity: 0; }
+
+.page-enter.page-enter-active {
+  opacity: 1;
+  /* Delay the enter animation until the leave completes */
+  transition: opacity .4s ease-in .6s; }
+
+.page-height {
+  transition: height .6s ease-in-out; }
+
+/*
+ * Picks a colour from two options based on which one is more visible
+ * on the given background colour.
+ *
+ * Usage: pick-visible-color($bg-color, $color-1, $color-2)
+ */
+/*
+ * Picks a colour from two options based on which one is more visible
+ * on the given background colour.
+ *
+ * Usage: pick-visible-color($bg-color, $color-1, $color-2)
+ */
+/*
+ * Picks a colour from two options based on which one is more visible
+ * on the given background colour.
+ *
+ * Usage: pick-visible-color($bg-color, $color-1, $color-2)
+ */
+.container__3HAetExL {
+  width: 100%;
+  max-width: 118rem;
+  margin: 0 auto;
+  padding: 1rem 2rem; }
+
+.layout-root__353MdM9y {
+  width: 100%;
+  padding: 0;
+  font-size: 10px;
+  font-family: "Montserrat", sans-serif;
+  -webkit-font-smoothing: antialiased; }
+
+.base-grid-layout__3yqSk4j_ {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 2rem;
+  grid-auto-flow: dense; }
+
+.base-grid-layout-3__2ThDQrua {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 2rem;
+  grid-auto-flow: dense; }
+
+.base-grid-layout-5__xtkufsvD {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: 2rem;
+  grid-auto-flow: dense; }
+
+.grid-element--full-width__1e5RQ_cO {
+  grid-column-end: span 4; }
+
+.grid-element--three-quarter__1z-wXvUL {
+  grid-column-end: span 3; }
+  @media (max-width: 102rem) {
+    .grid-element--three-quarter__1z-wXvUL {
+      grid-column-end: span 4; } }
+
+.grid-element--one-half__2-WzLC3Y {
+  grid-column-end: span 2; }
+  @media (max-width: 42rem) {
+    .grid-element--one-half__2-WzLC3Y {
+      grid-column-end: span 4; } }
+
+.grid-element--one-quarter__2s0-5rho {
+  grid-column-end: span 1; }
+  @media (max-width: 102rem) {
+    .grid-element--one-quarter__2s0-5rho {
+      grid-column-end: span 2; } }
+  @media (max-width: 42rem) {
+    .grid-element--one-quarter__2s0-5rho {
+      grid-column-end: span 4; } }
+
+.page-leave {
+  opacity: 1;
+  transition: all 0.4s ease-in-out; }
+
+.page-leave.page-leave-active {
+  opacity: 0;
+  transition: opacity .4s ease-in; }
+
+.page-enter {
+  opacity: 0; }
+
+.page-enter.page-enter-active {
+  opacity: 1;
+  /* Delay the enter animation until the leave completes */
+  transition: opacity .4s ease-in .6s; }
+
+.page-height {
+  transition: height .6s ease-in-out; }
+
+.stat-card__1sdQMJWL {
+  /*border: calcRem(1) solid #efefef;*/
+  background-color: #fff;
+  /*box-shadow: 0 calcRem(2) calcRem(4) 0 rgba(0,0,0,0.25);*/
+  padding: 2rem;
+  transition: all 0.3s ease-in-out;
+  display: flex; }
+  .stat-card__1sdQMJWL.span-2__1uZjZp4v {
+    grid-column-end: span 2; }
+    .stat-card__1sdQMJWL.span-2__1uZjZp4v .main-content__1pTR1e_a {
+      width: 100%; }
+  .stat-card__1sdQMJWL.span-3__2unMFAaK {
+    grid-column-end: span 3; }
+    .stat-card__1sdQMJWL.span-3__2unMFAaK .main-content __3ahX3Vmp {
+      width: 33%; }
+  .stat-card__1sdQMJWL.span-4__B6LXoULX {
+    grid-column-end: span 4; }
+    .stat-card__1sdQMJWL.span-4__B6LXoULX .main-content__1pTR1e_a {
+      width: 25%; }
+  .stat-card__1sdQMJWL:hover {
+    box-shadow: 0 0.6rem 1.2rem 0 rgba(0, 0, 0, 0.25); }
+  .stat-card__1sdQMJWL .main-content__1pTR1e_a {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    flex-grow: 0;
+    max-width: 100%; }
+    .stat-card__1sdQMJWL .main-content__1pTR1e_a .card-title__2g9pY5Ix {
+      display: block;
+      font-weight: bold;
+      color: #2C2A2F;
+      font-size: 1.3rem;
+      margin: 0 0 1rem; }
+    .stat-card__1sdQMJWL .main-content__1pTR1e_a .card-description__3cE45ETE {
+      display: block;
+      color: #45424a;
+      font-size: 1.1rem;
+      margin: 0 0 1rem; }
+
+.report-box__2ebqV1xn {
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+  .report-box__2ebqV1xn .download-btn__1BlHTDT1 {
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 1.3rem;
+    text-align: center;
+    padding: 1rem;
+    border: 0.2rem solid #0090c1;
+    background-color: white;
+    border-radius: 5rem;
+    color: #0090c1;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out; }
+  .report-box__2ebqV1xn .report-link__2UnBIjkj {
+    display: block;
+    font-weight: bold;
+    color: #2C2A2F;
+    font-size: 1.3rem;
+    margin: 0 0 1rem; }
 @charset "UTF-8";
 /*
  * Picks a colour from two options based on which one is more visible
