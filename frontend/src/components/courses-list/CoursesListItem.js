@@ -76,7 +76,7 @@ class CoursesListItem extends Component {
               </span>
               <span className={styles['stat-value']}>
                 {//Avoid division by zero
-                  this.props.nbLeaners === 0 ? 0 : (this.props.learnersCompleted / (this.props.nbLeaners).toFixed(2) * 100)
+                  this.props.nbLeaners === 0 ? 0 : ((this.props.learnersCompleted / this.props.nbLeaners) * 100).toFixed(2)
                 }%
               </span>
             </div>
