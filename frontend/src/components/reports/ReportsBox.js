@@ -12,13 +12,17 @@ class ReportsBox extends Component {
         };
 
         this.generateGradeReport = this.generateGradeReport.bind(this);
+        this.getFirstReportsList = this.getFirstReportsList.bind(this);
     }
 
     getFetchOptions = () => {
         // Options for API calls
-        return { credentials: "same-origin", method: "POST", headers: {
-            'X-CSRFToken': window.csrf
-        }
+        return { 
+            credentials: "same-origin",
+            method: "POST",
+            headers: {
+                'X-CSRFToken': window.csrf
+            }
         };
     }
 
@@ -71,6 +75,21 @@ class ReportsBox extends Component {
             lastReport: reports[0],
             downloadStatus: "To download the report, please click the link :"
         });
+    }
+
+    getFirstReportsList = () => {
+        fetch('/courses/'+this.props.courseId+'/instructor/api/list_report_downloads', this.getFetchOptions())
+        .then(response => response.json())
+        .then((json) => {
+            this.setState({
+                gradeReports: json.downloads,
+                lastReport: json.downloads[0],
+            });
+        });
+    }
+
+    componentDidMount() {
+        this.getFirstReportsList();
     }
 
     render() {
