@@ -88,21 +88,21 @@ class ReportsBox extends Component {
         });
     }
 
-    componentDidMount() {
-        this.getFirstReportsList();
-    }
-
     render() {
+        this.getFirstReportsList();
         return (
             <div>
                 <div className={styles['report-box']}>
-                    <span className={styles['download-btn']} onClick={this.generateGradeReport}>Download report</span>
+                    <span className={styles['download-btn']} onClick={this.generateGradeReport}>generate new report</span>
                 </div>
                 <div className={styles['report-box']}>
                     <span className={styles['report-link']}>{this.state.downloadStatus}</span>
                 </div>
                 <div className={styles['report-box']}>
-                    {this.state.lastReport && <a className={styles['report-link']} href={this.state.lastReport.url}>{this.state.lastReport.name}</a>}
+                    {this.state.lastReport ?
+                    <a className={styles['report-link']} href={this.state.lastReport.url}>{this.state.lastReport.name}</a> :
+                    <p className={styles['report-link']} >There is no generated report yet.</p>
+                    }
                 </div>
             </div>
         )
