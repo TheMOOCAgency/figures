@@ -8,11 +8,11 @@ class ReportsBox extends Component {
         this.state = {
             gradeReports: [],
             downloadStatus: '',
-            lastReport: {}
+            lastReport: null
         };
 
         this.generateGradeReport = this.generateGradeReport.bind(this);
-        this.getFirstReportsList = this.getFirstReportsList.bind(this);
+        this.getReportsList = this.getReportsList.bind(this);
     }
 
     getFetchOptions = () => {
@@ -32,22 +32,11 @@ class ReportsBox extends Component {
         .then(response => response.json())
         .then(() => {
         // Set status and get initial report list
-        this.setState({downloadStatus: "Your report is being generated, please wait."});
-        this.getReportsList();
-        }); 
-    }
-
-    getReportsList = () => {
-        // Fetch initial report list
-        fetch('/courses/'+this.props.courseId+'/instructor/api/list_report_downloads', this.getFetchOptions())
-        .then(response => response.json())
-        .then((json) => {
         this.setState({
-            gradeReports: json.downloads
+            downloadStatus: "Your report is being generated, please wait.",
         });
-        // Then wait for new report to be uploaded
         this.checkReportList();
-        });
+        }); 
     }
 
     checkReportList = () => {
@@ -57,27 +46,27 @@ class ReportsBox extends Component {
         const update = this.updateReportsList;
         // Check when report list has new report - means that task is done
         let intervalID = setInterval(function(){
-        fetch('/courses/'+ courseId +'/instructor/api/list_report_downloads', options)
-        .then(response => response.json())
-        .then((json) => {
-            // If new report in list, set state and clear interval
-            if (json.downloads.length > reports.length) {
-                update(json.downloads);
-                clearInterval(intervalID);
-            }
-        })
-        }, 500)
+            fetch('/courses/'+ courseId +'/instructor/api/list_report_downloads', options)
+            .then(response => response.json())
+            .then((json) => {
+                // If new report in list, set state and clear interval
+                if (json.downloads.length > reports.length) {
+                    update(json.downloads);
+                    clearInterval(intervalID);
+                }
+            })
+        }, 2000)
     }
 
     updateReportsList = (reports) => {
         this.setState({
             gradeReports: reports,
             lastReport: reports[0],
-            downloadStatus: "To download the report, please click the link :"
+            downloadStatus: "To download the new report, please click the link :"
         });
     }
 
-    getFirstReportsList = () => {
+    getReportsList = () => {
         fetch('/courses/'+this.props.courseId+'/instructor/api/list_report_downloads', this.getFetchOptions())
         .then(response => response.json())
         .then((json) => {
@@ -88,12 +77,27 @@ class ReportsBox extends Component {
         });
     }
 
+    componentDidUpdate() {
+        if (this.state.lastReport === null) {
+            this.getReportsList();
+        }
+    }
+
     render() {
-        this.getFirstReportsList();
         return (
             <div>
                 <div className={styles['report-box']}>
-                    <span className={styles['download-btn']} onClick={this.generateGradeReport}>generate new report</span>
+                    <span 
+                        className={styles['download-btn']}
+                        onClick={this.generateGradeReport}
+                    >generate new report</span>
+                </div>
+                <div className={styles['report-box']}>
+                    <span className={styles['report-info']} >
+                        Please do not click this button several times.<br/>
+                        It would only slow down report generation with multiple reports being generated.<br/>
+                        For large course, report generation may take more than one hour.
+                    </span>
                 </div>
                 <div className={styles['report-box']}>
                     <span className={styles['report-link']}>{this.state.downloadStatus}</span>
