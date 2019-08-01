@@ -2538,6 +2538,12 @@ textarea.input__2lx3TsF4, input[type="text"].input__2lx3TsF4, input[type="url"].
     color: #2C2A2F;
     font-size: 1.3rem;
     margin: 0 0 1rem; }
+  .report-box__2ebqV1xn .report-info__2JIR7YnL {
+    display: block;
+    color: #2C2A2F;
+    font-size: 1.3rem;
+    text-align: center;
+    margin: 1rem 0 1rem; }
 @charset "UTF-8";
 /*
  * Picks a colour from two options based on which one is more visible
