@@ -1,3 +1,7 @@
+import 'react-app-polyfill/ie11';
+import 'react-app-polyfill/stable';
+import './polyfill';
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
@@ -5,7 +9,6 @@ import { ConnectedRouter } from 'react-router-redux';
 import store, { history } from './redux/store';
 import App from './App';
 import './index.css';
-import './polyfill';
 
 ReactDOM.render(
   <Provider store={store}>
