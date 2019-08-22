@@ -16,6 +16,7 @@
 }
 
 .base-grid-layout {
+  display: -ms-grid;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-gap: calcRem(20);
@@ -23,6 +24,7 @@
 }
 
 .base-grid-layout-3 {
+  display: -ms-grid;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: calcRem(20);
@@ -30,6 +32,7 @@
 }
 
 .base-grid-layout-5 {
+  display: -ms-grid;
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   grid-gap: calcRem(20);

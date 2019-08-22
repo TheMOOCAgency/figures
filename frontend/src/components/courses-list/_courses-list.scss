@@ -70,6 +70,7 @@
   }
 
   .items-container {
+    display: -ms-grid;
     display: grid;
     grid-gap: calcRem(20);
     grid-auto-flow: dense;
