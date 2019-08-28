@@ -3127,7 +3127,7 @@ textarea.input__2lx3TsF4, input[type="text"].input__2lx3TsF4, input[type="url"].
       margin: 0 0 1rem; }
 
 .user-courses-list__1dnN7xi1 {
-  grid-column: span 4; }
+  grid-column: span 5; }
 
 .course-item__2VrJr4AV {
   width: 100%;
@@ -3165,6 +3165,11 @@ textarea.input__2lx3TsF4, input[type="text"].input__2lx3TsF4, input[type="url"].
     width: 100%;
     flex-grow: 1;
     flex-shrink: 1; }
+    .course-item__2VrJr4AV .user-stats__BQNUpV1s .sections-separator__25cKRPlk {
+      display: flex;
+      margin: 0 2rem;
+      background: #dfdde1;
+      width: 0.1rem; }
     .course-item__2VrJr4AV .user-stats__BQNUpV1s .stat__3lHJGULi {
       flex-grow: 0;
       flex-shrink: 0;
@@ -3183,6 +3188,25 @@ textarea.input__2lx3TsF4, input[type="text"].input__2lx3TsF4, input[type="url"].
         display: block; }
         .course-item__2VrJr4AV .user-stats__BQNUpV1s .stat__3lHJGULi .stat-value__lvpkn5cS .completed-icon__fE1CnhDc {
           color: #27ae60; }
+  .course-item__2VrJr4AV .button-section__qiER4app {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    flex-grow: 0; }
+    .course-item__2VrJr4AV .button-section__qiER4app .course-button__2aD_pIM2 {
+      font-size: 1rem;
+      padding: 1rem 2rem;
+      font-weight: bold;
+      color: #0090c1;
+      border: 0.2rem solid #0090c1;
+      background: transparent;
+      cursor: pointer;
+      border-radius: 3rem;
+      transition: all 0.3s ease-in-out;
+      text-decoration: none; }
+      .course-item__2VrJr4AV .button-section__qiER4app .course-button__2aD_pIM2:hover {
+        color: #fff;
+        background: #0090c1; }
   .course-item__2VrJr4AV .progress-bar__T6DeyJ3- {
     position: absolute;
     left: 0;
