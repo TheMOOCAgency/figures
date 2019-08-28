@@ -65,13 +65,15 @@ class SingleUserContent extends Component {
       <div className="ef--layout-root">
         <HeaderAreaLayout>
           <HeaderContentUser
-            email = {this.state.userData.getIn(['email'])}
-            name = {this.state.userData.getIn(['name'])}
-            rpid = {this.state.userData.getIn(['rpid'])}
-            iug = {this.state.userData.getIn(['iug'])}
+            email={this.state.userData.getIn(['email'])}
+            name={this.state.userData.getIn(['name'])}
+            rpid={this.state.userData.getIn(['rpid'])}
+            iug={this.state.userData.getIn(['iug'])}
+            joined={dateJoined.getDate() +'-'+ dateJoined.getMonth() +'-'+ dateJoined.getFullYear()}
           />
         </HeaderAreaLayout>
         <div className={cx({ 'container': true, 'base-grid-layout-5': true, 'user-content': true})}>
+          {/*
           <div className={styles['user-information']}>
             <div className={styles['name']}>
               {this.state.userData['name']}
@@ -85,7 +87,6 @@ class SingleUserContent extends Component {
                 <span className={styles['label']}>Date joined:</span>
                 <span className={styles['value']}>{dateJoined.toDateString()}</span>
               </li>
-              {/*
               <li>
                 <span className={styles['label']}>Is active:</span>
                 <span className={styles['value']}>{this.state.userData.getIn(['is_active'], false) ? 'Active user' : 'User inactive'}</span>
@@ -102,13 +103,13 @@ class SingleUserContent extends Component {
                 <span className={styles['label']}>Level of education:</span>
                 <span className={styles['value']}>{this.state.userData.getIn(['level_of_education']) ? educationLevelsDict[this.state.userData.getIn(['level_of_education'])] : 'Not Available'}</span>
               </li>
-              */}
               <li>
                 <span className={styles['label']}>Email address:</span>
                 <span className={styles['value']}><a href={"mailto:" + this.state.userData.getIn(['email'])}>{this.state.userData.getIn(['email'])}</a></span>
               </li>
             </ul>
           </div>
+          */}
           <UserCoursesList
             enrolledCoursesData={this.state.userData.getIn(['courses'], [])}
           />

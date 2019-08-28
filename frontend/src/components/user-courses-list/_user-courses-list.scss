@@ -4,7 +4,7 @@
 @import '~base/sass/base/stat-cards';
 
 .user-courses-list {
-  grid-column: span 4;
+  grid-column: span 5;
 }
 
 .course-item {
@@ -51,6 +51,13 @@
     flex-grow: 1;
     flex-shrink: 1;
 
+    .sections-separator {
+      display: flex;
+      margin: 0 calcRem(20);
+      background: lighten($base-text-color, 70%);
+      width: calcRem(1);
+    }
+
     .stat {
       flex-grow: 0;
       flex-shrink: 0;
@@ -74,6 +81,31 @@
         .completed-icon {
           color: $positive-color;
         }
+      }
+    }
+  }
+
+  .button-section {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    flex-grow: 0;
+
+    .course-button {
+      font-size: calcRem(10);
+      padding: calcRem(10) calcRem(20);
+      font-weight: bold;
+      color: $primary-color;
+      border: calcRem(2) solid $primary-color;
+      background: transparent;
+      cursor: pointer;
+      border-radius: calcRem(30);
+      transition: all 0.3s ease-in-out;
+      text-decoration: none;
+
+      &:hover {
+        color: #fff;
+        background: $primary-color;
       }
     }
   }

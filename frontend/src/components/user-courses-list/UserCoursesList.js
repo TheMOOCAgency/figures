@@ -13,7 +13,7 @@ class UserCoursesList extends Component {
 
     const coursesRender = this.props.enrolledCoursesData.map((course, index) => {
       const progressBarWidth = (course.getIn(['progress_data', 'course_progress_details', 'completion_rate'], 0)*100).toFixed(0) + '%';
-
+      console.log(course)
       return (
         <div key={index} className={cx({'stat-card': true, 'course-item': true})}>
           <div className={styles['course-info']}>
@@ -54,6 +54,9 @@ class UserCoursesList extends Component {
               </span>
             </li>
           </ul>
+          <div className={styles['button-section']}>
+            <Link to={'/courses/' + course.get('course_id') + '/progress'} className={styles['course-button']}>Detailed results</Link>
+          </div>
           <div className={styles['progress-bar']}>
             <span className={cx({'bar': true, 'finished': course.getIn(['progress_data', 'course_progress_details', 'completion_rate'])})} style={{width: progressBarWidth}}></span>
           </div>
