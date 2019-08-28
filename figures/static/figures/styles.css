@@ -2863,7 +2863,7 @@ textarea.input__2lx3TsF4, input[type="text"].input__2lx3TsF4, input[type="url"].
  * Usage: pick-visible-color($bg-color, $color-1, $color-2)
  */
 .header-content-user__2DVar5gk {
-  padding: 0rem 1rem 14rem 1rem;
+  padding: 0rem 1rem 16rem 1rem;
   position: relative;
   height: 8rem; }
   .header-content-user__2DVar5gk .user-image__3tJdyS1w {
@@ -2880,7 +2880,7 @@ textarea.input__2lx3TsF4, input[type="text"].input__2lx3TsF4, input[type="url"].
   .header-content-user__2DVar5gk .user-name__1tDGdjLN {
     display: block;
     margin-top: 4rem;
-    margin-bottom: 3rem;
+    margin-bottom: 1rem;
     font-size: 2.2rem;
     font-weight: bold;
     line-height: 100%;
@@ -3190,6 +3190,7 @@ textarea.input__2lx3TsF4, input[type="text"].input__2lx3TsF4, input[type="url"].
           color: #27ae60; }
   .course-item__2VrJr4AV .button-section__qiER4app {
     display: flex;
+    padding: 0rem 0rem 0rem 2rem;
     align-items: center;
     flex-shrink: 0;
     flex-grow: 0; }
