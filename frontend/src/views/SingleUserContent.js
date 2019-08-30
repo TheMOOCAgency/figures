@@ -60,7 +60,7 @@ class SingleUserContent extends Component {
 
   render() {
     const dateJoined = new Date(this.state.userData.getIn(['date_joined']));
-
+    
     return (
       <div className="ef--layout-root">
         <HeaderAreaLayout>
@@ -112,6 +112,7 @@ class SingleUserContent extends Component {
           */}
           <UserCoursesList
             enrolledCoursesData={this.state.userData.getIn(['courses'], [])}
+            userId={this.state.userData.getIn(['id'])}
           />
         </div>
       </div>
