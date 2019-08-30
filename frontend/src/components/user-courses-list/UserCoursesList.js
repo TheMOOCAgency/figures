@@ -55,7 +55,7 @@ class UserCoursesList extends Component {
             </li>
           </ul>
           <div className={styles['button-section']}>
-            <Link to={'/courses/' + course.get('course_id') + '/progress'} className={styles['course-button']}>Detailed results</Link>
+            <a href={'/courses/' + course.get('course_id') + '/progress'} className={styles['course-button']}>Detailed results</a>
           </div>
           <div className={styles['progress-bar']}>
             <span className={cx({'bar': true, 'finished': course.getIn(['progress_data', 'course_progress_details', 'completion_rate'])})} style={{width: progressBarWidth}}></span>
