@@ -10,7 +10,6 @@ let cx = classNames.bind(styles);
 class UserCoursesList extends Component {
 
   render() {
-
     const coursesRender = this.props.enrolledCoursesData.map((course, index) => {
       const progressBarWidth = (course.getIn(['progress_data', 'course_progress_details', 'completion_rate'], 0)*100).toFixed(0) + '%';
       console.log(course)
@@ -55,7 +54,7 @@ class UserCoursesList extends Component {
             </li>
           </ul>
           <div className={styles['button-section']}>
-            <a href={'/courses/' + course.get('course_id') + '/progress'} className={styles['course-button']}>Detailed results</a>
+            <a href={'/courses/' + course.get('course_id') + '/progress/'+ this.props.userId} className={styles['course-button']}>Detailed results</a>
           </div>
           <div className={styles['progress-bar']}>
             <span className={cx({'bar': true, 'finished': course.getIn(['progress_data', 'course_progress_details', 'completion_rate'])})} style={{width: progressBarWidth}}></span>
