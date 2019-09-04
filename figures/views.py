@@ -93,7 +93,7 @@ def figures_home(request):
     }
 
     # TMA #
-    call_command('populate_figures_metrics', '--no-delay')
+    # call_command('populate_figures_metrics', '--no-delay')
     
     return render(request, 'figures/index.html', context)
 
