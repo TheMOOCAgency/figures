@@ -512,7 +512,7 @@ class CourseDetailsSerializer(serializers.ModelSerializer):
         """
         from figures.pipeline.course_daily_metrics import get_enrolled_in_exclude_admins
         qs = get_enrolled_in_exclude_admins(course_overview.id, None)
-        qs = qs.filter(course_id=course_overview.id).exclude(tmacourseenrollment__completion_rate__gt=0)
+        qs = qs.filter(course_id=course_overview.id).exclude(tmacourseenrollment__completion_rate__lte=0)
         if qs:
             return qs.count()
         else:
