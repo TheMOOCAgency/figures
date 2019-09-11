@@ -265,10 +265,9 @@ class GeneralSiteMetricsView(CommonAuthMixin, APIView):
         Does not yet support multi-tenancy
         '''
         site = django.contrib.sites.shortcuts.get_current_site(request)
-        log.info(site)
         date_for = request.query_params.get('date_for')
         data = self.metrics_method(site=site, date_for=date_for)
-
+        log.info(data)
         if not data:
             data = {
                 'error': 'no metrics data available',

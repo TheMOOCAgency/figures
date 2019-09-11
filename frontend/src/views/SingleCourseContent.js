@@ -13,9 +13,6 @@ import ReportsBox from 'base/components/reports/ReportsBox';
 import apiConfig from 'base/apiConfig';
 //import { timingSafeEqual } from 'crypto';
 
-// IMPORT TMA
-//import LearnerStats from 'base/components/course-learners-list/LearnerStats.js'
-
 let cx = classNames.bind(styles);
 
 class SingleCourseContent extends Component {
@@ -159,7 +156,12 @@ class SingleCourseContent extends Component {
         </div>
         <div className={cx({ 'container': true, 'base-grid-layout': true, 'dashboard-content': true})}>
           <div className={styles['header']}>
-            <div className={styles['header-title']}>Learner Achievement</div>
+            <div className={styles['header-title']}>Learner Achievement                 
+                <a
+                    className={styles['download-btn']}
+                    href={'/tma_apps/'+ this.props.courseId +'/progress/average'}
+                  >Score details</a>
+                </div>
           </div>
           <BaseStatCard
             cardTitle='Passed / Done'
