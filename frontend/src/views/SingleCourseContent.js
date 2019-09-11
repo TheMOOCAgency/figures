@@ -156,11 +156,13 @@ class SingleCourseContent extends Component {
         </div>
         <div className={cx({ 'container': true, 'base-grid-layout': true, 'dashboard-content': true})}>
           <div className={styles['header']}>
-            <div className={styles['header-title']}>Learner Achievement                 
+            <div className={styles['header-title']}>Learner Achievement
+              {this.state.courseData.getIn(['tma_course', 'is_course_graded']) &&         
                 <a
                     className={styles['download-btn']}
                     href={'/tma_apps/'+ this.props.courseId +'/progress/average'}
                   >Score details</a>
+              }
                 </div>
           </div>
           <BaseStatCard
