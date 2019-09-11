@@ -63,7 +63,7 @@ class HeaderContentMaus extends Component {
         <div className={styles['graph-container']}>
           <ResponsiveContainer width="100%" height={110}>
             <AreaChart
-              data={this.props.showHistoryButton ? this.props.mauDataHistory : this.props.mauDataHistory.reverse()}
+              data={this.props.mauDataHistory}
               margin={{top: 0, bottom: 0, left: 0, right: 0}}
             >
               <Area type='linear' dataKey='value' stroke='none' fill='#ffffff' fillOpacity={0.8} />

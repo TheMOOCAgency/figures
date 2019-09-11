@@ -12,7 +12,7 @@ class MauDetailsContent extends Component {
 
   render() {
     let nextValue = 0;
-    const mausRender = this.props.mauHistory.reverse().map((period, index, history) => { 
+    const mausRender = this.props.mauHistory.map((period, index, history) => { 
       if ((index +1) < history.length) {
         nextValue = history[index+1].value
       }
