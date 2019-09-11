@@ -43,6 +43,7 @@ class BaseStatCard extends Component {
 
   render() {
     const valueHistory = this.props.valueHistory.length ? this.props.valueHistory : Immutable.fromJS([ { period: '', value: 0 }, { period: '', value: 0 } ])
+    console.log((this.props.mainValue / this.props.secondaryValue).toFixed(2) * 100)
 
     return (
       <div className={cx({ 'stat-card': true, 'span-2': (this.state.cardWidth === 2), 'span-3': (this.state.cardWidth === 3), 'span-4': (this.state.cardWidth === 4)})}>
@@ -82,7 +83,7 @@ class BaseStatCard extends Component {
             {(this.props.compareToPercent && !this.props.singleValue) && (
               <div className={styles['previous-comparison']}>
                 <span className={styles['comparison-value']}>
-                  {(this.props.mainValue === 0 || this.props.secondaryValue === 0) ? 0 : (this.props.mainValue / this.props.secondaryValue).toFixed(2) * 100}%
+                  {(this.props.mainValue === 0 || this.props.secondaryValue === 0) ? 0 : ((this.props.mainValue / this.props.secondaryValue) * 100).toFixed(2)}%
                 </span>
                 <span className={styles['comparison-text']}>{this.props.replaceText ? this.props.replaceText : "since last month"}</span>
               </div>
