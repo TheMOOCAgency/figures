@@ -43,8 +43,6 @@ class BaseStatCard extends Component {
 
   render() {
     const valueHistory = this.props.valueHistory.length ? this.props.valueHistory : Immutable.fromJS([ { period: '', value: 0 }, { period: '', value: 0 } ])
-    console.log((this.props.mainValue / this.props.secondaryValue).toFixed(2) * 100)
-
     return (
       <div className={cx({ 'stat-card': true, 'span-2': (this.state.cardWidth === 2), 'span-3': (this.state.cardWidth === 3), 'span-4': (this.state.cardWidth === 4)})}>
         <div className={styles['main-content']}>
