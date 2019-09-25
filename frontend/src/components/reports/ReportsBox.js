@@ -62,7 +62,7 @@ class ReportsBox extends Component {
         this.setState({
             gradeReports: reports,
             lastReport: reports[0],
-            downloadStatus: "To download the new report, please click the link :"
+            downloadStatus: "To download the new report, please click the link."
         });
     }
 
@@ -85,7 +85,7 @@ class ReportsBox extends Component {
 
     render() {
         return (
-            <div>
+            <div className={styles['header-report']}>
                 <div className={styles['report-box']}>
                     <span 
                         className={styles['download-btn']}
@@ -94,19 +94,18 @@ class ReportsBox extends Component {
                 </div>
                 <div className={styles['report-box']}>
                     <span className={styles['report-info']} >
-                        Please do not click this button several times.<br/>
-                        It would only slow down report generation with multiple reports being generated.<br/>
-                        For large course, report generation may take more than one hour.
+                        Please do not click this button several times. It would only slow down report generation with multiple reports being generated.<br/>
+                        For large courses, report generation may take more than one hour.
                     </span>
-                </div>
-                <div className={styles['report-box']}>
-                    <span className={styles['report-link']}>{this.state.downloadStatus}</span>
                 </div>
                 <div className={styles['report-box']}>
                     {this.state.lastReport ?
                     <a className={styles['report-link']} href={this.state.lastReport.url}>{this.state.lastReport.name}</a> :
                     <p className={styles['report-link']} >There is no generated report yet.</p>
                     }
+                </div>
+                <div className={styles['report-box']}>
+                    <span className={styles['report-link']}>{this.state.downloadStatus}</span>
                 </div>
             </div>
         )
