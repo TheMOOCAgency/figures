@@ -20,7 +20,7 @@ class TopCoursesStatCard extends Component {
   getTopCourses() {
     // Getting Top 5 courses by number of likes
     let coursesList = this.props.coursesList;
-    return coursesList.sortBy(item => item.get('tma_learners_enrolled')).reverse().slice(0,5);
+    return coursesList.sortBy(item => item.getIn(['learners_enrolled', 'current_month'])).reverse().slice(0,5);
   }
 
   render() {
