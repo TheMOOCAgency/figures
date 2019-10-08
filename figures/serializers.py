@@ -512,7 +512,7 @@ class CourseDetailsSerializer(serializers.ModelSerializer):
         """
         from figures.pipeline.course_daily_metrics import get_enrolled_in_exclude_admins
         qs = get_enrolled_in_exclude_admins(course_overview.id, None)
-        qs = qs.filter(course_id=course_overview.id).exclude(tmacourseenrollment__completion_rate__gt=0)
+        qs = qs.filter(course_id=course_overview.id).exclude(tmacourseenrollment__completion_rate__lte=0)
         if qs:
             return qs.count()
         else:
@@ -536,19 +536,14 @@ class CourseDetailsSerializer(serializers.ModelSerializer):
         Retrieves all learners who have a TmaCourseEnrollment completion rate > 0 and < 1
         Excludes Staff-Admins-Coaches
         """
-        staff = CourseStaffRole(course_overview.id).users_with_role()
-        admins = CourseInstructorRole(course_overview.id).users_with_role()
-        coaches = CourseCcxCoachRole(course_overview.id).users_with_role()
+        from figures.pipeline.course_daily_metrics import get_enrolled_in_exclude_admins
+        qs = get_enrolled_in_exclude_admins(course_overview.id, None)
+        qs = qs.filter(course_id=course_overview.id, tmacourseenrollment__completion_rate__gt=0).exclude(tmacourseenrollment__completion_rate=1)
 
-        qs = TmaCourseEnrollment.objects.filter(course_enrollment_edx__course_id=course_overview.id).exclude(course_enrollment_edx__user__in=staff).exclude(course_enrollment_edx__user__in=admins).exclude(course_enrollment_edx__user__in=coaches)
-        users_partially_completed = 0
         if qs:
-            for obj in qs:
-                if obj.completion_rate > 0 and obj.completion_rate < 1:
-                    users_partially_completed = users_partially_completed + 1
-            return users_partially_completed
+            return qs.count()
         else:
-            return users_partially_completed
+            return 0
 
     def get_tma_average_success_score(self, course_overview):
         """
