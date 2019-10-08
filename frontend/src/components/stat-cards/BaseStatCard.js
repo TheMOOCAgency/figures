@@ -42,6 +42,8 @@ class BaseStatCard extends Component {
   }
 
   getTMARound = (number) => {
+    console.log(number)
+    console.log(Math.floor(number * 100)/100)
     return Math.floor(number * 100)/100;
   }
 
