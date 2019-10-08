@@ -41,6 +41,10 @@ class BaseStatCard extends Component {
     }
   }
 
+  getTMARound = (number) => {
+    return Math.floor(number * 100)/100;
+  }
+
   render() {
     const valueHistory = this.props.valueHistory.length ? this.props.valueHistory : Immutable.fromJS([ { period: '', value: 0 }, { period: '', value: 0 } ])
     return (
@@ -63,15 +67,15 @@ class BaseStatCard extends Component {
             <span className={styles['current-data']}>
               {
                 (this.props.secondaryValue && !this.props.compareToPercent)
-                ? (this.props.mainValue / this.props.secondaryValue).toFixed(2) * 100 + '%'
-                : (this.props.dataType === 'percentage') ? ((this.props.mainValue)*100).toFixed(2) + '%' : (this.props.mainValue)}
+                ? (this.getTMARound(this.props.mainValue / this.props.secondaryValue) * 100) + '%'
+                : (this.props.dataType === 'percentage') ? (this.getTMARound(this.props.mainValue)*100) + '%' : (this.props.mainValue)}
             </span>
 
             {/* previous*/}
             {(this.props.compareToPrevious && !this.props.singleValue) && (
               <div className={styles['previous-comparison']}>
                 <span className={styles['comparison-value']}>{(this.props.dataType === 'percentage') ? (
-                  ((this.props.mainValue - valueHistory.getIn([valueHistory.size-2, 'value']))*100).toFixed(2)) :
+                  ((this.props.mainValue - (this.getTMAround(valueHistory.getIn([valueHistory.size-2, 'value']))*100)))) :
                   (this.props.mainValue - valueHistory.getIn([valueHistory.size-2, 'value']))}{(this.props.dataType === 'percentage') && '%'}
                 </span>
                 <span className={styles['comparison-text']}>{this.props.replaceText ? this.props.replaceText : "since last month"}</span>
@@ -81,7 +85,7 @@ class BaseStatCard extends Component {
             {(this.props.compareToPercent && !this.props.singleValue) && (
               <div className={styles['previous-comparison']}>
                 <span className={styles['comparison-value']}>
-                  {(this.props.mainValue === 0 || this.props.secondaryValue === 0) ? 0 : ((this.props.mainValue / this.props.secondaryValue) * 100).toFixed(2)}%
+                  {(this.props.mainValue === 0 || this.props.secondaryValue === 0) ? 0 : (this.getTMARound(this.props.mainValue / this.props.secondaryValue) * 100)}%
                 </span>
                 <span className={styles['comparison-text']}>{this.props.replaceText ? this.props.replaceText : "since last month"}</span>
               </div>
