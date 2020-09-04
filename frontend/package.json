@@ -37,7 +37,7 @@
     "iso-639-1": "^2.0.3",
     "jest": "20.0.4",
     "moment": "^2.22.1",
-    "node-sass": "^4.9.3",
+    "node-sass": "^4.13.1",
     "object-assign": "4.1.1",
     "papaparse": "^5.0.0",
     "postcss-flexbugs-fixes": "3.2.0",
