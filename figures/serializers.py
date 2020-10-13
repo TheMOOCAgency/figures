@@ -909,3 +909,7 @@ class LearnerDetailsSerializer(serializers.ModelSerializer):
                             user.profile, user, None)
         else:
             return None
+
+class ProgramNameSerializer(serializers.Serializer):
+
+    program_name = serializers.CharField()

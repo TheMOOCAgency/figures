@@ -37,6 +37,7 @@ from .filters import (
     SiteDailyMetricsFilter,
     SiteFilterSet,
     UserFilterSet,
+    ProgramNameFilter,
 )
 from .models import CourseDailyMetrics, SiteDailyMetrics
 from .serializers import (
@@ -45,12 +46,12 @@ from .serializers import (
     CourseEnrollmentSerializer,
     CourseIndexSerializer,
     GeneralCourseDataSerializer,
-
     LearnerDetailsSerializer,
     SiteDailyMetricsSerializer,
     SiteSerializer,
     UserIndexSerializer,
-    GeneralUserDataSerializer
+    GeneralUserDataSerializer,
+    ProgramNameSerializer
 )
 from figures import metrics
 from figures.pagination import FiguresLimitOffsetPagination
@@ -65,6 +66,9 @@ from django.conf import settings
 from django.core.management import call_command
 import datetime
 import logging
+
+from cms.djangoapps.tma_cms_apps.programs.models import TmaProgramOverview, TmaProgramCourse
+
 
 log = logging.getLogger()
 
@@ -363,7 +367,7 @@ class CourseDetailsViewSet(CommonAuthMixin, viewsets.ReadOnlyModelViewSet):
                 # Raising NotFound instead of PermissionDenied
                 raise NotFound()
         course_overview = get_object_or_404(CourseOverview, pk=course_key)
-
+	
         return Response(CourseDetailsSerializer(course_overview).data)
 
 
@@ -430,3 +434,51 @@ class SiteViewSet(StaffUserOnDefaultSiteAuthMixin, viewsets.ReadOnlyModelViewSet
     serializer_class = SiteSerializer
     filter_backends = (DjangoFilterBackend, )
     filter_class = SiteFilterSet
+
+class ProgramNameViewSet(CommonAuthMixin, viewsets.ReadOnlyModelViewSet):
+    '''
+
+    '''
+    model = TmaProgramOverview
+    pagination_class = FiguresLimitOffsetPagination
+    serializer_class = ProgramNameSerializer
+    filter_backends = (DjangoFilterBackend, )
+    filter_class = ProgramNameFilter
+
+    def get_queryset(self):
+        if bool(settings.FEATURES.get('FIGURES_HAS_MICROSITES', False)):
+            # Get current org
+            org_whitelist,org_blacklist = get_org_black_and_whitelist_for_site()
+            org = "phileas"
+            if org_whitelist:
+                org = org_whitelist[0]
+        else:
+            org = ""
+
+        queryset = figures.sites.get_courses_for_org(org)
+
+        ### TMA ###
+        # If user is_staff or _is_superuser : access to all courses
+        if figures.permissions.is_active_staff_or_superuser(self.request):
+            log.info('User has all access')
+            return queryset
+        # Else, only access to managed courses as instructor or course staff
+        else:
+            log.info('User has restricted access')
+            courseids_with_access = CourseAccessRole.objects.filter(user_id=self.request.user.id).values_list('course_id', flat=True)
+            return queryset.filter(id__in=courseids_with_access)
+
+    def retrieve(self, request, *args, **kwargs):
+        # Make it a decorator
+        course_id_str = kwargs.get('pk', '')
+        course_key = CourseKey.from_string(course_id_str.replace(' ', '+'))
+        site = django.contrib.sites.shortcuts.get_current_site(request)
+        if figures.helpers.is_multisite():
+            if site != figures.sites.get_site_for_course(course_key):
+                # Raising NotFound instead of PermissionDenied
+                raise NotFound()
+        course_overview = CourseOverview.objects.get(id=course_key)
+        program_course = TmaProgramCourse.objects.get(course=course_overview)
+        program = program_course.program
+
+        return Response(ProgramNameSerializer(program).data)

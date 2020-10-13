@@ -24,11 +24,13 @@ class SingleCourseContent extends Component {
       allLearnersLoaded: true,
       learnersList: Immutable.List(),
       apiFetchMoreLearnersUrl: null,
+      programName:"",
     };
 
     this.fetchCourseData = this.fetchCourseData.bind(this);
     this.fetchLearnersData = this.fetchLearnersData.bind(this);
     this.setLearnersData = this.setLearnersData.bind(this);
+    this.fetchProgramName = this.fetchProgramName.bind(this);
   }
 
   fetchCourseData = () => {
@@ -38,6 +40,15 @@ class SingleCourseContent extends Component {
       .then(json => this.setState({
         courseData: Immutable.fromJS(json)
       }, () => this.props.removeActiveApiFetch()))
+      .then(() => this.fetchProgramName())
+  }
+
+  fetchProgramName = () => {
+    fetch(apiConfig.programName + this.props.courseId + '/', { credentials: "same-origin" })
+      .then(response => response.json())
+      .then(json => this.setState({
+        programName: json.program_name
+      }))
   }
 
   fetchLearnersData = () => {
@@ -80,9 +91,10 @@ class SingleCourseContent extends Component {
             isSelfPaced={this.state.courseData.getIn(['self_paced'])}
             requiredGrade={this.state.courseData.getIn(['passing_grade'])}
             learnersEnrolled={this.state.courseData.getIn(['learners_enrolled'])}
+            programName={this.state.programName}
           />
         </HeaderAreaLayout>
-        <ReportsBox courseId={this.state.courseData.getIn(['course_id'])}/>
+        <ReportsBox courseId={this.state.courseData.getIn(['course_id'])} isProgramCourse={this.state.programName ? true : false}/>
         <div className={cx({ 'container': true, 'base-grid-layout': true, 'dashboard-content': true})}>
           <div className={styles['header']}>
             <div className={styles['header-title']}>Course Activity</div>

@@ -11,7 +11,6 @@
 
   .course-title {
     margin-top: 4rem;
-    margin-bottom: 3rem;
     font-size: calcRem(22);
     font-weight: bold;
     line-height: 100%;
@@ -28,6 +27,15 @@
   }
 
   .course-codes {
+    margin-top: 10px;
+    margin-top: 3rem;
+    font-size: calcRem(14);
+    text-transform: uppercase;
+    align-self: center;
+    vertical-align: middle;
+  }
+
+  .program-name {
     font-size: calcRem(14);
     text-transform: uppercase;
     align-self: center;

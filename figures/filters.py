@@ -24,6 +24,7 @@ from student.models import CourseEnrollment
 
 from figures.pipeline.course_daily_metrics import get_enrolled_in_exclude_admins
 from figures.models import CourseDailyMetrics, SiteDailyMetrics
+from cms.djangoapps.tma_cms_apps.programs.models import TmaProgramOverview
 
 
 def char_method_filter(method):
@@ -191,3 +192,11 @@ class SiteFilterSet(django_filters.FilterSet):
     class Meta:
         model = Site
         fields = ['domain', 'name']
+
+class ProgramNameFilter(django_filters.FilterSet):
+    
+    program_name = django_filters.CharFilter(lookup_expr='icontains')
+
+    class Meta:
+        model = TmaProgramOverview
+        fields = ['program_name']

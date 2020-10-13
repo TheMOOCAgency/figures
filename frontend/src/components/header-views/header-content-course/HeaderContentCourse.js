@@ -93,6 +93,7 @@ class HeaderContentCourse extends Component {
           <div className={styles['course-likes']}>
             {this.props.likesTotal} likes
             </div>*/}
+          {this.props.programName && <div className={styles['program-name']}>Program: {this.props.programName}</div>}
           <div className={styles['course-codes']}>{this.props.courseCode} | {this.props.microsite} | {this.props.tag} |
             <img
               data-for="header-tooltip"

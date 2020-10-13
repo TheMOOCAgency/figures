@@ -2241,7 +2241,6 @@ textarea.input__2lx3TsF4, input[type="text"].input__2lx3TsF4, input[type="url"].
     text-align: center; }
   .header-content-course__2MEybh6J .course-title__OztSnf5B {
     margin-top: 4rem;
-    margin-bottom: 3rem;
     font-size: 2.2rem;
     font-weight: bold;
     line-height: 100%; }
@@ -2252,6 +2251,13 @@ textarea.input__2lx3TsF4, input[type="text"].input__2lx3TsF4, input[type="url"].
     font-size: 1.4rem;
     font-weight: 600; }
   .header-content-course__2MEybh6J .course-codes__1qutIHkT {
+    margin-top: 10px;
+    margin-top: 3rem;
+    font-size: 1.4rem;
+    text-transform: uppercase;
+    align-self: center;
+    vertical-align: middle; }
+  .header-content-course__2MEybh6J .program-name__24cG1pDz {
     font-size: 1.4rem;
     text-transform: uppercase;
     align-self: center;

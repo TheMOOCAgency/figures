@@ -90,7 +90,7 @@ class ReportsBox extends Component {
                     <span 
                         className={styles['download-btn']}
                         onClick={this.generateGradeReport}
-                    >generate new report</span>
+                    >{this.props.isProgramCourse ? 'generate new program report' : 'generate new report'}</span>
                 </div>
                 <div className={styles['report-box']}>
                     <span className={styles['report-info']} >

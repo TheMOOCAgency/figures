@@ -61,6 +61,11 @@ router.register(
     views.LearnerDetailsViewSet,
     base_name='users-detail')
 
+router.register(
+    r'program-name',
+    views.ProgramNameViewSet,
+    base_name='program-name')
+
 
 # TODO: Consider changing this path to be 'users' or 'users/summary'
 # So that all user data fall under the same root path
