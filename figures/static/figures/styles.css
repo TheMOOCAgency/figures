@@ -2591,7 +2591,7 @@ textarea.input__2lx3TsF4, input[type="text"].input__2lx3TsF4, input[type="url"].
     .header-report__1dUNzhoV .report-box__2ebqV1xn .download-btn__1BlHTDT1 {
       text-transform: uppercase;
       font-weight: bold;
-      font-size: 1.3rem;
+      font-size: 1.1rem;
       text-align: center;
       padding: 1rem;
       border: 0.2rem solid #0090c1;
@@ -2601,17 +2601,30 @@ textarea.input__2lx3TsF4, input[type="text"].input__2lx3TsF4, input[type="url"].
       text-decoration: none;
       cursor: pointer;
       transition: all 0.2s ease-in-out; }
+    .header-report__1dUNzhoV .report-box__2ebqV1xn .disabled-btn__2n_BmWjw {
+      text-transform: uppercase;
+      font-weight: bold;
+      font-size: 1.1rem;
+      text-align: center;
+      padding: 1rem;
+      border: 0.2rem solid grey;
+      background-color: white;
+      border-radius: 5rem;
+      color: grey;
+      text-decoration: none;
+      cursor: not-allowed;
+      transition: all 0.2s ease-in-out; }
     .header-report__1dUNzhoV .report-box__2ebqV1xn .report-link__2UnBIjkj {
       display: block;
       font-weight: bold;
-      color: #2C2A2F;
+      color: #2c2a2f;
       font-size: 1.3rem;
       margin: 0 0 1rem; }
     .header-report__1dUNzhoV .report-box__2ebqV1xn .report-link__2UnBIjkj:hover {
       color: #0090c1; }
     .header-report__1dUNzhoV .report-box__2ebqV1xn .report-info__2JIR7YnL {
       display: block;
-      color: #2C2A2F;
+      color: #2c2a2f;
       font-size: 0.9rem;
       margin: 1rem 0 1rem; }
 @charset "UTF-8";

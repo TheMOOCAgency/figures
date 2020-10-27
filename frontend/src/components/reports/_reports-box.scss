@@ -1,7 +1,7 @@
-@import '~base/sass/base/variables';
-@import '~base/sass/base/functions';
-@import '~base/sass/base/grid';
-@import '~base/sass/base/stat-cards';
+@import "~base/sass/base/variables";
+@import "~base/sass/base/functions";
+@import "~base/sass/base/grid";
+@import "~base/sass/base/stat-cards";
 
 .header-report {
   display: grid;
@@ -14,11 +14,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
-  
+
     .download-btn {
       text-transform: uppercase;
       font-weight: bold;
-      font-size: 1.3rem;
+      font-size: 1.1rem;
       text-align: center;
       padding: 1rem;
       border: 0.2rem solid #0090c1;
@@ -29,24 +29,38 @@
       cursor: pointer;
       transition: all 0.2s ease-in-out;
     }
-  
+
+    .disabled-btn {
+      text-transform: uppercase;
+      font-weight: bold;
+      font-size: 1.1rem;
+      text-align: center;
+      padding: 1rem;
+      border: 0.2rem solid grey;
+      background-color: white;
+      border-radius: 5rem;
+      color: grey;
+      text-decoration: none;
+      cursor: not-allowed;
+      transition: all 0.2s ease-in-out;
+    }
+
     .report-link {
       display: block;
       font-weight: bold;
-      color: #2C2A2F;
+      color: #2c2a2f;
       font-size: 1.3rem;
       margin: 0 0 1rem;
     }
     .report-link:hover {
       color: #0090c1;
     }
-  
+
     .report-info {
       display: block;
-      color: #2C2A2F;
+      color: #2c2a2f;
       font-size: 0.9rem;
       margin: 1rem 0 1rem;
     }
   }
 }
-
