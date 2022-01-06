@@ -9,7 +9,7 @@
 ## General Python package dependencies
 ###
 
-celery==3.1.18
+celery==5.2.2
 
 python-dateutil==2.1
 path.py==8.2.1
